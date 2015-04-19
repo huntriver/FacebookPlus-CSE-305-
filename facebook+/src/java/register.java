@@ -7,21 +7,23 @@
 import com.mysql.jdbc.Driver;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author 鑫河
+ * @author Leon
  */
-public class login extends HttpServlet {
+@WebServlet(urlPatterns = {"/register"})
+
+public class register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,36 +37,41 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";  //address of database
+       String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
         String username = request.getParameter("username");
         String pwd = request.getParameter("pwd");
+        String pwd1 = request.getParameter("pwd1");
         PrintWriter out = response.getWriter();
         try {
-
-            Class.forName(driver).newInstance(); //init driver
+            if (username.equals("") || pwd.equals("") || pwd1.equals("")) {
+                throw new Exception();
+            }
+            Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
 
-            ps = conn.prepareStatement("SELECT * FROM users");
-            ps.execute();  //execute the query
-            ResultSet rs = ps.getResultSet();  //rs is the whole row set of tuples
-            //rs is a type readable by Java
-            while (rs.next()) {
-                if (rs.getString("username").equals(username)) {  //if what's at column username at database matches user's input
-                    if (rs.getString("pwd").equals(pwd)) {
-                        response.sendRedirect("user.jsp");
-                    } else {
-                        break;
-                    }
-                }
+            if (!pwd.equals(pwd1)) {
+                throw new Exception();
             }
-            out.println("login failed");
-            out.println("<button onclick=\"window.location='index.html'\">back</button>");
+
+            ps = conn.prepareStatement("SELECT * FROM users WHERE username=?");
+            ps.setString(1, username); //1 represents the first ?
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {    //if there is next to this cursor of the result, then it means that Username already exists
+                throw new Exception();
+            }
+
+            ps = conn.prepareStatement("INSERT into users (username,pwd) values (?,?)");
+            ps.setString(1, username); //1 represents the first ?
+            ps.setString(2, pwd);  
+         //   ps.setInt(3, 3);//1 manager   2= employee   3= regular customer
+            ps.execute();
 
             ps.close();
-
+            out.println("success");
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());
@@ -84,8 +91,8 @@ public class login extends HttpServlet {
 
                 }
             }
-
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
