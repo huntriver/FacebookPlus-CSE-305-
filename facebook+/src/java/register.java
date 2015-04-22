@@ -37,7 +37,7 @@ public class register extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
@@ -56,18 +56,28 @@ public class register extends HttpServlet {
                 throw new Exception();
             }
 
-            ps = conn.prepareStatement("SELECT * FROM users WHERE username=?");
+            ps = conn.prepareStatement("SELECT * FROM user WHERE username=?");
             ps.setString(1, username); //1 represents the first ?
             ps.execute();
             ResultSet rs = ps.getResultSet();
             if (rs.next()) {    //if there is next to this cursor of the result, then it means that Username already exists
                 throw new Exception();
             }
+            ps = conn.prepareStatement("insert into person() values()");
+            ps.execute();
+            ps = conn.prepareStatement("SELECT MAX(id) FROM person;");
+            ps.execute();
 
-            ps = conn.prepareStatement("INSERT into users (username,pwd) values (?,?)");
+            rs = ps.getResultSet();
+
+            rs.next();
+            String id = rs.getString(1);
+
+            ps = conn.prepareStatement("INSERT into user (username,pwd,Id) values (?,?,?)");
             ps.setString(1, username); //1 represents the first ?
-            ps.setString(2, pwd);  
-         //   ps.setInt(3, 3);//1 manager   2= employee   3= regular customer
+            ps.setString(2, pwd);
+            ps.setString(3, id);
+            //   ps.setInt(3, 3);//1 manager   2= employee   3= regular customer
             ps.execute();
 
             ps.close();

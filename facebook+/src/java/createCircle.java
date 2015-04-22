@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-import com.mysql.jdbc.Driver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author 鑫河
+ * @author Leon
  */
-public class login extends HttpServlet {
+public class createCircle extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,36 +34,46 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";  //address of database
+        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String username = request.getParameter("username");
-        String pwd = request.getParameter("pwd");
+        String name = request.getParameter("cname");
+        String type = request.getParameter("ctype");
+        String owner= request.getParameter("ownerId");
         PrintWriter out = response.getWriter();
         try {
-
-            Class.forName(driver).newInstance(); //init driver
+           
+            Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
 
-            ps = conn.prepareStatement("SELECT * FROM users");
-            ps.execute();  //execute the query
-            ResultSet rs = ps.getResultSet();  //rs is the whole row set of tuples
-            //rs is a type readable by Java
-            while (rs.next()) {
-                if (rs.getString("username").equals(username)) {  //if what's at column username at database matches user's input
-                    if (rs.getString("pwd").equals(pwd)) {
-                        response.sendRedirect("user.jsp");
-                    } else {
-                        break;
-                    }
-                }
+          
+
+            ps = conn.prepareStatement("INSERT INTO circle (NAME,Owner,Type) values (?,?,?)");
+            ps.setString(1, name); //1 represents the first ?
+            ps.setString(2, owner);
+            ps.setString(3, type);
+            ps.execute();
+            
+             ps = conn.prepareStatement("INSERT INTO owns (NAME,Owner,Type) values (?,?,?)");
+            ps.setString(1, name); //1 represents the first ?
+            ps.setString(2, owner);
+            ps.setString(3, type);
+            ps.execute();
+            
+            ResultSet rs = ps.getResultSet();
+            if (rs.next()) {    //if there is next to this cursor of the result, then it means that Username already exists
+                throw new Exception();
             }
-            out.println("login failed");
-            out.println("<button onclick=\"window.location='index.html'\">back</button>");
+            ps = conn.prepareStatement("insert into person() values()");
+            ps = conn.prepareStatement("INSERT into user (username,pwd) values (?,?)");
+            ps.setString(1, username); //1 represents the first ?
+            ps.setString(2, pwd);
+            //   ps.setInt(3, 3);//1 manager   2= employee   3= regular customer
+            ps.execute();
 
             ps.close();
-
+            out.println("success");
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());
@@ -84,7 +93,6 @@ public class login extends HttpServlet {
 
                 }
             }
-
         }
     }
 
