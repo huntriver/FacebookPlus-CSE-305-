@@ -45,30 +45,30 @@
                     ResultSet rs1 = ps1.getResultSet();
                     rs1.next();
 
-                    //  String s = "<a href=\"Circle_page.jsp?cid=" + cid + "\">" + rs1.getString("name") + "</a>";%>
-        <a href="Circle_page.jsp?cid=<%=cid%>"><%=rs1.getString("name")%></a>
-        </br>
-        <%
-                    ps1.close();
-                }
-
-                out.println("</br>");
-                ps.close();
-            }
+                    //  String s = "</a href=\"Circle_page.jsp?cid=" + cid + "\">" + rs1.getString("name") + "</a>"
         %>
-        <h1>Create A New Circle</h1>
-        <form action="createCircle" method="post">
-            <table>
-                <tr><td>Circle Name: </td> <td><input type="text" name="cname"/></td></tr>
-                <tr><td>Type:</td> <td> <input type="text" name="ctype" /></td></tr>
-                <input type="hidden" name="ownerId" value=<%=userid%> />
-            </table>
-            </br>
-            <input type="submit" value="Create" /> 
-        </form>
+        <a href="${pageContext.request.contextPath}/circle?cid=<%=cid%>"><%=rs1.getString("name")%></a>
+         </br>
+            <%                    ps1.close();
+                    }
+
+                    out.println("</br>");
+                    ps.close();
+                }
+            %>
+            <h1>Create A New Circle</h1>
+            <form action="createCircle" method="post">
+                <table>
+                    <tr><td>Circle Name: </td> <td><input type="text" name="cname"/></td></tr>
+                    <tr><td>Type:</td> <td> <input type="text" name="ctype" /></td></tr>
+                    <input type="hidden" name="ownerId" value=<%=userid%> />
+                </table>
+                </br>
+                <input type="submit" value="Create" /> 
+            </form>
 
 
-        </br></br></br>
-        <a href="logout.jsp">logout</a>
+            </br></br></br>
+            <a href="logout.jsp">logout</a>
     </body>
 </html>

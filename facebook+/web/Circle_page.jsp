@@ -15,13 +15,14 @@
     </head>
     <body>
         <% String userid = (String) session.getAttribute("userid");
-            String cid = request.getParameter("cid");
+            String cid = (String) session.getAttribute("cid");
             if (userid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
-            } else {
+            } else 
                 if (cid == null) {
+                    out.println(cid);
                     out.println("<script language=\"JavaScript\">alert(\"no such a circle！\");self.location='index.html';</script>"); //注意该方法的写法
                 } else {
                     String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
@@ -39,19 +40,25 @@
 
                         response.sendRedirect("apply.jsp");
                     }
-                     ps = conn.prepareStatement("SELECT * FROM post Where Circle_Id=?");
+                    session.setAttribute("cid", cid);
+                    
+                    ps = conn.prepareStatement("SELECT * FROM post Where Circle=?");
                     ps.setString(1, cid);
                     ps.execute();
+                    out.println("<h1>Recent posts</h1>");
                     rs = ps.getResultSet();
                       while (rs.next()) {
-                          
+                          %>
+                           <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject")%></a>
+                           </br>
+                          <%
                       }
                       
                     ps.close();
 
                 }
         %>
-        <h1>Hello World!</h1>
+        <h1>Make a Post</h1>
         <form action="new_post" method="post"> 
             <table> 
                 <tr><td>Subject</td><td><input style="width:250px" type="text" name="subject"></td></tr> 
@@ -59,6 +66,9 @@
                 <tr><td></td><td><input type="submit" name="submit" value="Submit"></td></tr> 
             </table> 
         </form> 
-
+</br></br></br>
+            <a href="user_index.jsp">back</a>
+            &nbsp;
+            <a href="logout.jsp">logout</a>
     </body>
 </html>
