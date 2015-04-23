@@ -11,16 +11,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Leon
+ * @author 鑫河
  */
-public class createCircle extends HttpServlet {
+public class login_check extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,72 +37,64 @@ public class createCircle extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
-        String driver = "com.mysql.jdbc.Driver";
-        PreparedStatement ps = null;
-        Connection conn = null;
-        String cname = request.getParameter("cname");
-        String ctype = request.getParameter("ctype");
-        String ownerId= request.getParameter("ownerId");
+        String username = request.getParameter("username");
+        String pwd = request.getParameter("pwd");
         PrintWriter out = response.getWriter();
-        try {
-           
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(dburl);
+        if (username != null && pwd != null) {
+            if (username.equals("") || pwd.equals("")) {
+                out.println("<script language=\"JavaScript\">alert(\"username and password must be not empty！\");self.location='index.html';</script>");
 
-          
-
-            ps = conn.prepareStatement("INSERT INTO circle (NAME,Owner,Type) values (?,?,?)");
-            ps.setString(1, cname); //1 represents the first ?
-            ps.setString(2, ownerId);
-            ps.setString(3, ctype);
-            ps.execute();
+            } else {
+                 PreparedStatement ps=null;
             
-
+                try{
             
-             ps = conn.prepareStatement("SELECT MAX(id) FROM circle;");
-            ps.execute();
+                String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+                String driver = "com.mysql.jdbc.Driver";
+                Class.forName(driver).newInstance(); //init driver
+                Connection conn = DriverManager.getConnection(dburl);
+                ps= conn.prepareStatement("SELECT * FROM user");
+                ps.execute();  //execute the query
+                ResultSet rs = ps.getResultSet();
+                boolean p = false;
+                String id = null;
+                while (rs.next()) {
+                    if (rs.getString("username").equals(username)) {  //if what's at column username at database matches user's input
+                        if (rs.getString("pwd").equals(pwd)) {
+                            id = rs.getString("Id");
+                            p = true;
 
-            ResultSet rs = ps.getResultSet();
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                
+                if (p) {
+                     HttpSession session = request.getSession();
+               
+                    session.setAttribute("userid", id);
 
-            rs.next();
-            String cid = rs.getString(1);
-            
-             ps = conn.prepareStatement("INSERT INTO addedto (User_Id,Circle_Id) values (?,?)");
-            ps.setString(1, ownerId); //1 represents the first ?
-            ps.setString(2, cid);
-            ps.execute();
-            
-            
-            ps = conn.prepareStatement("INSERT INTO owns (User_Id,Circle_Id) values (?,?)");
-            ps.setString(1, ownerId); //1 represents the first ?
-            ps.setString(2, cid);
-            ps.execute();
-            
-            
-            ps.close();
-            out.println("<script language='javascript'>alert('Success')</script>");
-        } catch (Exception ex) {
+                    response.sendRedirect("user_index.jsp");
 
-            out.println("failed " + ex.getMessage());
-
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-
+                } else {
+                    out.println("<script language=\"JavaScript\">alert(\"username or password incorrect！\");self.location='index.html';</script>");
                 }
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-
+                catch(Exception e)
+                        {}
+                finally
+                {
+                     try {
+                         ps.close();
+                     } catch (SQLException ex) {
+                         Logger.getLogger(login_check.class.getName()).log(Level.SEVERE, null, ex);
+                     }
                 }
             }
         }
-    }
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
