@@ -19,8 +19,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-
-
+  
+        <a href="user_profile.jsp">profile</a> 
         <% String userid = (String) session.getAttribute("userid");
             if (userid == null) {
 

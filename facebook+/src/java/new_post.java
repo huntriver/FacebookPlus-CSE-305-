@@ -70,7 +70,7 @@ public class new_post extends HttpServlet {
                     ps.execute();
 
                     ps.close();
-                    out.println("<script language='javascript'>alert('Success');self.location='Circle_page.jps'</script>");
+                    out.println("<script language='javascript'>alert('Success');self.location='Circle_page.jsp'</script>");
                 } catch (Exception ex) {
 
                     out.println("failed " + ex.getMessage());

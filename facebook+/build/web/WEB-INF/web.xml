@@ -28,6 +28,10 @@
         <servlet-name>post</servlet-name>
         <servlet-class>post</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>profile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -44,7 +48,7 @@
         <servlet-name>new_post</servlet-name>
         <url-pattern>/new_post</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>new_comment</servlet-name>
         <url-pattern>/new_comment</url-pattern>
     </servlet-mapping>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>post</servlet-name>
         <url-pattern>/post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

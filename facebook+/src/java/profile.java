@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Leon
+ * @author yishuo wang
  */
-public class new_comment extends HttpServlet {
+public class profile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,71 +35,53 @@ public class new_comment extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String lname = request.getParameter("lname");
+        String fname = request.getParameter("fname");
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-      
-        String content = request.getParameter("content");
+
         String uid = (String) request.getSession().getAttribute("userid");
-        String pid = (String) request.getSession().getAttribute("pid");
         PrintWriter out = response.getWriter();
-        if (uid == null || pid == null) {
-            out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
-        }
+        try {
 
-        if ( content != null) {
-            if ( content.equals("")) {
-                out.println("<script language=\"JavaScript\">alert(\"subject and content must be not empty！\");self.location='index.html';</script>");
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(dburl);
 
-            } else {
+            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=? WHERE id=?");
+            ps.setString(1, lname); //1 represents the first ?
+            ps.setString(2, fname);
+            ps.setString(3, uid);
+
+            ps.execute();
+
+            ps.close();
+            out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
+        } catch (Exception ex) {
+            
+            out.println("failed " + ex.getMessage());
+
+        } finally {
+            if (ps != null) {
                 try {
-
-                    Class.forName(driver).newInstance();
-                    conn = DriverManager.getConnection(dburl);
-
-                    ps = conn.prepareStatement("INSERT INTO comment (post,Author,Date,Content) values (?,?,?,?)");
-                    ps.setString(1, pid); //1 represents the first ?
-                    ps.setString(2, uid);
-                    
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date now = new Date();
-                    String date = sdf.format(now);
-                    ps.setString(3, date);
-                    ps.setString(4,content);
-                    ps.execute();
- 
-                    
-                    ps=  conn.prepareStatement("UPDATE post SET Comment_Count=Comment_Count+1 WHERE Id=?");
-                    ps.setString(1, pid);
-                    ps.execute();
                     ps.close();
-                    out.println("<script language='javascript'>alert('Success');self.location='post_page.jsp'</script>");
-                } catch (Exception ex) {
+                } catch (SQLException ex) {
 
-                    out.println("failed " + ex.getMessage());
-
-                } finally {
-                    if (ps != null) {
-                        try {
-                            ps.close();
-                        } catch (SQLException ex) {
-
-                        }
-                    }
-                    if (conn != null) {
-                        try {
-                            conn.close();
-                        } catch (SQLException ex) {
-
-                        }
-                    }
                 }
             }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+
+                }
+            }
+
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
