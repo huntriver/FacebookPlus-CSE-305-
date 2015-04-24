@@ -58,7 +58,9 @@ and open the template in the editor.
             <table border="0">
                 <tr><td>Last Name: </td> <td><input type="text" name="lname" value=<%=lname%>></td></tr>
                 <tr><td>First Name:</td> <td> <input type="text" name="fname" value=<%=fname%>></td></tr>
-
+<input type="checkbox" name="fruit" value ="apple" >苹果<br>
+<input type="checkbox" name="fruit1" value ="orange">桔子<br>
+<input type="checkbox" name="fruit2" value ="mango">芒果<br>
             </table>
             </br>
             <input type="submit" value="Submit" />  &nbsp;&nbsp; &nbsp;

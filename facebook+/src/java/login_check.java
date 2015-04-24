@@ -72,7 +72,8 @@ public class login_check extends HttpServlet {
                 
                 if (p) {
                      HttpSession session = request.getSession();
-               
+                  
+                    
                     session.setAttribute("userid", id);
 
                     response.sendRedirect("user_index.jsp");

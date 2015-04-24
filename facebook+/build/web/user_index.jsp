@@ -21,6 +21,7 @@
     <body>
   
         <a href="user_profile.jsp">profile</a> 
+          <a href="message.jsp">messages</a> 
         <% String userid = (String) session.getAttribute("userid");
             if (userid == null) {
 

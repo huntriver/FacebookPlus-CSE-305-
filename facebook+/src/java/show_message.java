@@ -6,12 +6,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author yishuo wang
+ * @author Leon
  */
-public class profile extends HttpServlet {
+public class show_message extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,55 +29,18 @@ public class profile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String lname = request.getParameter("lname");
-        String fname = request.getParameter("fname");
-        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
-        String driver = "com.mysql.jdbc.Driver";
-        PreparedStatement ps = null;
-        Connection conn = null;
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
 
-        String uid = (String) request.getSession().getAttribute("userid");
-        PrintWriter out = response.getWriter();
-        try {
-
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(dburl);
-            out.println(request.getParameter("fruit"));
-             out.println(request.getParameter("fruit1")); out.println(request.getParameter("fruit2"));
-             
-            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=? WHERE id=?");
-            ps.setString(1, lname); //1 represents the first ?
-            ps.setString(2, fname);
-            ps.setString(3, uid);
-
-            ps.execute();
-
-            ps.close();
-            out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
-        } catch (Exception ex) {
-            
-            out.println("failed " + ex.getMessage());
-
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-
-                }
-            }
-
+            request.getSession().setAttribute("subject", request.getParameter("subject"));
+            request.getSession().setAttribute("date", request.getParameter("date"));
+            request.getSession().setAttribute("content", request.getParameter("content"));
+            request.getSession().setAttribute("sender", request.getParameter("sender"));
+            response.sendRedirect("showMessage.jsp");
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

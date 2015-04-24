@@ -32,6 +32,18 @@
         <servlet-name>profile</servlet-name>
         <servlet-class>profile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>new_message</servlet-name>
+        <servlet-class>new_message</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>message</servlet-name>
+        <servlet-class>message</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>show_message</servlet-name>
+        <servlet-class>show_message</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -63,6 +75,18 @@
     <servlet-mapping>
         <servlet-name>profile</servlet-name>
         <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>new_message</servlet-name>
+        <url-pattern>/new_message</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>message</servlet-name>
+        <url-pattern>/message</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>show_message</servlet-name>
+        <url-pattern>/show_message</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
