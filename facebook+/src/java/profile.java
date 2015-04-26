@@ -37,6 +37,13 @@ public class profile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String lname = request.getParameter("lname");
         String fname = request.getParameter("fname");
+        String Address = request.getParameter("Address");
+        String City = request.getParameter("City");
+        String State = request.getParameter("State");
+        String Zip = request.getParameter("Zip");
+        String Tel = request.getParameter("Tel");
+        String Email = request.getParameter("Email");
+        
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
@@ -49,19 +56,28 @@ public class profile extends HttpServlet {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
             out.println(request.getParameter("fruit"));
-             out.println(request.getParameter("fruit1")); out.println(request.getParameter("fruit2"));
-             
-            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=? WHERE id=?");
+            out.println(request.getParameter("fruit1"));
+            out.println(request.getParameter("fruit2"));
+
+            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=?,Address=?,City=?,State=?,Zip_Code=?,Telephone=?,Email_Address=? WHERE id=?");
+
             ps.setString(1, lname); //1 represents the first ?
             ps.setString(2, fname);
-            ps.setString(3, uid);
+            ps.setString(3, Address); //1 represents the first ?
+            ps.setString(4, City);
+            ps.setString(5, State); //1 represents the first ?
+            ps.setString(6, Zip);
+            ps.setString(7, Tel); //1 represents the first ?
+            ps.setString(8, Email);
+
+            ps.setString(9, uid);
 
             ps.execute();
 
             ps.close();
             out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
         } catch (Exception ex) {
-            
+
             out.println("failed " + ex.getMessage());
 
         } finally {

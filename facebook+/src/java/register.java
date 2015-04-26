@@ -81,9 +81,9 @@ public class register extends HttpServlet {
             ps.execute();
 
             ps.close();
-            out.println("success");
+            out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='index.html';</script>");
         } catch (Exception ex) {
-
+            out.println("<script language=\"JavaScript\">alert(\"Failed！\");self.location='register.html';</script>");
             out.println("failed " + ex.getMessage());
 
         } finally {
