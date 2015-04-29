@@ -39,6 +39,7 @@ public class login_check extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String pwd = request.getParameter("pwd");
+          Connection conn=null;
         PrintWriter out = response.getWriter();
         if (username != null && pwd != null) {
             if (username.equals("") || pwd.equals("")) {
@@ -52,7 +53,7 @@ public class login_check extends HttpServlet {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
-                Connection conn = DriverManager.getConnection(dburl);
+                conn = DriverManager.getConnection(dburl);
                 ps= conn.prepareStatement("SELECT * FROM user");
                 ps.execute();  //execute the query
                 ResultSet rs = ps.getResultSet();
@@ -83,11 +84,15 @@ public class login_check extends HttpServlet {
                 }
             }
                 catch(Exception e)
-                        {}
+                        {out.println(e.getMessage());}
                 finally
                 {
+                  
                      try {
+                         if (ps!=null)
                          ps.close();
+                         if (conn!=null)
+                           conn.close();
                      } catch (SQLException ex) {
                          Logger.getLogger(login_check.class.getName()).log(Level.SEVERE, null, ex);
                      }

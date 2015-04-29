@@ -41,6 +41,7 @@ public class likecomment extends HttpServlet {
        // String pid = (String) request.getSession().getAttribute("pid");
         String cid=request.getParameter("cid");
         PrintWriter out = response.getWriter();
+        Connection conn=null;
         if (userid == null || cid == null) {
             out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
         } else {
@@ -51,7 +52,7 @@ public class likecomment extends HttpServlet {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
-                Connection conn = DriverManager.getConnection(dburl);
+                conn = DriverManager.getConnection(dburl);
                 ps = conn.prepareStatement("INSERT INTO user_likes_comment(User,Comment) values(?,?)");
                 ps.setString(1, userid);
                 ps.setString(2, cid);
@@ -61,11 +62,20 @@ public class likecomment extends HttpServlet {
 
             } catch (Exception e) {
             } finally {
+              if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(login_check.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+
+                }
+            }
             }
         }
 

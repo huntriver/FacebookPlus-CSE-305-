@@ -38,8 +38,9 @@ public class dislikecomment extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String userid = (String) request.getSession().getAttribute("userid");
-      //  String pid = (String) request.getSession().getAttribute("pid");
- String cid=request.getParameter("cid");
+        //  String pid = (String) request.getSession().getAttribute("pid");
+        String cid = request.getParameter("cid");
+        Connection conn = null;
         PrintWriter out = response.getWriter();
         if (userid == null || cid == null) {
             out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
@@ -51,7 +52,7 @@ public class dislikecomment extends HttpServlet {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
-                Connection conn = DriverManager.getConnection(dburl);
+                conn = DriverManager.getConnection(dburl);
                 ps = conn.prepareStatement("DELETE FROM user_likes_comment WHERE User=? and Comment=?");
                 ps.setString(1, userid);
                 ps.setString(2, cid);
@@ -61,11 +62,20 @@ public class dislikecomment extends HttpServlet {
 
             } catch (Exception e) {
             } finally {
+                if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(login_check.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+
+                }
+            }
             }
         }
 

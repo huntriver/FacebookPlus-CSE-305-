@@ -39,7 +39,7 @@ public class dislikepost extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String userid = (String) request.getSession().getAttribute("userid");
         String pid = (String) request.getSession().getAttribute("pid");
-
+Connection conn=null;
         PrintWriter out = response.getWriter();
         if (userid == null || pid == null) {
             out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
@@ -51,7 +51,7 @@ public class dislikepost extends HttpServlet {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
-                Connection conn = DriverManager.getConnection(dburl);
+                conn = DriverManager.getConnection(dburl);
                 ps = conn.prepareStatement("DELETE FROM user_likes_post WHERE User=? and Post=?");
                 ps.setString(1, userid);
                 ps.setString(2, pid);
@@ -61,11 +61,20 @@ public class dislikepost extends HttpServlet {
 
             } catch (Exception e) {
             } finally {
+           if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(login_check.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+
+                }
+            }
             }
         }
 
