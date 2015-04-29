@@ -28,6 +28,7 @@ and open the template in the editor.
             String Zip = null;
             String Tel = null;
             String Email = null;
+            String sex=null;
             //String Preference = null;
             
             String type = null;
@@ -58,6 +59,7 @@ and open the template in the editor.
                 
                 lname = rs.getString("Last_Name");
                 fname = rs.getString("First_Name");
+                sex=rs.getString("SEX");
                 Address = rs.getString("Address");
                 City = rs.getString("City");
 
@@ -73,6 +75,9 @@ and open the template in the editor.
                 }
                 if (fname == null) {
                     fname = "";
+                }
+                if (sex == null) {
+                    sex = "";
                 }
                 if (Address == null) {
                     Address = "";
@@ -115,6 +120,12 @@ and open the template in the editor.
             <table border="0">
                 <tr><td>Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
                 <tr><td>First Name:</td> <td> <input type="text" name="fname" value="<%=fname%>"></td></tr>
+                <tr><td>Gender:</td> <td> 
+                        <select name = "Sex">
+                            <option value = "">Choose</option>
+                            <option value = "Male" <% if (sex.equals("Male")) { %> selected="selected" <% } %>>Male</option> 
+                            <option value = "Female" <% if (sex.equals("Female")) { %> selected="selected" <% } %>>Female</option> 
+                             </td></tr>
                 <tr><td>Address: </td> <td><input type="text" name="Address" value="<%=Address%>"></td></tr>
                 <tr><td>City:</td> <td> <input type="text" name="City" value="<%=City%>"></td></tr>
                 <tr><td>State: </td> <td>
@@ -178,12 +189,10 @@ and open the template in the editor.
                 <tr><td>Zip Code:</td> <td> <input type="text" name="Zip" value="<%=Zip%>"></td></tr>
                 <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
                 <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
-                <input type="checkbox" name="fruit" value ="apple" >苹果<br>
-                <input type="checkbox" name="fruit1" value ="orange">桔子<br>
-                <input type="checkbox" name="fruit2" value ="mango">芒果<br>
+            
             </table>
             </br>
-            <input type="submit" value="Submit" />  &nbsp;&nbsp; &nbsp;
+            <input type="submit" value="Submit" /> 
         </form>
     </body>
 </html>

@@ -3,30 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/logout.jsp</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/dislikecomment.java</file>
             <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/post_page.jsp</file>
             <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/profile.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/show_message.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/circle.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/message.jsp</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/message.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/dislikepost.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/Manage_Circle.jsp</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/index.html</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/likecomment.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/new_post.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/login_check.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/dislikecomment.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/Circle_page.jsp</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/newMessage.jsp</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/user_index.jsp</file>
             <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/user_profile.jsp</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/showMessage.jsp</file>
             <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/likepost.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/user_list.jsp</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/post.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/new_comment.java</file>
-            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/createCircle.java</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/dislikepost.java</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/likecomment.java</file>
         </group>
     </open-files>
 </project-private>

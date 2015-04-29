@@ -43,7 +43,7 @@ public class profile extends HttpServlet {
         String Zip = request.getParameter("Zip");
         String Tel = request.getParameter("Tel");
         String Email = request.getParameter("Email");
-        
+          String Sex= request.getParameter("Sex");
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
@@ -55,11 +55,9 @@ public class profile extends HttpServlet {
 
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-            out.println(request.getParameter("fruit"));
-            out.println(request.getParameter("fruit1"));
-            out.println(request.getParameter("fruit2"));
 
-            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=?,Address=?,City=?,State=?,Zip_Code=?,Telephone=?,Email_Address=? WHERE id=?");
+
+            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=?,Address=?,City=?,State=?,Zip_Code=?,Telephone=?,Email_Address=?, SEX=? WHERE id=?");
 
             ps.setString(1, lname); //1 represents the first ?
             ps.setString(2, fname);
@@ -69,8 +67,8 @@ public class profile extends HttpServlet {
             ps.setString(6, Zip);
             ps.setString(7, Tel); //1 represents the first ?
             ps.setString(8, Email);
-
-            ps.setString(9, uid);
+            ps.setString(9, Sex);
+            ps.setString(10, uid);
 
             ps.execute();
 
