@@ -44,6 +44,22 @@
         <servlet-name>show_message</servlet-name>
         <servlet-class>show_message</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>likepost</servlet-name>
+        <servlet-class>likepost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dislikepost</servlet-name>
+        <servlet-class>dislikepost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dislikecomment</servlet-name>
+        <servlet-class>dislikecomment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>likecomment</servlet-name>
+        <servlet-class>likecomment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -87,6 +103,22 @@
     <servlet-mapping>
         <servlet-name>show_message</servlet-name>
         <url-pattern>/show_message</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>likepost</servlet-name>
+        <url-pattern>/likepost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dislikepost</servlet-name>
+        <url-pattern>/dislikepost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dislikecomment</servlet-name>
+        <url-pattern>/dislikecomment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>likecomment</servlet-name>
+        <url-pattern>/likecomment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
