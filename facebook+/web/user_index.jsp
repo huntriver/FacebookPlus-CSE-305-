@@ -33,6 +33,7 @@
                  ResultSet rs = ps.getResultSet();
                  rs.next();
                  String inumber=rs.getString(1);
+                 
                //  out.println(inumber);
                  
                 ps = conn.prepareStatement("SELECT * FROM addedto Where User_Id=?");

@@ -6,6 +6,11 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Leon
  */
-public class show_message extends HttpServlet {
+public class acceptinvitation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,16 +34,57 @@ public class show_message extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        
             /* TODO output your page here. You may use following sample code. */
-       
-            request.getSession().setAttribute("subject", request.getParameter("subject"));
-            request.getSession().setAttribute("date", request.getParameter("date"));
-            request.getSession().setAttribute("content", request.getParameter("content"));
-            request.getSession().setAttribute("sender", request.getParameter("sender"));
-            response.sendRedirect("showMessage.jsp");
+          String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+        String driver = "com.mysql.jdbc.Driver";
+        PreparedStatement ps = null;
+        Connection conn = null;
+        String uid = request.getParameter("uid");
+        String cid = request.getParameter("cid");
+        PrintWriter out = response.getWriter();
+        try {
+           
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(dburl);
+
+       //      out.println(uid+" "+cid);
+
+            ps = conn.prepareStatement("DELETE FROM invitation WHERE user_id=? and circle_id=?");
+            ps.setString(1,uid); //1 represents the first ?
+            ps.setString(2,cid);
+            
+            ps.execute();
+            
+             ps = conn.prepareStatement("INSERT INTO addedto(User_Id,Circle_Id) values (?,?)");
+            ps.setString(1,uid); //1 represents the first ?
+            ps.setString(2,cid);
+            
+            ps.execute();
+            
+            out.println("<script language='javascript'> alert('Success');self.location='invitation.jsp';</script>");
+        } catch (Exception ex) {
+
+            out.println("failed " + ex.getMessage());
+
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+
+                }
+            }
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -41,7 +41,17 @@ public class createCircle extends HttpServlet {
         String cname = request.getParameter("cname");
         String ctype = request.getParameter("ctype");
         String ownerId= request.getParameter("ownerId");
+        String userid = (String) request.getSession().getAttribute("userid");
         PrintWriter out = response.getWriter();
+        
+        if (userid == null) {
+            out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
+        } 
+        if (cname != null && ctype != null) {
+            if (cname.equals("") || ctype.equals("")) {
+                out.println("<script language=\"JavaScript\">alert(\"name and type must be not empty！\");self.location='user_index.jsp';</script>");
+
+            } else {
         try {
            
             Class.forName(driver).newInstance();
@@ -100,7 +110,8 @@ public class createCircle extends HttpServlet {
             }
         }
     }
-
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

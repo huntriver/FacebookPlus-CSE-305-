@@ -43,7 +43,7 @@ public class send_invitation extends HttpServlet {
         String uid = (String) request.getSession().getAttribute("userid");
         String cid = (String) request.getSession().getAttribute("cid");
         PrintWriter out = response.getWriter();
-       
+
         if (uid == null || cid == null) {
             out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
         }
@@ -57,34 +57,42 @@ public class send_invitation extends HttpServlet {
 
                     Class.forName(driver).newInstance();
                     conn = DriverManager.getConnection(dburl);
-                   
+
                     ps = conn.prepareStatement("SELECT * FROM user WHERE username=?");
                     ps.setString(1, iuname); //1 represents the first 
                     ps.execute();
-                    ResultSet rs=ps.getResultSet();
-                   
-                    String iuid=null;
-                    if (rs.next())
-                    {
-                        iuid=rs.getString("id");
-                    }
-                    else
-                    {
+                    ResultSet rs = ps.getResultSet();
+
+                    String iuid = null;
+                    if (rs.next()) {
+                        iuid = rs.getString("id");
+                    } else {
                         out.println("<script language='javascript'>alert('No such a user');self.location='Manage_Circle.jsp'</script>");
                         return;
                     }
-                   
-                    ps = conn.prepareStatement("SELECT * FROM invitation WHERE user_id=? and circle_id=?");
-                    ps.setString(1, iuid); //1 represents the first ?
+
+                    ps = conn.prepareStatement("SELECT * FROM addedto WHERE User_Id=? and Circle_Id=?");
+                    ps.setString(1, iuid);
                     ps.setString(2, cid);
                     ps.execute();
-                    if (!ps.getResultSet().next()) {
-                        ps = conn.prepareStatement("INSERT INTO invitation (user_id,circle_id) values (?,?)");
+                    rs = ps.getResultSet();
+
+                    if (!rs.next()) {
+                        ps = conn.prepareStatement("SELECT * FROM invitation WHERE user_id=? and circle_id=?");
                         ps.setString(1, iuid); //1 represents the first ?
                         ps.setString(2, cid);
                         ps.execute();
+                        if (!ps.getResultSet().next()) {
+                            ps = conn.prepareStatement("INSERT INTO invitation (user_id,circle_id) values (?,?)");
+                            ps.setString(1, iuid); //1 represents the first ?
+                            ps.setString(2, cid);
+                            ps.execute();
+
+                        }
+                        out.println("<script language='javascript'>alert('Invitation has been sent');self.location='Manage_Circle.jsp'</script>");
+                    } else {
+                        out.println("<script language='javascript'>alert('The uses is already in the circle');self.location='Manage_Circle.jsp'</script>");
                     }
-                    out.println("<script language='javascript'>alert('Invitation has been sent');self.location='Manage_Circle.jsp'</script>");
                 } catch (Exception ex) {
 
                     out.println("failed " + ex.getMessage());

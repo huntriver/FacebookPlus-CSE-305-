@@ -40,7 +40,7 @@ public class discardinvitation extends HttpServlet {
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String uid = request.getParameter("userid");
+        String uid = request.getParameter("uid");
         String cid = request.getParameter("cid");
         PrintWriter out = response.getWriter();
         try {
@@ -48,7 +48,7 @@ public class discardinvitation extends HttpServlet {
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
 
-          
+          out.println(uid+" "+cid);
 
             ps = conn.prepareStatement("DELETE FROM invitation WHERE user_id=? and circle_id=?");
             ps.setString(1,uid); //1 represents the first ?

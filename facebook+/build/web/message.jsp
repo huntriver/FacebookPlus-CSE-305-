@@ -52,7 +52,11 @@
                     String sender = rs1.getString("username");
 
             %>    
-            <tr> <td><input type="checkbox" name="mid" value=<%=mid%>> </td> <td><%=sender%></td><td><a href="${pageContext.request.contextPath}/show_message?sender=<%=sender%>&date=<%=date%>&subject=<%=subject%>&content=<%=content%>"><%=subject%></a></td><td><%=date%></td></tr>
+            <tr> <td><input type="checkbox" name="mid" value=<%=mid%>> </td> 
+                <td><%=sender%></td>
+                <td><a href="${pageContext.request.contextPath}/show_message?sender=<%=sender%>&date=<%=date%>&subject=<%=subject%>&content=<%=content%>"><%=subject%></a></td>
+                <td><%=date%></td>
+            </tr>
                     <%
                             ps1.close();
                         }

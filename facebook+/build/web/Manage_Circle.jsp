@@ -70,7 +70,12 @@
                 %>
                 
                 <tr>
-                    <td><input type="checkbox" name="users" value="<%=rs.getString("id")%>"></td>
+                    <td>
+                       
+                        <input type="checkbox" name="dusers" value="<%=rs.getString("id")%>"  <% if (rs.getString("id").equals(oid)) { %>
+                                DISABLED <%}%> >
+                        
+                    </td>
                     <td> <%=rs.getString("username")%></td>
                     <td><%=rs.getString("id").equals(oid) ? "owener" : "member"%></td>
                 </tr>
@@ -99,6 +104,6 @@
         <input name="delete_circle" type="button" value="Delete this circle"  onClick="if (confirm('Are u sure? (All post and members will lose)')) {
                     location.href = '${pageContext.request.contextPath}/delete_circle';
                 }" />
-
+     <a href="Circle_page.jsp">back</a>
     </body>
 </html>

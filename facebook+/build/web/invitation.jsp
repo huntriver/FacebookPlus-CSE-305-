@@ -22,17 +22,27 @@
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM invitation Where user_id=?");
+
+                PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM invitation Where user_id=?");
                 ps.setString(1, userid);
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
+                rs.next();
+                int inumber = Integer.valueOf(rs.getString(1));
 
-              //  out.println(inumber);
+                ps = conn.prepareStatement("SELECT * FROM invitation Where user_id=?");
+
+                ps.setString(1, userid);
+                ps.execute();
+                rs = ps.getResultSet();
+
+                //  out.println(inumber);
         %>
     </head>
     <body>
         <h1>Invitations</h1>
         <table>
+            <%if (inumber > 0) { %>
             <tr><td>Circle Name</td></tr>
             <%while (rs.next()) {
                     PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM circle Where id=?");
@@ -46,20 +56,26 @@
 
             %>
             <tr><td><%=cname%>   </td>
-                
-                 <td>   <input type="button" value="Accept" onclick="location.href='${pageContext.request.contextPath}/joincircle?uid =<%=userid%> & cid<%=cid%>'"> </td>
-                  
-                 <td>   <input type="button" value="Discard" onclick="location.href='${pageContext.request.contextPath}/discardinvitation?uid =<%=userid%> & cid<%=cid%>'"> </td>
+
+                <td>   <input type="button" value="Accept" onclick="location.href = '${pageContext.request.contextPath}/acceptinvitation?uid=<%=userid%>&cid=<%=cid%>'"> </td>
+
+                <td>   <input type="button" value="Discard" onclick="location.href = '${pageContext.request.contextPath}/discardinvitation?uid=<%=userid%>&cid=<%=cid%>'"> </td>
                 </td>
             </tr>
 
 
             <%       }
+                    }
+            else
+                %>
+                <h2>There is no new invitation</h2>
+                <%
                     out.println("</br>");
                     ps.close();
                     conn.close();
                 }
             %>
         </table>
+        <a href="user_index.jsp">back</a>
     </body>
 </html>
