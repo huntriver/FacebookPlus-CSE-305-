@@ -41,6 +41,7 @@ public class login_check extends HttpServlet {
         String pwd = request.getParameter("pwd");
           Connection conn=null;
         PrintWriter out = response.getWriter();
+    
         if (username != null && pwd != null) {
             if (username.equals("") || pwd.equals("")) {
                 out.println("<script language=\"JavaScript\">alert(\"username and password must be not empty！\");self.location='index.html';</script>");

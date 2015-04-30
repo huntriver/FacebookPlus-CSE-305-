@@ -35,9 +35,11 @@
                 ResultSet rs = ps.getResultSet();
                 if (rs.next()) {
                     isowner = true;
+                
                 } else {
                     isowner = false;
                 }
+               //     out.println(userid+" "+cid);
                 ps = conn.prepareStatement("SELECT * FROM addedto Where User_Id=? and Circle_Id=?");
                 ps.setString(1, userid);
                 ps.setString(2, cid);
@@ -60,8 +62,9 @@
 
 
     <body>
-        <% if (isowner) %>
-        <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
+        <% if (isowner) {%>
+           <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
+          <% }%>
         <h1>Recent posts</h1>
         <% while (rs.next()) {%>
 

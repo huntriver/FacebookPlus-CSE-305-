@@ -30,6 +30,7 @@ public class show_message extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+<<<<<<< HEAD
             
             //getSession won't allow user to see the value appended at the URL
             //in order to show the page, need userId to show 
@@ -41,6 +42,10 @@ public class show_message extends HttpServlet {
             //make sure the form action = name in .jsp matches the name of the java 
             //jsp will take the input from user through html
             //java servlet in here will do SQL handling
+=======
+            /* TODO output your page here. You may use following sample code. */
+       
+>>>>>>> b68c5e346333901e9dbd9d4a3b654f55207ce99a
             request.getSession().setAttribute("subject", request.getParameter("subject"));
             request.getSession().setAttribute("date", request.getParameter("date"));
             request.getSession().setAttribute("content", request.getParameter("content"));

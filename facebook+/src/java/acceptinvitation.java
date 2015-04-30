@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Leon
  */
-public class createCircle extends HttpServlet {
+public class acceptinvitation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,61 +34,35 @@ public class createCircle extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+        
+            /* TODO output your page here. You may use following sample code. */
+          String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String cname = request.getParameter("cname");
-        String ctype = request.getParameter("ctype");
-        String ownerId= request.getParameter("ownerId");
-        String userid = (String) request.getSession().getAttribute("userid");
+        String uid = request.getParameter("uid");
+        String cid = request.getParameter("cid");
         PrintWriter out = response.getWriter();
-        
-        if (userid == null) {
-            out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
-        } 
-        if (cname != null && ctype != null) {
-            if (cname.equals("") || ctype.equals("")) {
-                out.println("<script language=\"JavaScript\">alert(\"name and type must be not empty！\");self.location='user_index.jsp';</script>");
-
-            } else {
         try {
            
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
 
-          
+       //      out.println(uid+" "+cid);
 
-            ps = conn.prepareStatement("INSERT INTO circle (NAME,Owner,Type) values (?,?,?)");
-            ps.setString(1, cname); //1 represents the first ?
-            ps.setString(2, ownerId);
-            ps.setString(3, ctype);
+            ps = conn.prepareStatement("DELETE FROM invitation WHERE user_id=? and circle_id=?");
+            ps.setString(1,uid); //1 represents the first ?
+            ps.setString(2,cid);
+            
             ps.execute();
             
-
+             ps = conn.prepareStatement("INSERT INTO addedto(User_Id,Circle_Id) values (?,?)");
+            ps.setString(1,uid); //1 represents the first ?
+            ps.setString(2,cid);
             
-             ps = conn.prepareStatement("SELECT MAX(id) FROM circle;");
-            ps.execute();
-
-            ResultSet rs = ps.getResultSet();
-
-            rs.next();
-            String cid = rs.getString(1);
-            
-             ps = conn.prepareStatement("INSERT INTO addedto (User_Id,Circle_Id) values (?,?)");
-            ps.setString(1, ownerId); //1 represents the first ?
-            ps.setString(2, cid);
             ps.execute();
             
-            
-            ps = conn.prepareStatement("INSERT INTO owns (User_Id,Circle_Id) values (?,?)");
-            ps.setString(1, ownerId); //1 represents the first ?
-            ps.setString(2, cid);
-            ps.execute();
-            
-            
-            ps.close();
-            out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp';</script>");
+            out.println("<script language='javascript'> alert('Success');self.location='invitation.jsp';</script>");
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());
@@ -110,8 +84,8 @@ public class createCircle extends HttpServlet {
             }
         }
     }
-        }
-    }
+    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -39,7 +39,7 @@ public class dislikepost extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String userid = (String) request.getSession().getAttribute("userid");
         String pid = (String) request.getSession().getAttribute("pid");
-Connection conn=null;
+        Connection conn=null;
         PrintWriter out = response.getWriter();
         if (userid == null || pid == null) {
             out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");

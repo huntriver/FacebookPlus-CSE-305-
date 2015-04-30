@@ -50,7 +50,7 @@ public class new_post extends HttpServlet {
 
         if (subject != null && content != null) {
             if (subject.equals("") || content.equals("")) {
-                out.println("<script language=\"JavaScript\">alert(\"subject and content must be not empty！\");self.location='index.html';</script>");
+                out.println("<script language=\"JavaScript\">alert(\"subject and content must be not empty！\");self.location='Circle_page.jsp';</script>");
 
             } else {
                 try {
