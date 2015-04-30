@@ -55,7 +55,8 @@
     </head>
     <body>
         <form action="modify_circle_name" method="post">
-            <h1> Circle Name: <input type="text" name="cname" value="<%=cname%>"/>  <input type="submit" value="Modify" /> </h1>
+            <h1> Circle Name: <input type="text" name="cname" value="<%=cname%>"/>  
+                <input type="submit" value="Modify" /> </h1>
 
         </form>
 
@@ -63,22 +64,41 @@
 
         <form action="delete_user_from_circle" method="post">
 
+            <table style="width:300px" border="1">
+                <tr> <td> </td> <td>username</td><td>roll</td> </tr>
+                <% while (rs.next()) {
+                %>
+                
+                <tr>
+                    <td><input type="checkbox" name="users" value="<%=rs.getString("id")%>"></td>
+                    <td> <%=rs.getString("username")%></td>
+                    <td><%=rs.getString("id").equals(oid) ? "owener" : "member"%></td>
+                </tr>
+                <br>
 
-            <% while (rs.next()) {
-            %>
-            <input type="checkbox" name="users" value="<%=rs.getString("id")%>"><%=rs.getString("username")%><br>
-           
-            <%}%>
+                <%}%>
+            </table>
+
             <br>
-            <input type="submit" value="Delete">
+            <input type="submit" value="Delete Selected Users">
         </form>
         <%ps.close();
                 conn.close();
             }
         %>
-        
-       <form action="send_invitation">
-           <>
-           </form>
+        <br>
+        <br>
+        <form action="send_invitation" method="post">
+            Send an invitation:  <input type="text" name="iuname" /> 
+            
+            <input type="submit" value="Send" />
+        </form>
+        <br>
+        <br>
+
+        <input name="delete_circle" type="button" value="Delete this circle"  onClick="if (confirm('Are u sure? (All post and members will lose)')) {
+                    location.href = '${pageContext.request.contextPath}/delete_circle';
+                }" />
+
     </body>
 </html>

@@ -1,20 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" " http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns=" http://www.w3.org/1999/xhtml"><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <head><!--css样式开始-->
-        <style>
-            *{margin:0 auto; padding:0; font-size:9pt;}
-           
-            .leftside{width:200px;}
-            .rightside{height:100px;}
-        </style>
-        <title>无标题文档</title>
-    </head>
-    <body>
-        <!--主体部分开始-->
-       
-            <div class="leftside">左边内容ad fa</div>  
-            <div class="rightside">右边内容 <br></br>. abc</div>
-   
-       </body>
-
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>目录样式的下拉菜单</title>
+<SCRIPT language=javascrip'>
+function out()
+{
+//判断鼠标是否移动到当前菜单或菜单中的项-第一个菜单的判断
+if(window.event.toElement.id!=="menuOne"        &&       window.event.toElement.id!=="link")
+  menuOne.style.visibility="hidden";  //如果不是，则隐藏菜单
+}
+function out1()
+{
+//判断鼠标是否移动到当前菜单或菜单中的项-第二个菜单的判断
+if(window.event.toElement.id!=="menuTwo"        &&       window.event.toElement.id!=="linkTwo")
+  menuTwo.style.visibility="hidden";  //如果不是，则隐藏菜单
+}
+</SCRIPT>
+ </head>
+<body>
+ <td>
+   <div id="back" onMouseOut="pulldown()" style="visibility:visible;">
+ <div id="menubar"  onmouseover="menuOne.style.visibility='visible'">
+ <font   size=4><img src="images/aaa.jpg" name="Image1" align="absmiddle" /></div>
+ <div border=1  id="menuOne" style="position:absolute;width:70px;height:10px;z-index:2;visibility:hidden;">
+   <div><a  href="http://localhost:8080/sso" target="_blank"><img  id="A1"src="images/bbb.jpg" align="absmiddle" /></a></div>
+   <div><a  href="http://localhost:8080/sso" target="_blank"><img  id="A2"src="images/bbb.jpg" align="absmiddle" /></a></div>
+   <div><a  href="http://localhost:8080/sso" target="_blank"><img  id="A3"src="images/bbb.jpg" align="absmiddle" /></a></div>
+   <div><a  href="http://localhost:8080/sso" target="_blank"><img  id="A4"src="images/bbb.jpg" align="absmiddle" /></a></div>
+   <div><a  href="http://localhost:8080/sso" target="_blank"><img  id="A5"src="images/bbb.jpg" align="absmiddle" /></a></div>
+ </div>
+ </div>
+ </td>
+</body>
 </html>
