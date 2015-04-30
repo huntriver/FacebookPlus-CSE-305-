@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import com.mysql.jdbc.Driver;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
