@@ -12,8 +12,6 @@
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-    </head>
-    <body>
         <% String userid = (String) session.getAttribute("userid");
             String cid = (String) session.getAttribute("cid");
             if (userid == null) {
@@ -28,12 +26,24 @@
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM addedto Where User_Id=? and Circle_Id=?");
+                PreparedStatement ps;
+                boolean isowner;
+                ps = conn.prepareStatement("SELECT * FROM owns Where User_Id=? and Circle_Id=?");
+                ps.setString(1, userid);
+                ps.setString(2, cid);
+                ps.execute();
+                ResultSet rs = ps.getResultSet();
+                if (rs.next()) {
+                    isowner = true;
+                } else {
+                    isowner = false;
+                }
+                ps = conn.prepareStatement("SELECT * FROM addedto Where User_Id=? and Circle_Id=?");
                 ps.setString(1, userid);
                 ps.setString(2, cid);
 
                 ps.execute();
-                ResultSet rs = ps.getResultSet();
+                rs = ps.getResultSet();
                 if (!rs.next()) {
                     ps.close();
 
@@ -44,14 +54,21 @@
                 ps = conn.prepareStatement("SELECT * FROM post Where Circle=?");
                 ps.setString(1, cid);
                 ps.execute();
-                out.println("<h1>Recent posts</h1>");
-                rs = ps.getResultSet();
-                while (rs.next()) {
-        %>
+                
+                rs = ps.getResultSet();  %>
+    </head>
+
+
+    <body>
+        <% if (isowner) %>
+        <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
+        <h1>Recent posts</h1>
+        <% while (rs.next()) {%>
+
         <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject")%></a>
         </br>
         <%
-                }
+                    }
 
                 ps.close();
                 conn.close();
@@ -66,6 +83,8 @@
             </table> 
         </form> 
         </br></br></br>
+
+
         <a href="user_index.jsp">back</a>
         &nbsp;
         <a href="logout.jsp">logout</a>
