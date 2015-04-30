@@ -30,13 +30,23 @@ public class show_message extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-
+            
+            //getSession won't allow user to see the value appended at the URL
+            //in order to show the page, need userId to show 
+            //session is like a hashmap 
+            //parameter is the value I passed in to get 
+            //this session will stay the same no matter which page you're on within same login session
+            //setting the values of this sesssion like a preservation jar
+            //so the value passed in from current page by the user will be preserved across different pages within the same session
+            //make sure the form action = name in .jsp matches the name of the java 
+            //jsp will take the input from user through html
+            //java servlet in here will do SQL handling
             request.getSession().setAttribute("subject", request.getParameter("subject"));
             request.getSession().setAttribute("date", request.getParameter("date"));
             request.getSession().setAttribute("content", request.getParameter("content"));
             request.getSession().setAttribute("sender", request.getParameter("sender"));
             response.sendRedirect("showMessage.jsp");
+            
         }
     }
 
