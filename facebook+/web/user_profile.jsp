@@ -116,6 +116,9 @@ and open the template in the editor.
         }
         %>
         
+        <%-- "profile" must match the name of the profile.java file
+        Despite the form was presented in html, the data will be sent to profile.java
+        --%>
         <form action="profile" method="post">
             <table border="0">
                 <tr><td>Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
