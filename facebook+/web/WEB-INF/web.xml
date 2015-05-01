@@ -88,6 +88,10 @@
         <servlet-name>list</servlet-name>
         <servlet-class>list</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>creditAccount</servlet-name>
+        <servlet-class>creditAccount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>list</servlet-name>
         <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>creditAccount</servlet-name>
+        <url-pattern>/creditAccount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
