@@ -45,6 +45,7 @@ public class list extends HttpServlet {
         //String uid = (String) request.getSession().getAttribute("userid");
         String[] ids=request.getParameterValues("id");
         String[] types=request.getParameterValues("type");
+       // out.println(ids.length+" "+types.i)
         PrintWriter out = response.getWriter();
         try {
 
@@ -57,7 +58,7 @@ public class list extends HttpServlet {
             ps.setString(1, types[i]); //1 represents the first ?
             
             ps.setString(2, ids[i]);
-   out.println(ids[i]+" "+types[i]+"<br>");
+            out.println(ids[i]+" "+types[i]+"<br>");
             ps.execute();
           }
             ps.close();
@@ -65,6 +66,7 @@ public class list extends HttpServlet {
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());
+            ex.printStackTrace();
 
         } finally {
             if (ps != null) {

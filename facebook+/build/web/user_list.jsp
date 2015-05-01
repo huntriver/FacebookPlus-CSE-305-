@@ -26,14 +26,31 @@
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
                 //     PreparedStatement ps = conn.prepareStatement("SELECT Id,Last_Name,First_Name FROM person");
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM user");
+                
+                
+                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+                ps.setString(1, userid);
+                ps.execute();
+                ResultSet rs = ps.getResultSet();
+                rs.next();
+
+                if (!rs.getString("type").equals("1")) {
+                    out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>"); //注意该方法的写法
+                    ps.close();
+                    conn.close();
+                    return ;
+                }
+               
+                
+                
+                ps = conn.prepareStatement("SELECT * FROM user");
 
                 //ps.setString(1, userid);
                 //ps_type.setString(1, userid);
                 ps.execute();
                 //    ps_type.execute();
 
-                ResultSet rs = ps.getResultSet();
+                rs = ps.getResultSet();
           //      ResultSet rs_type = ps_type.getResultSet();
         %>
 
@@ -47,13 +64,19 @@
                 <%
                     for (int i = 0; rs.next(); i++) {
                 %>
-                <tr> <td> <input type="hidden" name="id" value="<%=rs.getString("id")%>" /> <%=rs.getString("id")%></td> 
+                <tr> <td> <% if (!rs.getString("type").equals("1")) { %>  <input type="hidden" name="id" value="<%=rs.getString("id")%>" />  <%}%> <%=rs.getString("id")%></td> 
                     <td><%=rs.getString("username")%></td> 
-                    <td> 
-                        <select name = "type" <% if (rs.getString("type").equals("1")) { %> disabled="disabled" <% } %> >
-                            <% if (rs.getString("type").equals("1")) { %>  <option value = "1"  select qed="selected" >Manager</option> <% } %>
+                    <td>  <% if (rs.getString("type").equals("1")) { %> 
+                        Manager
+                        
+                        <%}
+                        else
+                    {%>
+                        <select name = "type"  >
+                         
                             <option value = "2" <% if (rs.getString("type").equals("2"))  { %> selected="selected" <% } %>>Employee</option> 
                             <option value = "3" <% if(rs.getString("type").equals("3"))  { %> selected="selected" <% } %>>Customer</option> 
+                          <%  }%>
                         </Select>
                         
                     </td>
