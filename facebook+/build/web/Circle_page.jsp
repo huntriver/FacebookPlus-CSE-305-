@@ -35,11 +35,12 @@
                 ResultSet rs = ps.getResultSet();
                 if (rs.next()) {
                     isowner = true;
-                
+                    session.setAttribute("owner", true);
                 } else {
                     isowner = false;
+                    session.setAttribute("owner", false);
                 }
-               //     out.println(userid+" "+cid);
+                //     out.println(userid+" "+cid);
                 ps = conn.prepareStatement("SELECT * FROM addedto Where User_Id=? and Circle_Id=?");
                 ps.setString(1, userid);
                 ps.setString(2, cid);
@@ -56,22 +57,49 @@
                 ps = conn.prepareStatement("SELECT * FROM post Where Circle=?");
                 ps.setString(1, cid);
                 ps.execute();
-                
+
                 rs = ps.getResultSet();  %>
     </head>
 
 
     <body>
         <% if (isowner) {%>
-           <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
-          <% }%>
+        <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
+        <% }%>
         <h1>Recent posts</h1>
-        <% while (rs.next()) {%>
+        <% if (isowner) {
+        %>
+        <form action="delete_user_from_circle" method="post">
+            <%} %>
+            <table style="width:300px" border="1">
+                <tr> <td> </td> <td>Subject</td><td>Author</td> </tr>
 
-        <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject")%></a>
-        </br>
-        <%
+                <% while (rs.next()) {
+                        PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where Id=?");
+                        ps1.setString(1, rs.getString("Author"));
+                        ps1.execute();
+                        ResultSet rs1 = ps1.getResultSet();
+                        rs1.next();
+                %>
+                <tr> <td>
+                        <input type="checkbox" name="dpost" value="<%=rs.getString("id")%>"
+                    </td> 
+                    <td>
+                        <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject")%></a>
+                    </td>
+                    <td>
+                        <%=rs1.getString("username")%>
+                    </td>
+                </tr>
+                <%
+
                     }
+                %>
+            </table>
+            <%
+           if (isowner) {%>
+        </form> 
+        <%}
 
                 ps.close();
                 conn.close();

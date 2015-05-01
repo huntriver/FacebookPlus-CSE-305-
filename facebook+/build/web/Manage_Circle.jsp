@@ -18,8 +18,9 @@
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
             } else if (cid == null) {
-                out.println(cid);
-                out.println("<script language=\"JavaScript\">alert(\"no such a circle！\");self.location='index.html';</script>"); //注意该方法的写法
+          //      out.println(cid);
+                out.println("<script language=\"JavaScript\">alert(\"no such a circle！\");self.location='user_index.jsp';</script>"); //注意该方法的写法
+                return;
             } else {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
@@ -41,6 +42,7 @@
                     out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='Circle_page.jsp';</script>"); //注意该方法的写法
                     ps.close();
                     conn.close();
+                    return;
                 }
 
                 ps = conn.prepareStatement("SELECT * FROM addedto,user Where addedto.Circle_Id=? and addedto.User_Id=user.Id");
@@ -87,10 +89,36 @@
             <br>
             <input type="submit" value="Delete Selected Users">
         </form>
-        <%ps.close();
-                conn.close();
-            }
-        %>
+     
+            
+          <h2>Membership management</h2>
+          
+          <form action="delete_user_from_circle" method="post">
+
+            <table style="width:300px" border="1">
+                <tr> <td> </td> <td>username</td><td>roll</td> </tr>
+                <% while (rs.next()) {
+                %>
+                
+                <tr>
+                    <td>
+                       
+                        <input type="checkbox" name="dusers" value="<%=rs.getString("id")%>"  <% if (rs.getString("id").equals(oid)) { %>
+                                DISABLED <%}%> >
+                        
+                    </td>
+                    <td> <%=rs.getString("username")%></td>
+                    <td><%=rs.getString("id").equals(oid) ? "owener" : "member"%></td>
+                </tr>
+                <br>
+
+                <%}%>
+            </table>
+
+            <br>
+            <input type="submit" value="Delete Selected Users">
+        </form>
+            
         <br>
         <br>
         <form action="send_invitation" method="post">
@@ -105,5 +133,10 @@
                     location.href = '${pageContext.request.contextPath}/delete_circle';
                 }" />
      <a href="Circle_page.jsp">back</a>
+     
+        <%ps.close();
+                conn.close();
+            }
+        %>
     </body>
 </html>
