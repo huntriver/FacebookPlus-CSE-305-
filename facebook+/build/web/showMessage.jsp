@@ -20,7 +20,6 @@
             } 
             else
             {
-                //when user log in, is given a cookie, I as client then save that cookie to track session        
                 String sender=(String) session.getAttribute("sender");
                 String date=(String) session.getAttribute("date");
                 String content=(String) session.getAttribute("content");
@@ -33,7 +32,7 @@
            
             <tr><td>content</td><td><textarea name="content" style="height:150px;width:900px;resize: none;"disabled="disabled" ><%=content%></textarea></td></tr> 
             
-</table> 
+        </table> 
              <%=sender%> sends on <%=date%>  
            <% }
         %>

@@ -84,6 +84,10 @@
         <servlet-name>delete_user_from_circle</servlet-name>
         <servlet-class>delete_user_from_circle</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>list</servlet-name>
+        <servlet-class>list</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>delete_user_from_circle</servlet-name>
         <url-pattern>/delete_user_from_circle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>list</servlet-name>
+        <url-pattern>/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -60,7 +60,6 @@
 
 
         %>
-          <!---cid will be the parameter in line 33 in circle.java  file name must be same--->
         <a href="${pageContext.request.contextPath}/circle?cid=<%=cid%>"><%=rs1.getString("name")%></a>
         </br>
         <%                    ps1.close();
