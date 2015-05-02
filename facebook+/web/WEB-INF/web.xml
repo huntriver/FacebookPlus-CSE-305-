@@ -92,6 +92,18 @@
         <servlet-name>creditAccount</servlet-name>
         <servlet-class>creditAccount</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>delete_post_from_circle</servlet-name>
+        <servlet-class>delete_post_from_circle</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_post</servlet-name>
+        <servlet-class>delete_post</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_comment</servlet-name>
+        <servlet-class>delete_comment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -183,6 +195,18 @@
     <servlet-mapping>
         <servlet-name>creditAccount</servlet-name>
         <url-pattern>/creditAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_post_from_circle</servlet-name>
+        <url-pattern>/delete_post_from_circle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_post</servlet-name>
+        <url-pattern>/delete_post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_comment</servlet-name>
+        <url-pattern>/delete_comment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

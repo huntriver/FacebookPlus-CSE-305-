@@ -16,6 +16,7 @@
         <%
             String userid = (String) session.getAttribute("userid");
             String pid = (String) session.getAttribute("pid");
+            Boolean isowner = (Boolean) session.getAttribute("owner");
             if (userid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
@@ -71,7 +72,9 @@
             <input name="like" type="image" value="like" src="<%=likepost ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
 
         </form>
-
+        <% if (isowner) {%>
+        <a href="delete_post">delete this post</a>
+        <%}%>
         <h2>Comments</h2>
         <%
             ps = conn.prepareStatement("SELECT * FROM comment Where post=?");
@@ -103,18 +106,22 @@
         %>
         <textarea name="textarea" disabled="disabled"style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
         </br>
-       
+
         <form id="form1" name="form1" method="post" action="<%=likecomment ? "dislikecomment" : "likecomment"%>">
             <%=auname%> posted on <%=rs.getString("date")%> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <input name="like" type="image"  src="<%=likecomment ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
             <input name="cid" type="hidden" value="<%=rs.getString("Id")%>">
         </form>
+        <% if (isowner) {%>
+        <a href="delete_comment?coid=<%=rs.getString("Id")%>">delete this comment</a>
+        <%}%>
         </br>
         <%
                 ps1.close();
             }
 
         %>
+
         <h2>Make a Comment</h2>
         <form action="new_comment" method="post"> 
             <table> 
@@ -127,8 +134,9 @@
         <a href="Circle_page.jsp">back</a>
         &nbsp;
         <a href="logout.jsp">logout</a>
+
     </body>
-    <% 
-            conn.close();}
+    <%            conn.close();
+        }
     %>
 </html>

@@ -67,12 +67,14 @@
         <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
         <% }%>
         <h1>Recent posts</h1>
-        <% if (isowner) {
-        %>
-        <form action="delete_user_from_circle" method="post">
+        <% if (isowner) {    %>
+        <form action="delete_post_from_circle" method="post">
             <%} %>
             <table style="width:300px" border="1">
-                <tr> <td> </td> <td>Subject</td><td>Author</td> </tr>
+                <tr>  <% if (isowner) {    %><td> </td> <%} %> 
+                    <td>Subject</td>
+                    <td>Author</td> 
+                </tr>
 
                 <% while (rs.next()) {
                         PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where Id=?");
@@ -81,9 +83,9 @@
                         ResultSet rs1 = ps1.getResultSet();
                         rs1.next();
                 %>
-                <tr> <td>
-                        <input type="checkbox" name="dpost" value="<%=rs.getString("id")%>"
-                    </td> 
+                <tr>
+                    <% if (isowner) {%> <td>      <input type="checkbox" name="dposts" value="<%=rs.getString("id")%>"        </td>                  <%}%>
+
                     <td>
                         <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject")%></a>
                     </td>
@@ -96,10 +98,10 @@
                     }
                 %>
             </table>
-            <%
-           if (isowner) {%>
-        </form> 
-        <%}
+            <%  if (isowner) {%>      
+            <input type="submit" value="Delete Selected Posts">
+             </form>   
+             <%}
 
                 ps.close();
                 conn.close();
