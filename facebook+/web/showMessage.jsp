@@ -28,7 +28,7 @@
     </head>
     <body>
         <table> 
-            <tr><td>Subject</td><td><input style="width:250px" type="text" name="subject" disabled="disabled" value=<%=subject%>></td></tr> 
+            <tr><td>Subject</td><td><input style="width:250px" type="text" name="subject" disabled="disabled" value="<%=subject%>"></td></tr> 
            
             <tr><td>content</td><td><textarea name="content" style="height:150px;width:900px;resize: none;"disabled="disabled" ><%=content%></textarea></td></tr> 
             
