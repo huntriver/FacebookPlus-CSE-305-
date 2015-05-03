@@ -132,6 +132,14 @@
         <servlet-name>creditAccount</servlet-name>
         <servlet-class>creditAccount</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>NewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_account</servlet-name>
+        <servlet-class>delete_account</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -263,6 +271,14 @@
     <servlet-mapping>
         <servlet-name>creditAccount</servlet-name>
         <url-pattern>/creditAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_account</servlet-name>
+        <url-pattern>/delete_account</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

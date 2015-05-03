@@ -3,28 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/new_comment.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/delete_message.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/delete_post_from_circle.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/delete_circle.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/discardapply.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/modify_post.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/acceptapply.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/acceptinvitation.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/newAccount.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/discardinvitation.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/creditAccount.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/user_index.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/Manage_Circle.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/unjoin_circle.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/post_page.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/modify_comment.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/message.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/search_result.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/dislikecomment.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/applyjoin.java</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/Circle_page.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/src/java/delete_user_from_circle.java</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/creditAccount.java</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/register.java</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/user_profile.jsp</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/src/java/profile.java</file>
+            <file>file:/C:/Users/yishuo%20wang/Documents/cse305/facebook+/web/newAccount.jsp</file>
         </group>
     </open-files>
 </project-private>

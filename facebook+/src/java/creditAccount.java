@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author 鑫河
+ * @author yishuo wang
  */
 public class creditAccount extends HttpServlet {
 
@@ -36,10 +36,13 @@ public class creditAccount extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-           String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+        String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
+        
         Connection conn = null;
+        
+        String uid = (String) request.getSession().getAttribute("userid");
         String Card_Num = request.getParameter("Card_Num");
         String Full_Name = request.getParameter("Full_Name");
        
@@ -50,28 +53,46 @@ public class creditAccount extends HttpServlet {
             }
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
+
             
             if (!Card_Num.matches("[0-9]{16}")) {
                 throw new Exception();
             }
-            out.println(Card_Num+"   "+Card_Num.length()+"  "+Full_Name);
+
             ps = conn.prepareStatement("SELECT * FROM account WHERE Credit_Card_Number=?");
+            
             ps.setString(1, Card_Num); //1 represents the first ?
             ps.execute();
             ResultSet rs = ps.getResultSet();
             if (rs.next()) {    //if there is next to this cursor of the result, then it means that Username already exists
                 throw new Exception();
-            }                     
-            ps = conn.prepareStatement("INSERT into account (Credit_Card_Number,Account_Creation_Date) values (?,?)");
-            ps.setString(1, Card_Num); //1 represents the first ?
+            }         
+            
+            
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date now = new Date();
             String date = sdf.format(now);
+            
+            ps = conn.prepareStatement("INSERT into account (Credit_Card_Number,Account_Creation_Date) values (?,?)");
+            ps.setString(1, Card_Num); //1 represents the first ?           
             ps.setString(2, date);
-            //   ps.setInt(3, 3);//1 manager   2= employee   3= regular customer
             ps.execute();
-
+            
+            ps = conn.prepareStatement("SELECT MAX(Account_Number) FROM account;");
+            ps.execute();            
+            rs = ps.getResultSet();
+            rs.next();
+            String Account_Number = rs.getString(1);
+            
+            out.println(Card_Num+"   "+Card_Num.length()+"  "+Full_Name);
+            
+            ps = conn.prepareStatement("INSERT into user_has_account (User_Id,Account_Number) values (?,?)");
+            ps.setString(1, uid);
+            ps.setString(2, Account_Number);
+            ps.execute();
+ 
             ps.close();
+            
             out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='account.jsp';</script>");
         } catch (Exception ex) {
             out.println("<script language=\"JavaScript\">alert(\"Failed！\");self.location='newAccount.jsp';</script>");
@@ -92,7 +113,9 @@ public class creditAccount extends HttpServlet {
 
                 }
             }
-        }   
+        }
+
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
