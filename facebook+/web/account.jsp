@@ -3,7 +3,6 @@
     Created on : 2015-4-30, 22:58:44
     Author     : yishuo wang
 --%>
-<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,4 +16,3 @@
         
     </body>
 </html>
-

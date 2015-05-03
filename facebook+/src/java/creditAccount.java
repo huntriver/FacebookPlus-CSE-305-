@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,37 +50,24 @@ public class creditAccount extends HttpServlet {
             }
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-            /*boolean flag = true;
-            for(int i = 0; i < Ac_Num.length();i++){
-                if( !(Ac_Num.charAt(i) >= '0' && Ac_Num.charAt(i) <= '9') ){
-                    flag = false;
-                    break;
-                }
-            }*/
+            
             if (!Card_Num.matches("[0-9]{16}")) {
                 throw new Exception();
             }
-
+            out.println(Card_Num+"   "+Card_Num.length()+"  "+Full_Name);
             ps = conn.prepareStatement("SELECT * FROM account WHERE Credit_Card_Number=?");
             ps.setString(1, Card_Num); //1 represents the first ?
             ps.execute();
             ResultSet rs = ps.getResultSet();
             if (rs.next()) {    //if there is next to this cursor of the result, then it means that Username already exists
                 throw new Exception();
-            }
-            ps = conn.prepareStatement("insert into Credit_Card_Number() values()");
-            ps.execute();
-            ps = conn.prepareStatement("SELECT MAX(id) FROM person;");
-            ps.execute();
-
-            rs = ps.getResultSet();
-
-            rs.next();
-            String id = rs.getString(1);
-
-            ps = conn.prepareStatement("INSERT into account (Credit_Card_Number,) values (?,?)");
+            }                     
+            ps = conn.prepareStatement("INSERT into account (Credit_Card_Number,Account_Creation_Date) values (?,?)");
             ps.setString(1, Card_Num); //1 represents the first ?
-            //ps.setString(2, pwd);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date now = new Date();
+            String date = sdf.format(now);
+            ps.setString(2, date);
             //   ps.setInt(3, 3);//1 manager   2= employee   3= regular customer
             ps.execute();
 
@@ -103,48 +92,6 @@ public class creditAccount extends HttpServlet {
 
                 }
             }
-        }
-
-    
+        }    
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
