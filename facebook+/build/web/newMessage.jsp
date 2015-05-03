@@ -21,5 +21,6 @@
                 <tr><td></td><td><input type="submit"  value="Send"></td></tr> 
             </table> 
         </form> 
+                  <a href="message.jsp">back</a>
     </body>
 </html>

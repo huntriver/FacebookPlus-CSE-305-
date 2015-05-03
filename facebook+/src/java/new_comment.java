@@ -50,7 +50,7 @@ public class new_comment extends HttpServlet {
 
         if ( content != null) {
             if ( content.equals("")) {
-                out.println("<script language=\"JavaScript\">alert(\"subject and content must be not empty！\");self.location='index.html';</script>");
+                out.println("<script language=\"JavaScript\">alert(\"content must be not empty！\");self.location='index.html';</script>");
 
             } else {
                 try {

@@ -104,6 +104,34 @@
         <servlet-name>delete_comment</servlet-name>
         <servlet-class>delete_comment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>modify_comment</servlet-name>
+        <servlet-class>modify_comment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>modify_post</servlet-name>
+        <servlet-class>modify_post</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>unjoin_circle</servlet-name>
+        <servlet-class>unjoin_circle</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_message</servlet-name>
+        <servlet-class>delete_message</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>applyjoin</servlet-name>
+        <servlet-class>applyjoin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>acceptapply</servlet-name>
+        <servlet-class>acceptapply</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>discardapply</servlet-name>
+        <servlet-class>discardapply</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -207,6 +235,34 @@
     <servlet-mapping>
         <servlet-name>delete_comment</servlet-name>
         <url-pattern>/delete_comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modify_comment</servlet-name>
+        <url-pattern>/modify_comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modify_post</servlet-name>
+        <url-pattern>/modify_post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>unjoin_circle</servlet-name>
+        <url-pattern>/unjoin_circle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_message</servlet-name>
+        <url-pattern>/delete_message</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>applyjoin</servlet-name>
+        <url-pattern>/applyjoin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>acceptapply</servlet-name>
+        <url-pattern>/acceptapply</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>discardapply</servlet-name>
+        <url-pattern>/discardapply</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Leon
  */
-public class delete_user_from_circle extends HttpServlet {
+public class delete_message extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,11 +38,11 @@ public class delete_user_from_circle extends HttpServlet {
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String[] dusers = request.getParameterValues("dusers");
-       String cid = (String) request.getSession().getAttribute("cid");
+        String[] mids = request.getParameterValues("mids");
+       
        PrintWriter out = response.getWriter();
-          if (dusers==null){
-              out.println("<script language=\"JavaScript\">alert(\"choose at least one！\");self.location='Manage_Circle.jsp';</script>");
+       if (mids==null){
+              out.println("<script language=\"JavaScript\">alert(\"choose at least one message！\");self.location='message.jsp';</script>");
        }
        else
         try {
@@ -52,12 +52,11 @@ public class delete_user_from_circle extends HttpServlet {
        
            
 
-            ps = conn.prepareStatement("DELETE FROM addedto WHERE User_Id=? and Circle_Id=?");
+            ps = conn.prepareStatement("DELETE FROM message WHERE Id=? ");
          //   ps.setString(1, cname); //1 represents the first ?
             
-          for (int i=0;i<dusers.length;i++){
-            ps.setString(1, dusers[i]);
-            ps.setString(2, cid);
+          for (int i=0;i<mids.length;i++){
+            ps.setString(1, mids[i]);
             ps.execute();
           }
             
@@ -65,7 +64,7 @@ public class delete_user_from_circle extends HttpServlet {
         
             ps.close();
           
-            out.println("<script language='javascript'>alert('Success');self.location='Manage_Circle.jsp';</script>");
+            out.println("<script language='javascript'>alert('Success');self.location='message.jsp';</script>");
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());

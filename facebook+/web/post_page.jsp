@@ -63,8 +63,18 @@
     <body>
         <h1>Subject: <%=subject%></h1>
 
-        <textarea name="textarea" disabled="disabled"style="height:150px;width:900px;resize: none;"><%=content%></textarea>
+        <%if (isowner) { %>
+        <form  method="post" action="modify_post">
+            <%}%>
+        <textarea name="content" <%if (!isowner) {%>disabled="disabled"<%}%>style="height:150px;width:900px;resize: none;"><%=content%></textarea>
         </br>
+         <% if (isowner) {%>
+           
+           <input type="submit" value="Modify">
+        </form>
+        <%}%>
+        
+        
         <form id="form1" name="form1" method="post" action="<%=likepost ? "dislikepost" : "likepost"%>">
             <%=author%> posted on <%=date%>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
@@ -103,10 +113,16 @@
                     likecomment = false;
                 }
 
-        %>
-        <textarea name="textarea" disabled="disabled"style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
-        </br>
-
+        if (isowner) { %>
+        <form  method="post" action="modify_comment">
+            <%}%>
+            <textarea name="content"  <%if (!isowner) {%>disabled="disabled" <%}%>  style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
+            </br>
+            <% if (isowner) {%>
+            <input name="coid" type="hidden" value="<%=rs.getString("Id")%>">
+           <input type="submit" value="Modify">
+        </form>
+        <%}%>
         <form id="form1" name="form1" method="post" action="<%=likecomment ? "dislikecomment" : "likecomment"%>">
             <%=auname%> posted on <%=rs.getString("date")%> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <input name="like" type="image"  src="<%=likecomment ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />

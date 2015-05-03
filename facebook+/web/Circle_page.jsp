@@ -65,6 +65,10 @@
     <body>
         <% if (isowner) {%>
         <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
+        <% } else {%>
+         <input name="unjoin_circle" type="button" value="Unjoin this circle"  onClick="if (confirm('Are u sure? ')) {
+                    location.href = '${pageContext.request.contextPath}/unjoin_circle';
+                }" />
         <% }%>
         <h1>Recent posts</h1>
         <% if (isowner) {    %>

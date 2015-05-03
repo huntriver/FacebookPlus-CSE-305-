@@ -41,6 +41,10 @@ public class delete_post_from_circle extends HttpServlet {
         String[] dposts = request.getParameterValues("dposts");
    //    String cid = (String) request.getSession().getAttribute("cid");
        PrintWriter out = response.getWriter();
+              if (dposts==null){
+              out.println("<script language=\"JavaScript\">alert(\"choose at least one！\");self.location='Circle_page.jsp';</script>");
+       }
+       else
         try {
            
          Class.forName(driver).newInstance();

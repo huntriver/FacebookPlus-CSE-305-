@@ -91,34 +91,52 @@
         </form>
      
             
-          <h2>Membership management</h2>
-          
-          <form action="delete_user_from_circle" method="post">
+           
+        <br>
+        <br>
+        
+        <h2>Applications</h2>
+        <table>
+            <%
+             ps = conn.prepareStatement("SELECT * FROM application Where circle_id=?");
+                  
+                ps.setString(1, cid);
+                ps.execute();
+                rs = ps.getResultSet();
+            if (rs.next()) { %>
+            <tr><td>username</td></tr>
+            <%do {
+                    PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where id=?");
+                    String uid = rs.getString("user_id");
+                    ps1.setString(1, uid);
+                    ps1.execute();
+                    ResultSet rs1 = ps1.getResultSet();
+                    rs1.next();
+                    String username = rs1.getString("username");
+                    ps1.close();
 
-            <table style="width:300px" border="1">
-                <tr> <td> </td> <td>username</td><td>roll</td> </tr>
-                <% while (rs.next()) {
+            %>
+            <tr><td><%=username%>   </td>
+
+                <td>   <input type="button" value="Accept" onclick="location.href = '${pageContext.request.contextPath}/acceptapply?uid=<%=uid%>&cid=<%=cid%>'"> </td>
+
+                <td>   <input type="button" value="Discard" onclick="location.href = '${pageContext.request.contextPath}/discardapply?uid=<%=uid%>&cid=<%=cid%>'"> </td>
+                </td>
+            </tr>
+
+
+            <%       }while (rs.next());
+                    }
+            else{
                 %>
-                
-                <tr>
-                    <td>
-                       
-                        <input type="checkbox" name="dusers" value="<%=rs.getString("id")%>"  <% if (rs.getString("id").equals(oid)) { %>
-                                DISABLED <%}%> >
-                        
-                    </td>
-                    <td> <%=rs.getString("username")%></td>
-                    <td><%=rs.getString("id").equals(oid) ? "owener" : "member"%></td>
-                </tr>
-                <br>
-
-                <%}%>
-            </table>
-
-            <br>
-            <input type="submit" value="Delete Selected Users">
-        </form>
-            
+                <h2>There is no new application</h2>
+                <%
+                   }  out.println("</br>");
+                    ps.close();
+                    conn.close();
+                }
+            %>
+        </table>
         <br>
         <br>
         <form action="send_invitation" method="post">
@@ -134,9 +152,6 @@
                 }" />
      <a href="Circle_page.jsp">back</a>
      
-        <%ps.close();
-                conn.close();
-            }
-        %>
+   
     </body>
 </html>

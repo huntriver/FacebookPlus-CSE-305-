@@ -38,7 +38,7 @@ public class delete_circle extends HttpServlet {
         PreparedStatement ps = null;
         Connection conn = null;
 
-        String cname = request.getParameter("cname");
+    
         String uid = (String) request.getSession().getAttribute("userid");
         String cid = (String) request.getSession().getAttribute("cid");
         PrintWriter out = response.getWriter();

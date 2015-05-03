@@ -31,48 +31,52 @@
     <body>
         <h1>Inbox</h1>
         <button type="button"onclick="window.location.href = '${pageContext.request.contextPath}/message'">New Message!</button>
-            <div style="left:120px">
-<input type="button" value="123213" style="background-color:#66CCFF" />
-</div></div>
-        <table board="1">
-            <tr><td></td><td  width="200">From</td><td  width="300" >Subject</td><td  width="200">Date</td></tr>
-            <%
-                while (rs.next()) {
-                    String subject = rs.getString("Subject");
-                    String mid = rs.getString("Id");
-                    String date = rs.getString("date");
-                    String senderid = rs.getString("sender");
-                    String content = rs.getString("content");
-                    PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where id=?");
-                    ps1.setString(1, senderid);
-
-                    ps1.execute();
-                    ResultSet rs1 = ps1.getResultSet();
-                    rs1.next();
-                    String sender = rs1.getString("username");
-
-            %>    
-            <tr> <td><input type="checkbox" name="mid" value=<%=mid%>> </td> 
-                <td><%=sender%></td>
-                <td><a href="${pageContext.request.contextPath}/show_message?sender=<%=sender%>&date=<%=date%>&subject=<%=subject%>&content=<%=content%>"><%=subject%></a></td>
-                <td><%=date%></td>
-            </tr>
-                    <%
-                            ps1.close();
-                        }
-                    %>
 
 
+    <form action="delete_message" method="post">
 
+            <table board="1">
+                <tr><td></td><td  width="200">From</td><td  width="300" >Subject</td><td  width="200">Date</td></tr>
+                <%
+                    while (rs.next()) {
+                        String subject = rs.getString("Subject");
+                        String mid = rs.getString("Id");
+                        String date = rs.getString("date");
+                        String senderid = rs.getString("sender");
+                        String content = rs.getString("content");
+                        PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where id=?");
+                        ps1.setString(1, senderid);
 
+                        ps1.execute();
+                        ResultSet rs1 = ps1.getResultSet();
+                        rs1.next();
+                        String sender = rs1.getString("username");
 
-        </table>
+                %>    
+                <tr> 
+                    <td><input   type="checkbox" name="mids" value=<%=mid%>> </td> 
+                    <td><%=sender%></td>
+                    <td><a href="${pageContext.request.contextPath}/show_message?sender=<%=sender%>&date=<%=date%>&subject=<%=subject%>&content=<%=content%>"><%=subject%></a></td>
+                    <td><%=date%></td>
+                </tr>
+                <%
+                        ps1.close();
+                    }
+                %>
+
+            </table>
+
+            <br>
+            <input type="submit" value="Delete Selected Messages">
+        </form>
+
         <%
                 ps.close();
                 conn.close();
-                
+
             }
         %>
-        <button type="button"onclick="window.location.href = 'user_index.jsp'">back</button>
+        <br>
+        <a href="user_index.jsp">back</a>
     </body>
 </html>

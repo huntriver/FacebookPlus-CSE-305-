@@ -82,7 +82,14 @@
             <input type="submit" value="Create" /> 
         </form>
 
-
+    <h1>Search A Circle</h1>
+    <form action="search_result.jsp" method="post">
+            <table>
+                <tr><td>Circle Name: </td> <td><input type="text" name="cname"/></td></tr>
+            </table>
+            </br>
+            <input type="submit" value="Search" /> 
+        </form>
         </br></br></br>
         <a href="logout.jsp">logout</a>
     </body>

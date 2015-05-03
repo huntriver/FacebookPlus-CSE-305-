@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Leon
  */
-public class delete_user_from_circle extends HttpServlet {
+public class discardapply extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,38 +34,29 @@ public class delete_user_from_circle extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+        
+            /* TODO output your page here. You may use following sample code. */
+          String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String[] dusers = request.getParameterValues("dusers");
-       String cid = (String) request.getSession().getAttribute("cid");
-       PrintWriter out = response.getWriter();
-          if (dusers==null){
-              out.println("<script language=\"JavaScript\">alert(\"choose at least one！\");self.location='Manage_Circle.jsp';</script>");
-       }
-       else
+        String uid = request.getParameter("uid");
+        String cid = request.getParameter("cid");
+        PrintWriter out = response.getWriter();
         try {
            
-         Class.forName(driver).newInstance();
+            Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-       
-           
 
-            ps = conn.prepareStatement("DELETE FROM addedto WHERE User_Id=? and Circle_Id=?");
-         //   ps.setString(1, cname); //1 represents the first ?
+          out.println(uid+" "+cid);
+
+            ps = conn.prepareStatement("DELETE FROM application WHERE user_id=? and circle_id=?");
+            ps.setString(1,uid); //1 represents the first ?
+            ps.setString(2,cid);
             
-          for (int i=0;i<dusers.length;i++){
-            ps.setString(1, dusers[i]);
-            ps.setString(2, cid);
             ps.execute();
-          }
             
-
-        
-            ps.close();
-          
-            out.println("<script language='javascript'>alert('Success');self.location='Manage_Circle.jsp';</script>");
+            out.println("<script language='javascript'>self.location='Manage_Circle.jsp';</script>");
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());
@@ -87,6 +78,8 @@ public class delete_user_from_circle extends HttpServlet {
             }
         }
     }
+    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
