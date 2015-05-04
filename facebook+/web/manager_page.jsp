@@ -42,6 +42,6 @@
     <body>
         <h1>Manager Proflie</h1>
         <a href="user_list.jsp">All Users</a> 
-        
+       
     </body>
 </html>
