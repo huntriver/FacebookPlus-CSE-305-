@@ -32,37 +32,54 @@
         %>
     </head>
     <body>
-        <h1>Advertisments</h1>
-         <form action="delete_ad" method="post">
-        <table border="1">
-            <tr>
-                <td></td>
-                <td>Item_Name</td>
-                <td>Company</td>
-                <td>Content</td>
-                <td>Price</td>
-                <td>Available_Units</td>
-            </tr>
-            <%              while (rs.next()) {
+        <h1>Advertisements</h1>
+        <form action="delete_ad" method="post">
+            <table border="1">
+                <tr>
+                    <td></td>
+                    <td>Item_Name</td>
+                    <td>Company</td>
+                    <td>Content</td>
+                    <td>Price</td>
+                    <td>Available_Units</td>
+                </tr>
+                <%              while (rs.next()) {
 
 
-            %>
-            <tr>
-                <td><input   type="checkbox" name="aids" value=<%=rs.getString("id")%>> </td> 
-                <td><%=rs.getString("item_name")%></td>
-                <td><%=rs.getString("company")%></td>
-                <td><%=rs.getString("content")%></td>
-                <td><%=rs.getString("unit_price")%></td>
-                <td><%=rs.getString("available_units")%></td>
-            </tr>
-            <%
-                }
-            %>
-        </table>
-        <input type="submit" value="Delete Selected Advertisments">
- </form>
+                %>
+                <tr>
+                    <td><input   type="checkbox" name="aids" value=<%=rs.getString("id")%>> </td> 
+                    <td><%=rs.getString("item_name")%></td>
+                    <td><%=rs.getString("company")%></td>
+                    <td><%=rs.getString("content")%></td>
+                    <td><%=rs.getString("unit_price")%></td>
+                    <td><%=rs.getString("available_units")%></td>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+            <input type="submit" value="Delete Selected Advertisments">
+        </form>
+            <br>
+           <br>
+            <br>
+        <form action="create_ad" method="post">
+            <table>
+                <tr><td>Item_Name:</td><td><input type="text" name="item_name"></td></tr>
+                <tr><td> Company:</td><td><input type="text" name="company"></td></tr>
+                <tr><td>Type:</td><td><input type="text" name="type"></td></tr>
+                <tr><td> Content:</td><td><input type="text" name="content"></td></tr>
+                <tr><td>Unit_Price:</td><td><input type="text" name="price"></td> </tr>
+                <tr><td> Available_Units:</td><td><input type="text" name="units"></td></tr>
+            </table>
+            <input type="submit" value="Create">
+
+        </form>
     </body>
     <%
+              ps.close();
+             conn.close();
         }
     %>
 </html>

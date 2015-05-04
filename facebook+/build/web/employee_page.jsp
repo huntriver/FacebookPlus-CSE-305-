@@ -28,7 +28,7 @@
     <body>
         <h1>Employee Page</h1>
         <a href="user_list.jsp">All Users</a> 
-       <a href="advertisement.jsp">Advertisments</a> 
+       <a href="advertisement.jsp">Advertisements</a> 
     </body>
     <%}%>
 </html>
