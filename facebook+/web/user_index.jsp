@@ -18,6 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <% String userid = (String) session.getAttribute("userid");
+            String type = (String) session.getAttribute("type");
             if (userid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
@@ -27,15 +28,14 @@
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
-                 PreparedStatement ps=conn.prepareStatement("SELECT COUNT(*) FROM invitation Where user_id=?");
-                 ps.setString(1, userid);
-                 ps.execute();
-                 ResultSet rs = ps.getResultSet();
-                 rs.next();
-                 String inumber=rs.getString(1);
-                 
+                PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM invitation Where user_id=?");
+                ps.setString(1, userid);
+                ps.execute();
+                ResultSet rs = ps.getResultSet();
+                rs.next();
+                String inumber = rs.getString(1);
+
                //  out.println(inumber);
-                 
                 ps = conn.prepareStatement("SELECT * FROM addedto Where User_Id=?");
                 ps.setString(1, userid);
                 ps.execute();
@@ -48,6 +48,20 @@
         <a href="message.jsp">messages</a> 
         <a href="invitation.jsp">invitations(<%=inumber%>)</a>
         <a href="account.jsp">Account</a> 
+        <%
+            if (type.equals("2")) {
+        %>
+        <a href="employee_page.jsp">Employee Page</a> 
+        <%
+            }
+        %>
+         <%
+            if (type.equals("1")) {
+        %>
+        <a href="manager_page.jsp">Manager Page</a> 
+        <%
+            }
+        %>
 
         <h1>My Circle</h1>
         <%
@@ -82,8 +96,8 @@
             <input type="submit" value="Create" /> 
         </form>
 
-    <h1>Search A Circle</h1>
-    <form action="search_result.jsp" method="post">
+        <h1>Search A Circle</h1>
+        <form action="search_result.jsp" method="post">
             <table>
                 <tr><td>Circle Name: </td> <td><input type="text" name="cname"/></td></tr>
             </table>

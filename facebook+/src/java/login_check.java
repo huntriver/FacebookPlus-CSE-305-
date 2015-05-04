@@ -60,10 +60,12 @@ public class login_check extends HttpServlet {
                 ResultSet rs = ps.getResultSet();
                 boolean p = false;
                 String id = null;
+                String type=null;
                 while (rs.next()) {
                     if (rs.getString("username").equals(username)) {  //if what's at column username at database matches user's input
                         if (rs.getString("pwd").equals(pwd)) {
                             id = rs.getString("Id");
+                            type=rs.getString("type");
                             p = true;
 
                         } else {
@@ -75,9 +77,9 @@ public class login_check extends HttpServlet {
                 if (p) {
                      HttpSession session = request.getSession();
                   
-                    
+                    out.println(type);
                     session.setAttribute("userid", id);
-
+                    session.setAttribute("type",type);
                     response.sendRedirect("user_index.jsp");
 
                 } else {

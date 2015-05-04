@@ -108,14 +108,7 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Profile Information</h1>
-        <%
-        if(type.equals("1")){
-        %>
-        <a href="manager_profile.jsp">Manager Profile</a> 
-        <%
-        }
-        %>
-        
+
         <form action="profile" method="post">
             <table border="0">
                 <tr><td>Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
