@@ -71,9 +71,6 @@
         </table>
         <input type="submit" value="Delete Selected Accounts">
         </form>
-        <input type="submit" value="View History of Selected Account">
-        Or
-        <button class="button" onClick="window.open('accountHistory.html');">Account History</button>
         <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
     </head>
     <body>

@@ -67,19 +67,11 @@
         <form action="create_ad" method="post">
             <table>
                 <tr><td>Item_Name:</td><td><input type="text" name="item_name"></td></tr>
-<<<<<<< HEAD
                 <tr><td>Company:</td><td><input type="text" name="company"></td></tr>
                 <tr><td>Type:</td><td><input type="text" name="type"></td></tr>
                 <tr><td>Content:</td><td><input type="text" name="content"></td></tr>
                 <tr><td>Unit_Price:</td><td><input type="text" name="price"></td> </tr>
                 <tr><td>Available_Units:</td><td><input type="text" name="units"></td></tr>
-=======
-                <tr><td> Company:</td><td><input type="text" name="company"></td></tr>
-                <tr><td>Type:</td><td><input type="text" name="type"></td></tr>
-                <tr><td> Content:</td><td><input type="text" name="content"></td></tr>
-                <tr><td>Unit_Price:</td><td><input type="text" name="price"></td> </tr>
-                <tr><td> Available_Units:</td><td><input type="text" name="units"></td></tr>
->>>>>>> 67fda1232983625fbbd30771e3f183127794b3c9
             </table>
             <input type="submit" value="Create">
 

@@ -27,11 +27,7 @@
     </head>
     <body>
         <h1>Employee Page</h1>
-<<<<<<< HEAD
         <a href="normal_user_list.jsp">All Customer</a> 
-=======
-        <a href="user_list.jsp">All Users</a> 
->>>>>>> 67fda1232983625fbbd30771e3f183127794b3c9
        <a href="advertisement.jsp">Advertisements</a> 
     </body>
     <%}%>
