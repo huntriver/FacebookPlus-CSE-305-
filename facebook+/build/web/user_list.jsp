@@ -27,8 +27,8 @@
                 Connection conn = DriverManager.getConnection(dburl);
                 //     PreparedStatement ps = conn.prepareStatement("SELECT Id,Last_Name,First_Name FROM person");
                 
-                
-                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+                PreparedStatement ps_ = conn.prepareStatement("SELECT * FROM employee Where id=?");
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
                 ps.setString(1, userid);
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
@@ -42,14 +42,8 @@
                 }
                
                 
-                
                 ps = conn.prepareStatement("SELECT * FROM user");
-
-                //ps.setString(1, userid);
-                //ps_type.setString(1, userid);
                 ps.execute();
-                //    ps_type.execute();
-
                 rs = ps.getResultSet();
           //      ResultSet rs_type = ps_type.getResultSet();
         %>
@@ -59,16 +53,16 @@
         <h1>All Users</h1>
         <form action="list" method="post">
             <table border="1">
-                <tr><td>id</td><td>username</td><td>roll</td>
+                <tr><td>id</td><td>username</td><td>roll</td><td>Hourly Rate</td>
                 </tr>
                 <%
                     for (int i = 0; rs.next(); i++) {
+                        
                 %>
-                <tr> <td> <% if (!rs.getString("type").equals("1")) { %>  <input type="hidden" name="id" value="<%=rs.getString("id")%>" />  <%}%> <%=rs.getString("id")%></td> 
+                <tr> <td> <% if (!rs.getString("type").equals("1")) { %>  <input type="hidden" name="id" value="<%=rs.getString("id")%>" >  <%}%> <%=rs.getString("id")%></td> 
                     <td><%=rs.getString("username")%></td> 
                     <td>  <% if (rs.getString("type").equals("1")) { %> 
-                        Manager
-                        
+                                    Manager
                         <%}
                         else
                     {%>
@@ -80,13 +74,23 @@
                         </Select>
                         
                     </td>
+                    <td> <% if (!rs.getString("type").equals("1")) { %> 
+                        <input type="text" name="H_Rate" <% if (rs.getString("type").equals("3")) { %> value="<%=""%>"<% } %>                                            
+                                                          <% if (rs.getString("type").equals("2")) {                                                              
+                                                              ps_.setString(1, rs.getString("id"));
+                                                              ps_.execute();
+                                                              ResultSet rs_ = ps_.getResultSet();
+                                                              rs_.next();
+                                                          %> value="<%=rs_.getString("Hourly_Rate")%>"<% } }%>
+                        
+                    </td> 
 
                 </tr>
                 <%
            
                         }
 
-
+                        ps_.close();
                         ps.close();
                         conn.close();
                     }
@@ -98,4 +102,5 @@
             <input type="submit" value="Submit" /> 
         </form>
     </body>
+    <button type="button" onclick="window.location.href = 'manager_page.jsp'">back</button>
 </html>

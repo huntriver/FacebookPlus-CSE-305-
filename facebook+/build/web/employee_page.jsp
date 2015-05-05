@@ -27,8 +27,9 @@
     </head>
     <body>
         <h1>Employee Page</h1>
-        <a href="user_list.jsp">All Users</a> 
-       <a href="advertisement.jsp">Advertisments</a> 
+        <a href="normal_user_list.jsp">All Customer</a> 
+       <a href="advertisement.jsp">Advertisements</a> 
     </body>
     <%}%>
+    <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
 </html>

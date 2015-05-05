@@ -30,7 +30,7 @@ and open the template in the editor.
             String Email = null;
             String sex=null;
             //String Preference = null;
-            
+
             String type = null;
                     
             if (userid == null) {

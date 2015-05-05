@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,36 +36,88 @@ public class list extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String type = request.getParameter("lname");
-        
+
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
 
         //String uid = (String) request.getSession().getAttribute("userid");
-        String[] ids=request.getParameterValues("id");
-        String[] types=request.getParameterValues("type");
-       // out.println(ids.length+" "+types.i)
+        String[] ids = request.getParameterValues("id");
+        String[] types = request.getParameterValues("type");
+        String[] H_Rate = request.getParameterValues("H_Rate");
+        
+        // out.println(ids.length+" "+types.i)
         PrintWriter out = response.getWriter();
+        for(int i=0;i<H_Rate.length;i++){
+            out.println(H_Rate[i]+" ");
+        }
+        for(int i=0;i<ids.length;i++){
+            out.println(ids[i]+" ");
+        }
         try {
 
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
 
-          for (int i=0;i<ids.length;i++){
-            ps = conn.prepareStatement("UPDATE user SET type=? WHERE id=?");
-
-            ps.setString(1, types[i]); //1 represents the first ?
-            
-            ps.setString(2, ids[i]);
-            out.println(ids[i]+" "+types[i]+"<br>");
-            ps.execute();
-          }
+            for (int i = 0; i < ids.length; i++) {
+                ps = conn.prepareStatement("UPDATE user SET type=? WHERE id=?");
+                ps.setString(1, types[i]); //1 represents the first ?          
+                ps.setString(2, ids[i]);
+                //out.println(ids[i]+"   "+H_Rate[i]+ "<br>");
+                
+                out.println(ids[i] + " " + types[i] + "<br>");
+                
+                ps.execute();
+                
+                if (types[i].equals("2")) {
+                    
+                    ps = conn.prepareStatement("SELECT * FROM employee WHERE Id=?");
+                    ps.setString(1, ids[i]); 
+                    ps.execute();
+                    
+                    ResultSet rs = ps.getResultSet();
+                    
+                    if (!rs.next()) {    
+                        
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date now = new Date();
+                        String date = sdf.format(now);
+                        ps = conn.prepareStatement("INSERT into employee (Id,Start_Date,Hourly_Rate) values (?,?,?)");
+                        ps.setString(1, ids[i]); //1 represents the first ?          
+                        ps.setString(2, date);
+                        ps.setString(3, H_Rate[i]);
+                        ps.execute();
+                    }
+                    else{
+                       // out.println("123"+"<br>");
+                        out.println(ids[i]+"   "+H_Rate[i]+ "<br>");
+                        
+                        ps = conn.prepareStatement("UPDATE employee SET Hourly_Rate=? WHERE Id=?");
+                        ps.setString(1, H_Rate[i]);    
+                        ps.setString(2, ids[i]);
+                        ps.execute();
+                        
+                        
+                    }
+                }
+                if (types[i].equals("3")) {
+                    ps = conn.prepareStatement("SELECT * FROM employee WHERE Id=?");
+                    ps.setString(1, ids[i]); 
+                    ps.execute();
+                    ResultSet rs = ps.getResultSet();
+                    if (rs.next()) {    
+                        ps = conn.prepareStatement("DELETE FROM employee where Id=?");
+                        ps.setString(1, ids[i]);
+                        ps.execute();
+                    }                   
+                }
+                
+            }
             ps.close();
             out.println("<script language='javascript'>alert('Success');self.location='user_list.jsp'</script>");
         } catch (Exception ex) {
-
+            out.println("<script language='javascript'>alert('failed');self.location='user_list.jsp'</script>");
             out.println("failed " + ex.getMessage());
             ex.printStackTrace();
 

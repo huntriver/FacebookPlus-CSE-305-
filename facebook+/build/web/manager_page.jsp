@@ -44,4 +44,5 @@
         <a href="user_list.jsp">All Users</a> 
        
     </body>
+    <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
 </html>

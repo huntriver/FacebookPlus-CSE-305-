@@ -140,6 +140,14 @@
         <servlet-name>delete_account</servlet-name>
         <servlet-class>delete_account</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>delete_ad</servlet-name>
+        <servlet-class>delete_ad</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>create_ad</servlet-name>
+        <servlet-class>create_ad</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -279,6 +287,14 @@
     <servlet-mapping>
         <servlet-name>delete_account</servlet-name>
         <url-pattern>/delete_account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_ad</servlet-name>
+        <url-pattern>/delete_ad</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>create_ad</servlet-name>
+        <url-pattern>/create_ad</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
