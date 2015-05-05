@@ -18,7 +18,8 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <%
-            String userid= (String) session.getAttribute("userid");
+            String uid = (String) session.getAttribute("userid");
+            String userid = (String) session.getAttribute("muid");
             String lname = null;
             String fname = null;
             //String Sex = null;
@@ -28,12 +29,12 @@ and open the template in the editor.
             String Zip = null;
             String Tel = null;
             String Email = null;
-            String sex=null;
+            String sex = null;
             //String Preference = null;
 
             String type = null;
-                    
-            if (userid == null) {
+
+            if (uid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
@@ -44,22 +45,22 @@ and open the template in the editor.
                 Connection conn = DriverManager.getConnection(dburl);
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM person Where id=?");
                 PreparedStatement ps_type = conn.prepareStatement("SELECT * FROM user Where id=?");
-                
+
                 ps.setString(1, userid);
                 ps_type.setString(1, userid);
-                
+
                 ps.execute();
                 ps_type.execute();
-                
+
                 ResultSet rs = ps.getResultSet();
                 ResultSet rs_type = ps_type.getResultSet();
 
                 rs.next();
                 rs_type.next();
-                
+
                 lname = rs.getString("Last_Name");
                 fname = rs.getString("First_Name");
-                sex=rs.getString("SEX");
+                sex = rs.getString("SEX");
                 Address = rs.getString("Address");
                 City = rs.getString("City");
 
@@ -67,7 +68,7 @@ and open the template in the editor.
                 Zip = rs.getString("Zip_Code");
                 Tel = rs.getString("Telephone");
                 Email = rs.getString("Email_Address");
-                
+
                 type = rs_type.getString("type");
 
                 if (lname == null) {
@@ -102,7 +103,7 @@ and open the template in the editor.
                 //    String authorid = rs.getString("author");
                 ps.close();
                 conn.close();
-          
+
         %>
 
     </head>
@@ -117,8 +118,8 @@ and open the template in the editor.
                         <select name = "Sex">
                             <option value = "">Choose</option>
                             <option value = "Male" <% if (sex.equals("Male")) { %> selected="selected" <% } %>>Male</option> 
-                            <option value = "Female" <% if (sex.equals("Female")) { %> selected="selected" <% } %>>Female</option> 
-                             </td></tr>
+                            <option value = "Female" <% if (sex.equals("Female")) { %> selected="selected" <% }%>>Female</option> 
+                    </td></tr>
                 <tr><td>Address: </td> <td><input type="text" name="Address" value="<%=Address%>"></td></tr>
                 <tr><td>City:</td> <td> <input type="text" name="City" value="<%=City%>"></td></tr>
                 <tr><td>State: </td> <td>
@@ -174,7 +175,7 @@ and open the template in the editor.
                             <option value = "WV" <% if (State.equals("WV")) { %> selected="selected" <% } %>>WV</option>
                             <option value = "WI" <% if (State.equals("WI")) { %> selected="selected" <% } %>>WI</option>
                             <option value = "WY" <% if (State.equals("WY")) { %> selected="selected" <% } %>>WY</option>
-                            <option value = "OTHER"  <% if (State.equals("OTHER")) { %> selected="selected" <% } %>>OTHER</option>
+                            <option value = "OTHER"  <% if (State.equals("OTHER")) { %> selected="selected" <% }%>>OTHER</option>
                     </td></tr>
 
 
@@ -182,12 +183,12 @@ and open the template in the editor.
                 <tr><td>Zip Code:</td> <td> <input type="text" name="Zip" value="<%=Zip%>"></td></tr>
                 <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
                 <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
-              <input type="hidden" value="0" name="q"> 
+                <input type="hidden" value="1" name="q"> 
             </table>
             </br>
             <input type="submit" value="Submit" /> 
         </form>
-                <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
+        <button type="button" onclick="window.location.href = 'normal_user_list.jsp'">back</button>
     </body>
     <%}%>
 </html>

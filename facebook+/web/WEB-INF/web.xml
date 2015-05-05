@@ -148,6 +148,10 @@
         <servlet-name>create_ad</servlet-name>
         <servlet-class>create_ad</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>modify_profile</servlet-name>
+        <servlet-class>modify_profile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -295,6 +299,10 @@
     <servlet-mapping>
         <servlet-name>create_ad</servlet-name>
         <url-pattern>/create_ad</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modify_profile</servlet-name>
+        <url-pattern>/modify_profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

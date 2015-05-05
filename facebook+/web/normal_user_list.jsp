@@ -47,10 +47,10 @@
                 <%
                     for (int i = 0; rs.next(); i++) {                        
                 %>
-                <tr><td> <input type="hidden" name="id" value="<%=rs.getString("id")%>" > <%=rs.getString("id")%> </td> 
+                <tr><td> <%=rs.getString("id")%> </td> 
                     <td><%=rs.getString("username")%></td>    
 
-                    <td><button type="button" onclick="window.location.href = 'user_profile.jsp'">go</button></td> 
+                    <td><button type="button" onclick="window.location.href = 'modify_profile?uid=<%=rs.getString("id")%>'">go</button></td> 
                 </tr>
                 <%
                     }

@@ -35,6 +35,7 @@ public class profile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String q=request.getParameter("q");
         String lname = request.getParameter("lname");
         String fname = request.getParameter("fname");
         String Address = request.getParameter("Address");
@@ -73,7 +74,10 @@ public class profile extends HttpServlet {
             ps.execute();
 
             ps.close();
-            out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
+            if (q.equals("1"))
+             out.println("<script language='javascript'>alert('Success');self.location='normal_user_list.jsp'</script>");
+            else
+                out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");  
         } catch (Exception ex) {
 
             out.println("failed " + ex.getMessage());

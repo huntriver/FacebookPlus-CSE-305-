@@ -18,7 +18,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <%
-            String userid = (String) session.getAttribute("userid");
+            String userid= (String) session.getAttribute("userid");
             String lname = null;
             String fname = null;
             //String Sex = null;
@@ -102,7 +102,7 @@ and open the template in the editor.
                 //    String authorid = rs.getString("author");
                 ps.close();
                 conn.close();
-            }
+          
         %>
 
     </head>
@@ -182,11 +182,13 @@ and open the template in the editor.
                 <tr><td>Zip Code:</td> <td> <input type="text" name="Zip" value="<%=Zip%>"></td></tr>
                 <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
                 <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
-            
+              <input type="hidden" value="0" name="q"> 
             </table>
             </br>
             <input type="submit" value="Submit" /> 
         </form>
+                <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
     </body>
+    <%}%>
 </html>
 
