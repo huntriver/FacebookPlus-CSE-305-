@@ -19,22 +19,37 @@
             if (!type.equals("2")) {
                 out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
             } else {
-
+                String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
+                String driver = "com.mysql.jdbc.Driver";
+                Class.forName(driver).newInstance(); //init driver
+                Connection conn = DriverManager.getConnection(dburl);
+                //     PreparedStatement ps = conn.prepareStatement("SELECT Id,Last_Name,First_Name FROM person");
+                PreparedStatement ps = conn.prepareStatement("SELECT user.username,person.email_address FROM user,person WHERE user.id=person.id and user.type='3'");
+                ps.execute();
+                ResultSet rs = ps.getResultSet();
         %>
 
 
     </head>
     <body>
-        <h1>Employee Page</h1>
+        <h1>Customer Mailing Lists</h1>
         <table border="0">
-            <tr> <td><a href="normal_user_list.jsp">All Customer</a></td> </tr>
-            <tr> <td><a href="advertisement.jsp">Advertisements</a> </td></tr>
-            <tr> <td> <a href="show_mailinglist.jsp">show customer mailing list</a></td></tr> 
+            <tr> <td>Username</a></td> <td>Email Address</td></tr>
+ 
+            <% while (rs.next())
+            {
+                %>
+            
+            <tr> <td> <%=rs.getString(1)%></td><td><%=rs.getString(2)%></td></tr> 
 
-
+             <%}
+             %>
 
             <tr> <td>          <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button></td></tr>
         </table>
-        <%}%>
+        <%
+            ps.close();
+            conn.close();
+    }%>
     </body>
 </html>

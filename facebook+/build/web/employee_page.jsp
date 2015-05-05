@@ -10,26 +10,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <% String userid = (String) session.getAttribute("userid");
-           String type = (String) session.getAttribute("type");
+            String type = (String) session.getAttribute("type");
             if (userid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
             }
-             if (!type.equals("2")) {
-                    out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
-               }
-             else{
-                 
-             %>
-           
-        
+            if (!type.equals("2")) {
+                out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
+            } else {
+
+        %>
+
+
     </head>
     <body>
         <h1>Employee Page</h1>
-        <a href="normal_user_list.jsp">All Customer</a> 
-       <a href="advertisement.jsp">Advertisements</a> 
+        <table border="0">
+            <tr> <td><a href="normal_user_list.jsp">All Customer</a></td> </tr>
+            <tr> <td><a href="advertisement.jsp">Advertisements</a> </td></tr>
+            <tr> <td> <a href="show_mailinglist.jsp">show customer mailing list</a></td></tr> 
+
+
+
+            <tr> <td>          <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button></td></tr>
+        </table>
+        <%}%>
     </body>
-    <%}%>
-    <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
 </html>
