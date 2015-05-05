@@ -73,6 +73,8 @@ public class login_check extends HttpServlet {
                         }
                     }
                 }
+                ps.close();
+                conn.close();
                 
                 if (p) {
                      HttpSession session = request.getSession();
@@ -95,7 +97,10 @@ public class login_check extends HttpServlet {
                          if (ps!=null)
                          ps.close();
                          if (conn!=null)
+                         {
+                             
                            conn.close();
+                         }
                      } catch (SQLException ex) {
                          Logger.getLogger(login_check.class.getName()).log(Level.SEVERE, null, ex);
                      }
