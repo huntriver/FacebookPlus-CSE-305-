@@ -50,7 +50,7 @@ public class profile extends HttpServlet {
         PreparedStatement ps = null;
         Connection conn = null;
 
-        String uid = (String) request.getSession().getAttribute("userid");
+        String uid = (String) request.getSession().getAttribute("muid");
         PrintWriter out = response.getWriter();
         try {
 

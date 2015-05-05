@@ -31,8 +31,13 @@ public class modify_profile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String mid=request.getParameter("uid");
         request.getSession().setAttribute("muid", mid);
-        response.sendRedirect("muser_profile.jsp");
-        
+        String uid=(String) request.getSession().getAttribute("userid");
+        response.getWriter().println(uid+" "+mid);
+           if (!uid.equals(mid)){
+            response.sendRedirect("muser_profile.jsp");
+        }
+        else
+              response.sendRedirect("user_profile.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

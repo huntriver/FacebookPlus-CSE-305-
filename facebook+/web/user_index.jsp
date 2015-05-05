@@ -44,7 +44,7 @@
     </head>
     <body>
 
-        <a href="user_profile.jsp">profile</a> 
+        <a href="modify_profile?uid=<%=userid%>">profile</a> 
         <a href="message.jsp">messages</a> 
         <a href="invitation.jsp">invitations(<%=inumber%>)</a>
         <a href="account.jsp">Account</a> 
