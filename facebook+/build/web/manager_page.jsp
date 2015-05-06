@@ -31,7 +31,7 @@
                     out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>"); //注意该方法的写法
                     ps.close();
                     conn.close();
-                    return ;
+                    return;
                 }
                 ps.close();
                 conn.close();
@@ -41,8 +41,21 @@
     </head>
     <body>
         <h1>Manager Proflie</h1>
-        <a href="user_list.jsp">All Users</a> 
-       
+        <table>
+        <tr><td><a href="employee_list.jsp">All Employees</a> </td></tr>
+        <tr><td> sale report <form action="sale_report.jsp" method="post">
+            <select name = "salereport">
+                <option value = "">Choose a month</option>
+                <%
+                    for (int i = 1; i <= 12; i++) {%>
+                <option value = "<%=i%>" name="month"><%=i%></option> 
+                <%}%>
+
+            </select>
+            <input type="submit" value="ckeck">
+        </form>
+        </td></tr>
+        </table>
     </body>
     <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
 </html>

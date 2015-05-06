@@ -89,8 +89,10 @@ public class profile extends HttpServlet {
             
             ps.close();
             if (q.equals("1")) {
-                out.println("<script language='javascript'>alert('Success');self.location='normal_user_list.jsp'</script>");
-            } else {
+                out.println("<script language='javascript'>alert('Success');window.history.go(-2)</script>");
+            } else 
+            {
+            
                 out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
             }
         } catch (Exception ex) {
