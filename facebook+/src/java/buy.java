@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,26 +39,59 @@ public class buy extends HttpServlet {
         PreparedStatement ps = null;
         Connection conn = null;
         PrintWriter out = response.getWriter();
-        
-        String[] num = request.getParameterValues("num");
-        String[] aids = request.getParameterValues("aids");
-        
+
+        String num = request.getParameter("num");
+        String aids = request.getParameter("aid");
+
         if (aids == null) {
-            out.println("<script language=\"JavaScript\">alert(\"choose at least one message！\");self.location='buy.jsp';</script>");
+            out.println("<script language=\"JavaScript\">alert(\"choose at least one item！\");self.location='buy.jsp';</script>");
         } else {
             try {
-                for(int i = 0; i < aids.length; i++){
-                    ps = conn.prepareStatement("SELECT * FROM advertisement WHERE Id=? ");
-                    ps.setString(i, aids[i]);
-                    ps.execute();
-                }
-                
-                ps.close();
 
-                out.println("<script language='javascript'>alert('Success');self.location='advertisement.jsp';</script>");
+                if (num.equals("")) {
+                    out.println("<script language=\"JavaScript\">alert(\"input a number!\");self.location='buy.jsp';</script>");
+
+                } else if (!num.matches("[0-9]*")) {
+
+                    out.println("<script language=\"JavaScript\">alert(\"Invalid input!\");self.location='buy.jsp';</script>");
+
+                } else {
+                    int x = Integer.valueOf(num);
+                    Class.forName(driver).newInstance();
+                    conn = DriverManager.getConnection(dburl);
+                    ps = conn.prepareStatement("SELECT * FROM advertisement WHERE Id=? ");
+
+                    ps.setString(1, aids);
+                    ps.execute();
+                    ResultSet rs = ps.getResultSet();
+                    rs.next();
+                    if (x <= 0) {
+                        conn.close();
+                        out.println("<script language=\"JavaScript\">alert(\"number must be positive!\");self.location='buy.jsp';</script>");
+
+                    } else {
+                        if (x > Integer.valueOf(rs.getString("available_units"))) {
+                            conn.close();
+
+                            out.println("<script language=\"JavaScript\">alert(\"number must not be greater than available units!\");self.location='buy.jsp';</script>");
+
+                        } else {
+         //         ps = conn.prepareStatement("UPDATE advertisement set available_units=available_units-? WHERE Id=? ");
+                            //       ps.setString(1, num);
+                            //      ps.setString(2, aids);
+
+              //   ps.execute();
+                            ps.close();
+                            conn.close();
+                            request.getSession().setAttribute("baid", aids);
+                            request.getSession().setAttribute("bnum", num);
+                            response.sendRedirect("checkout.jsp");
+                        }
+                    }
+                }
             } catch (Exception ex) {
 
-                out.println("failed " + ex.getMessage());
+                out.println("aafailed " + ex.getMessage());
 
             } finally {
                 if (ps != null) {

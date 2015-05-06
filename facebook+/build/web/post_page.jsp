@@ -63,12 +63,12 @@
     <body>
         <h1>Subject: <%=subject%></h1>
 
-        <%if (isowner) { %>
+        <%if (isowner ||authorid.equals(userid)) { %>
         <form  method="post" action="modify_post">
             <%}%>
-        <textarea name="content" <%if (!isowner) {%>disabled="disabled"<%}%>style="height:150px;width:900px;resize: none;"><%=content%></textarea>
+        <textarea name="content" <%if ((!isowner )&& (!authorid.equals(userid))) {%>disabled="disabled"<%}%>style="height:150px;width:900px;resize: none;"><%=content%></textarea>
         </br>
-         <% if (isowner) {%>
+         <% if (isowner||authorid.equals(userid)) {%>
            
            <input type="submit" value="Modify">
         </form>
@@ -82,7 +82,8 @@
             <input name="like" type="image" value="like" src="<%=likepost ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
 
         </form>
-        <% if (isowner) {%>
+      
+        <% if (isowner || authorid.equals(userid)) {%>
         <a href="delete_post">delete this post</a>
         <%}%>
         <h2>Comments</h2>
@@ -113,12 +114,12 @@
                     likecomment = false;
                 }
 
-        if (isowner) { %>
+        if (isowner || aid.equals(userid)) { %>
         <form  method="post" action="modify_comment">
             <%}%>
-            <textarea name="content"  <%if (!isowner) {%>disabled="disabled" <%}%>  style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
+            <textarea name="content"  <%if ((!isowner )&& (!aid.equals(userid))) {%>disabled="disabled" <%}%>  style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
             </br>
-            <% if (isowner) {%>
+            <% if (isowner || aid.equals(userid)) {%>
             <input name="coid" type="hidden" value="<%=rs.getString("Id")%>">
            <input type="submit" value="Modify">
         </form>
@@ -128,7 +129,7 @@
             <input name="like" type="image"  src="<%=likecomment ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
             <input name="cid" type="hidden" value="<%=rs.getString("Id")%>">
         </form>
-        <% if (isowner) {%>
+        <% if (isowner || aid.equals(userid)) {%>
         <a href="delete_comment?coid=<%=rs.getString("Id")%>">delete this comment</a>
         <%}%>
         </br>

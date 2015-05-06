@@ -3,6 +3,7 @@
     Created on : Apr 23, 2015, 4:18:08 PM
     Author     : yishuo wang
 --%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,15 +46,19 @@ and open the template in the editor.
                 Connection conn = DriverManager.getConnection(dburl);
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM person Where id=?");
                 PreparedStatement ps_type = conn.prepareStatement("SELECT * FROM user Where id=?");
-
+ PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user_preferences Where id=?");
+ 
                 ps.setString(1, userid);
                 ps_type.setString(1, userid);
+ps1.setString(1, userid);
 
                 ps.execute();
                 ps_type.execute();
+ps1.execute();
 
                 ResultSet rs = ps.getResultSet();
                 ResultSet rs_type = ps_type.getResultSet();
+ResultSet rs1 = ps1.getResultSet();
 
                 rs.next();
                 rs_type.next();
@@ -70,6 +75,11 @@ and open the template in the editor.
                 Email = rs.getString("Email_Address");
 
                 type = rs_type.getString("type");
+                ArrayList<String> pref=new  ArrayList<String>();
+               for (int i=0;rs1.next();i++)
+               {
+                   pref.add(rs1.getString("preference"));
+               }
 
                 if (lname == null) {
                     lname = "";
@@ -182,6 +192,17 @@ and open the template in the editor.
                 <tr><td>Zip Code:</td> <td> <input type="text" name="Zip" value="<%=Zip%>"></td></tr>
                 <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
                 <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
+                <tr> <th colspan="2">
+                     
+                    <table>
+                         <caption>Preference</caption>
+                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("car")) {%>checked="checked" <%}%> value="car"></td><td>Car</td></tr>
+                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
+                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
+                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
+                         
+                    </table>
+                </tr>
                 <input type="hidden" value="1" name="q"> 
             </table>
             </br>

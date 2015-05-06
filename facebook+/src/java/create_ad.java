@@ -96,7 +96,7 @@ public class create_ad extends HttpServlet {
 
                 out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='advertisement.jsp';</script>");
             } catch (Exception ex) {
-                out.println("<script language=\"JavaScript\">alert(\"Failed！\");self.location='advertisement.jsp';</script>");
+             //   out.println("<script language=\"JavaScript\">alert(\"Failed！\");self.location='advertisement.jsp';</script>");
                 out.println("failed " + ex.getMessage());
 
             } finally {

@@ -14,6 +14,8 @@
             if (userid == null) {
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
             }
+            else
+            {
             String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
             String driver = "com.mysql.jdbc.Driver";
             Class.forName(driver).newInstance(); //init driver
@@ -25,43 +27,121 @@
     </head>
     <body>
         <h1>You can buy whatever you like in this page!</h1>
-        <form action="buy" method="post">
-            <table border="1">
-                <tr>
-                    <td>Item_Name</td>
-                    <td>Company</td>
-                    <td>Content</td>
-                    <td>Price</td>
-                    <td>Available_Units</td>
-                    <td>Check if buy</td>
-                    <td>number you buy</td>
-                </tr>
-                <%
-                    while (rs.next()) {
-                %>
-                <tr>                    
-                    <td><%=rs.getString("item_name")%></td>
-                    <td><%=rs.getString("company")%></td>
-                    <td><%=rs.getString("content")%></td>
-                    <td><%=rs.getString("unit_price")%></td>
-                    <td><%=rs.getString("available_units")%></td>
-                    <td><input type="checkbox" name="aids" value=<%=rs.getString("Id")%>> </td> 
-                    <td><input type="text" name="num" value=<%=""%>> </td>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
-            <input type="submit" value="Buy">
-        </form>
-        <br>
 
+        <table border="1">
+            <tr>
+                <td>Item_Name</td>
+                <td>Company</td>
+                <td>Type</td>
+                <td>Content</td>
+                <td>Price</td>
+                <td>Available_Units</td>
+                <td>number you buy</td>
+            </tr>
+            <%
+                while (rs.next()) {
+            %>
+            <tr>        
 
-    </body>
+            <form action="buy?aid=<%=rs.getString("id")%>" method="post" >
+                <td><%=rs.getString("item_name")%></td>
+                <td><%=rs.getString("company")%></td>
+                <td><%=rs.getString("type")%></td>
+                <td><%=rs.getString("content")%></td>
+                <td><%=rs.getString("unit_price")%></td>
+                <td><%=rs.getString("available_units")%></td>
+                <td><input type="text" name="num" > </td>
+                <td>  <input type="submit" value="Buy"></td>
+            </form>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+
+    <br>
+    <h1>BEST-SELLER</h1>
     <%
-        ps.close();
-        conn.close();
-
+         ps = conn.prepareStatement("DROP view IF EXISTS ads");
+         ps.execute();
+        ps = conn.prepareStatement("create view ads as (select sale.advertisement,sum(sale.number_of_units) as sums from sale group by sale.advertisement) ");
+        ps.execute();
+          ps = conn.prepareStatement("select * from advertisement,ads where advertisement.id=ads.advertisement order by ads.sums desc");
+        ps.execute();
+        rs = ps.getResultSet();
     %>
+    <table border="1">    
+        <tr>
+            <td>Item_Name</td>
+            <td>Company</td>
+            <td>Type</td>
+            <td>Content</td>
+            <td>Price</td>
+            <td>Available_Units</td>
+            <td>Sold </td>
+        </tr>
+        <%  while (rs.next()) {
+        %> <tr>
+
+            <td><%=rs.getString("item_name")%></td>
+            <td><%=rs.getString("company")%></td>
+            <td><%=rs.getString("type")%></td>
+            <td><%=rs.getString("content")%></td>
+            <td><%=rs.getString("unit_price")%></td>
+            <td><%=rs.getString("available_units")%></td>
+             <td><%=rs.getString("sums")%></td>
+        </tr>
+
+
+        <%
+            }
+
+
+        %>
+    </table>
+    <br>
+ <h1>Suggestion Items</h1>
+     <%
+         ps = conn.prepareStatement("select * from advertisement where advertisement.type in (select user_preferences.preference from user_preferences where user_preferences.id=?)");
+         ps.setString(1, userid);
+         ps.execute();
+        
+        rs = ps.getResultSet();
+    %>
+    <table border="1">    
+        <tr>
+            <td>Item_Name</td>
+            <td>Company</td>
+            <td>Type</td>
+            <td>Content</td>
+            <td>Price</td>
+            <td>Available_Units</td>
+         
+        </tr>
+        <%  while (rs.next()) {
+        %> <tr>
+
+            <td><%=rs.getString("item_name")%></td>
+            <td><%=rs.getString("company")%></td>
+            <td><%=rs.getString("type")%></td>
+            <td><%=rs.getString("content")%></td>
+            <td><%=rs.getString("unit_price")%></td>
+            <td><%=rs.getString("available_units")%></td>
+            
+        </tr>
+
+
+        <%
+            }
+
+
+        %>
+    </table>
+ 
     <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
+</body>
+<%    ps.close();
+    conn.close();
+            }
+%>
 </html>

@@ -39,6 +39,7 @@
                     <td></td>
                     <td>Item_Name</td>
                     <td>Company</td>
+                    <td>Type</td>
                     <td>Content</td>
                     <td>Price</td>
                     <td>Available_Units</td>
@@ -51,6 +52,7 @@
                     <td><input   type="checkbox" name="aids" <%if (!rs.getString("employee_id").equals(userid)){%>disabled="disabled" <%}%>value=<%=rs.getString("id")%>> </td> 
                     <td><%=rs.getString("item_name")%></td>
                     <td><%=rs.getString("company")%></td>
+                    <td><%=rs.getString("type")%></td>
                     <td><%=rs.getString("content")%></td>
                     <td><%=rs.getString("unit_price")%></td>
                     <td><%=rs.getString("available_units")%></td>

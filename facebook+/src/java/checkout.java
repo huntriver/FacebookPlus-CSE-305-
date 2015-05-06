@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author yishuo wang
  */
-public class profile extends HttpServlet {
+public class checkout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,66 +36,47 @@ public class profile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String q = request.getParameter("q");
-        String lname = request.getParameter("lname");
-        String fname = request.getParameter("fname");
-        String Address = request.getParameter("Address");
-        String City = request.getParameter("City");
-        String State = request.getParameter("State");
-        String Zip = request.getParameter("Zip");
-        String Tel = request.getParameter("Tel");
-        String Email = request.getParameter("Email");
-        String Sex = request.getParameter("Sex");
-        String[] pref = request.getParameterValues("pre");
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-
-        String uid = (String) request.getSession().getAttribute("muid");
         PrintWriter out = response.getWriter();
+        String uid = (String) request.getSession().getAttribute("userid");
+        String aid = (String) request.getSession().getAttribute("baid");
+        String num = (String) request.getSession().getAttribute("bnum");
+        String acnum = request.getParameter("acnum");
+      if (acnum==null){
+            out.println("<script language=\"JavaScript\">alert(\"you must choose one account!\");self.location='checkout.jsp';</script>");
+      }
+      else
         try {
 
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-
-            ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=?,Address=?,City=?,State=?,Zip_Code=?,Telephone=?,Email_Address=?, SEX=? WHERE id=?");
-
-            ps.setString(1, lname); //1 represents the first ?
-            ps.setString(2, fname);
-            ps.setString(3, Address); //1 represents the first ?
-            ps.setString(4, City);
-            ps.setString(5, State); //1 represents the first ?
-            ps.setString(6, Zip);
-            ps.setString(7, Tel); //1 represents the first ?
-            ps.setString(8, Email);
-            ps.setString(9, Sex);
-            ps.setString(10, uid);
-
+            ps = conn.prepareStatement("UPDATE advertisement set available_units=available_units-? WHERE Id=? ");
+            ps.setString(1, num);
+            ps.setString(2, aid);
             ps.execute();
-           
-            ps = conn.prepareStatement("delete from user_preferences where id=? ");
-            ps.setString(1, uid);
+            ps = conn.prepareStatement("INSERT INTO sale (advertisement,number_of_units,account,user,date) values(?,?,?,?,?)");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date now = new Date();
+            String date = sdf.format(now);
+            ps.setString(1, aid);
+            ps.setString(2, num);
+            ps.setString(3, acnum);
+            ps.setString(4, uid);
+            ps.setString(5, date);
             ps.execute();
-            if (pref!=null)
-            for (int i = 0; i < pref.length; i++) {
-                ps = conn.prepareStatement("insert into user_preferences (id,preference) values(?,?)");
-                ps.setString(1, uid);
-                ps.setString(2, pref[i]);
-                ps.execute();
-                    
-                }
-            
-            
+
+            //   ps.execute();
             ps.close();
-            if (q.equals("1")) {
-                out.println("<script language='javascript'>alert('Success');self.location='normal_user_list.jsp'</script>");
-            } else {
-                out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
-            }
+            conn.close();
+
+            out.println("<script language=\"JavaScript\">alert(\"success!\");self.location='buy.jsp';</script>");
+
         } catch (Exception ex) {
 
-            out.println("failed " + ex.getMessage());
+            out.println("aafailed " + ex.getMessage());
 
         } finally {
             if (ps != null) {
@@ -114,9 +95,10 @@ public class profile extends HttpServlet {
             }
 
         }
+
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

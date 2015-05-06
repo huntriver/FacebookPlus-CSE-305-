@@ -156,6 +156,14 @@
         <servlet-name>buy</servlet-name>
         <servlet-class>buy</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>checkout</servlet-name>
+        <servlet-class>checkout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>view_history</servlet-name>
+        <servlet-class>view_history</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -311,6 +319,14 @@
     <servlet-mapping>
         <servlet-name>buy</servlet-name>
         <url-pattern>/buy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checkout</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>view_history</servlet-name>
+        <url-pattern>/view_history</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
