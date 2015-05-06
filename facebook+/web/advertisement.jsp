@@ -48,7 +48,7 @@
 
                 %>
                 <tr>
-                    <td><input   type="checkbox" name="aids" value=<%=rs.getString("id")%>> </td> 
+                    <td><input   type="checkbox" name="aids" <%if (!rs.getString("employee_id").equals(userid)){%>disabled="disabled" <%}%>value=<%=rs.getString("id")%>> </td> 
                     <td><%=rs.getString("item_name")%></td>
                     <td><%=rs.getString("company")%></td>
                     <td><%=rs.getString("content")%></td>
@@ -82,4 +82,5 @@
              conn.close();
         }
     %>
+    <button type="button" onclick="window.location.href = 'employee_page.jsp'">back</button>
 </html>

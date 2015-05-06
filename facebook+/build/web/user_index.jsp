@@ -47,6 +47,7 @@
         <a href="modify_profile?uid=<%=userid%>">profile</a> 
         <a href="message.jsp">messages</a> 
         <a href="invitation.jsp">invitations(<%=inumber%>)</a>
+        <a href="buy.jsp">Buy</a> 
         <a href="account.jsp">Account</a> 
         <%
             if (type.equals("2")) {

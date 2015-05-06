@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Leon
+ * @author yishuo wang
  */
-public class delete_ad extends HttpServlet {
+public class buy extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,25 +37,21 @@ public class delete_ad extends HttpServlet {
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String[] aids = request.getParameterValues("aids");
-
         PrintWriter out = response.getWriter();
+        
+        String[] num = request.getParameterValues("num");
+        String[] aids = request.getParameterValues("aids");
+        
         if (aids == null) {
-            out.println("<script language=\"JavaScript\">alert(\"choose at least one message！\");self.location='message.jsp';</script>");
+            out.println("<script language=\"JavaScript\">alert(\"choose at least one message！\");self.location='buy.jsp';</script>");
         } else {
             try {
-
-                Class.forName(driver).newInstance();
-                conn = DriverManager.getConnection(dburl);
-
-                ps = conn.prepareStatement("DELETE FROM advertisement WHERE Id=? ");
-         //   ps.setString(1, cname); //1 represents the first ?
-
-                for (int i = 0; i < aids.length; i++) {
-                    ps.setString(1, aids[i]);
+                for(int i = 0; i < aids.length; i++){
+                    ps = conn.prepareStatement("SELECT * FROM advertisement WHERE Id=? ");
+                    ps.setString(i, aids[i]);
                     ps.execute();
                 }
-
+                
                 ps.close();
 
                 out.println("<script language='javascript'>alert('Success');self.location='advertisement.jsp';</script>");
@@ -81,10 +76,10 @@ public class delete_ad extends HttpServlet {
                 }
             }
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *

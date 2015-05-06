@@ -33,23 +33,19 @@
     </head>
     <body>
         <h1>Customer Mailing Lists</h1>
-        <table border="0">
+        <table border="1">
             <tr> <td>Username</a></td> <td>Email Address</td></tr>
- 
-            <% while (rs.next())
-            {
-                %>
-            
-            <tr> <td> <%=rs.getString(1)%></td><td><%=rs.getString(2)%></td></tr> 
 
-             <%}
-             %>
+            <% while (rs.next()) {
+            %>
 
-            <tr> <td>          <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button></td></tr>
+            <tr> <td> <%=rs.getString(1)%></td><td><%if (rs.getString(2) == null)%><%=""%><%if (rs.getString(2) != null)%><%=rs.getString(2)%></td></tr> 
+            <%}%>       
         </table>
         <%
             ps.close();
-            conn.close();
-    }%>
+                conn.close();
+            }%>
     </body>
+    <button type="button" onclick="window.location.href = 'employee_page.jsp'">back</button>
 </html>

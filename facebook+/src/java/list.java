@@ -90,7 +90,6 @@ public class list extends HttpServlet {
                         ps.execute();
                     }
                     else{
-                       // out.println("123"+"<br>");
                         out.println(ids[i]+"   "+H_Rate[i]+ "<br>");
                         
                         ps = conn.prepareStatement("UPDATE employee SET Hourly_Rate=? WHERE Id=?");

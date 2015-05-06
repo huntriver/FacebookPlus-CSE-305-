@@ -103,7 +103,6 @@ and open the template in the editor.
                 //    String authorid = rs.getString("author");
                 ps.close();
                 conn.close();
-
         %>
 
     </head>
