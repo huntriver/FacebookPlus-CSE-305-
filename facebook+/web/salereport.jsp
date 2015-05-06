@@ -10,12 +10,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <% String userid = (String) session.getAttribute("userid");
+        String type=(String) session.getAttribute("type");
+        String month=request.getParameter("month");
             if (userid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
             } else {
-
+                 if (!type.equals("1")) {
+                    out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>"); //注意该方法的写法
+                    
+                }
+                 else
+                 {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
@@ -27,12 +34,7 @@
                 ResultSet rs = ps.getResultSet();
                 rs.next();
 
-                if (!rs.getString("type").equals("1")) {
-                    out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>"); //注意该方法的写法
-                    ps.close();
-                    conn.close();
-                    return;
-                }
+              
                 ps.close();
                 conn.close();
 

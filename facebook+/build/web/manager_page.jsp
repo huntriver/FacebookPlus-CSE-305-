@@ -44,7 +44,7 @@
         <table>
         <tr><td><a href="employee_list.jsp">All Employees</a> </td></tr>
         <tr><td> sale report <form action="sale_report.jsp" method="post">
-            <select name = "salereport">
+            <select name = "salereport.jsp">
                 <option value = "">Choose a month</option>
                 <%
                     for (int i = 1; i <= 12; i++) {%>
