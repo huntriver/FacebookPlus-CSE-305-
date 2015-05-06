@@ -129,6 +129,9 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <input type="submit" value="Search" /> 
         </form>
         </br></br></br>
+        <p>User Rating is currently:  0 </p>
+    <button class="button" onClick="window.open('bestSellerList.html');"><span class="icon">View Best-Seller list of items</span></button>
+        <br>
         <a href="logout.jsp">logout</a>
     </body>
 </html>
