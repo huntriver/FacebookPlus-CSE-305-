@@ -15,16 +15,6 @@
                 alert("Create successfully");
             }
         </script>
-        
-        <!-----Fumi---->
-        <script type="text/javascript">
-function MM_jumpMenu(targ,selObj,restore){ //v3.0
-  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
-  if (restore) selObj.selectedIndex=0;
-}
-        </script>
-        <!-----Fumi---->
-        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <% String userid = (String) session.getAttribute("userid");
@@ -73,21 +63,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         <%
             }
         %>
-        
-        <!---------Fumi---->
-        <form name="form" id="form">
-          Drop Down Help Menu 
-          <select name="jumpMenu" id="jumpMenu" onChange="MM_jumpMenu('parent',this,0)">
-           <option value="helpMenu.html/">FAQ from Start</option>
-            <option value="helpMenu.html#circle">Circle Usage</option>
-            <option value="helpMenu.html#message">Message Usage</option>
-            <option value="helpMenu.html#post">Post Usage</option>            
-            <option value="helpMenu.html#purchase">Purchase Usage</option>
-            <option value="helpMenu.html#creditCardAccounts">Credit Card Accounts</option>
-          </select>
-        </form>
-         <!---------Fumi---->
-         
+
         <h1>My Circle</h1>
         <%
             while (rs.next()) {
@@ -130,9 +106,6 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <input type="submit" value="Search" /> 
         </form>
         </br></br></br>
-        <p>User Rating is currently:  0 </p>
-    <button class="button" onClick="window.open('bestSellerList.html');"><span class="icon">View Best-Seller list of items</span></button>
-        <br>
         <a href="logout.jsp">logout</a>
     </body>
 </html>
