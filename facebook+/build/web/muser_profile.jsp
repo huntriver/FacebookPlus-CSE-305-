@@ -33,35 +33,38 @@ and open the template in the editor.
             String sex = null;
             //String Preference = null;
 
-            String type = null;
+            String type = (String) session.getAttribute("type");
 
             if (uid == null) {
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
-            } else {
+            } else if (!type.equals("1") && (!type.equals("2")))
+
+                out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='index.html';</script>"); //注意该方法的写法}
+            else {
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM person Where id=?");
-                PreparedStatement ps_type = conn.prepareStatement("SELECT * FROM user Where id=?");
- PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user_preferences Where id=?");
- 
+                PreparedStatement ps3 = conn.prepareStatement("SELECT * FROM user Where id=?");
+                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user_preferences Where id=?");
+
                 ps.setString(1, userid);
-                ps_type.setString(1, userid);
-ps1.setString(1, userid);
+                ps3.setString(1, userid);
+                ps1.setString(1, userid);
 
                 ps.execute();
-                ps_type.execute();
-ps1.execute();
+                ps3.execute();
+                ps1.execute();
 
                 ResultSet rs = ps.getResultSet();
-                ResultSet rs_type = ps_type.getResultSet();
-ResultSet rs1 = ps1.getResultSet();
+                ResultSet rs3 = ps3.getResultSet();
+                ResultSet rs1 = ps1.getResultSet();
 
                 rs.next();
-                rs_type.next();
+                rs3.next();
 
                 lname = rs.getString("Last_Name");
                 fname = rs.getString("First_Name");
@@ -73,13 +76,12 @@ ResultSet rs1 = ps1.getResultSet();
                 Zip = rs.getString("Zip_Code");
                 Tel = rs.getString("Telephone");
                 Email = rs.getString("Email_Address");
+                String rating = rs3.getString("rating");
 
-                type = rs_type.getString("type");
-                ArrayList<String> pref=new  ArrayList<String>();
-               for (int i=0;rs1.next();i++)
-               {
-                   pref.add(rs1.getString("preference"));
-               }
+                ArrayList<String> pref = new ArrayList<String>();
+                for (int i = 0; rs1.next(); i++) {
+                    pref.add(rs1.getString("preference"));
+                }
 
                 if (lname == null) {
                     lname = "";
@@ -193,22 +195,23 @@ ResultSet rs1 = ps1.getResultSet();
                 <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
                 <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
                 <tr> <th colspan="2">
-                     
-                    <table>
-                         <caption>Preference</caption>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("car")) {%>checked="checked" <%}%> value="car"></td><td>Car</td></tr>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
-                         
-                    </table>
+
+                <table>
+                    <caption>Preference</caption>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("car")) {%>checked="checked" <%}%> value="car"></td><td>Car</td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
+
+                </table>
                 </tr>
+                <tr><td>Rating:</td><td><input type="text" name="rating" value="<%=rating%>">(added by 1 for one transaction)</td></tr>
                 <input type="hidden" value="1" name="q"> 
             </table>
             </br>
             <input type="submit" value="Submit" /> 
         </form>
-        <button type="button" onclick="window.location.href = 'normal_user_list.jsp'">back</button>
+        <button type="button" onclick="window.history.go(-1);">back</button>
     </body>
     <%}%>
 </html>

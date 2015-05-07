@@ -54,7 +54,7 @@ and open the template in the editor.
                 ps1.execute();
                 ResultSet rs = ps.getResultSet();
                 ResultSet rs_type = ps_type.getResultSet();
-ResultSet rs1 = ps1.getResultSet();
+                ResultSet rs1 = ps1.getResultSet();
                 rs.next();
                 rs_type.next();
 
@@ -68,13 +68,12 @@ ResultSet rs1 = ps1.getResultSet();
                 Zip = rs.getString("Zip_Code");
                 Tel = rs.getString("Telephone");
                 Email = rs.getString("Email_Address");
-
+                String rating = rs_type.getString("rating");
                 type = rs_type.getString("type");
-                ArrayList<String> pref=new  ArrayList<String>();
-               for (int i=0;rs1.next();i++)
-               {
-                   pref.add(rs1.getString("preference"));
-               }
+                ArrayList<String> pref = new ArrayList<String>();
+                for (int i = 0; rs1.next(); i++) {
+                    pref.add(rs1.getString("preference"));
+                }
                 if (lname == null) {
                     lname = "";
                 }
@@ -105,11 +104,7 @@ ResultSet rs1 = ps1.getResultSet();
 
                 //    String date = rs.getString("date");
                 //    String authorid = rs.getString("author");
-                ps.close();
-                conn.close();
-
-        %>
-
+    %>
     </head>
     <body>
         <h1>Profile Information</h1>
@@ -188,17 +183,33 @@ ResultSet rs1 = ps1.getResultSet();
                 <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
                 <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
                 <tr> <th colspan="2">
-                     
-                    <table>
-                         <caption>Preference</caption>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("car")) {%>checked="checked" <%}%> value="car"></td><td>Car</td></tr>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
-                         <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
-                         
-                    </table>
+
+                <table>
+                    <caption>Preference</caption>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("car")) {%>checked="checked" <%}%> value="car"></td><td>Car</td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
+
+                </table>
+                </th>
                 </tr>
-                
+                <tr><td>Rating:</td><td><%=rating%>(added by 1 for one transaction)</td></tr>
+                <%if (!type.equals("3")) {
+                    PreparedStatement ps3;
+                    if (type.equals("2"))
+                       ps3 = conn.prepareStatement("SELECT * FROM employee Where id=?");
+                    else
+                       ps3 = conn.prepareStatement("SELECT * FROM manager Where id=?");
+                    ps3.setString(1, userid);
+                    ps3.execute();
+                    ResultSet rs3=ps3.getResultSet();
+                    rs3.next();
+                 %>
+                <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs3.getString("ssn")%>"></td></tr>
+                <tr><td>Start Date</td><td><input type="text" name="ssn" disabled="dsiabled" value="<%=rs3.getString("start_date")%>"></td></tr>
+                <tr><td>Hourly Rate</td><td><input type="text" name="ssn" disabled="disabled" value="<%=rs3.getString("hourly_rate")%>"></td></tr>
+                <%}%>
                 <input type="hidden" value="0" name="q"> 
             </table>
             </br>
@@ -206,6 +217,13 @@ ResultSet rs1 = ps1.getResultSet();
         </form>
         <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
     </body>
-    <%}%>
+    <%
+                ps.close();
+                conn.close();
+                
+
+
+
+    }%>
 </html>
 

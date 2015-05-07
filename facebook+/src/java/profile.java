@@ -45,6 +45,7 @@ public class profile extends HttpServlet {
         String Zip = request.getParameter("Zip");
         String Tel = request.getParameter("Tel");
         String Email = request.getParameter("Email");
+        String rating = request.getParameter("rating");
         String Sex = request.getParameter("Sex");
         String[] pref = request.getParameterValues("pre");
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
@@ -58,7 +59,12 @@ public class profile extends HttpServlet {
 
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-
+            if (rating != null) {
+                ps = conn.prepareStatement("UPDATE user Set rating=? Where id=?");
+                ps.setString(1, rating);
+                 ps.setString(2, uid);
+                ps.execute();
+            }
             ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=?,Address=?,City=?,State=?,Zip_Code=?,Telephone=?,Email_Address=?, SEX=? WHERE id=?");
 
             ps.setString(1, lname); //1 represents the first ?
@@ -73,26 +79,25 @@ public class profile extends HttpServlet {
             ps.setString(10, uid);
 
             ps.execute();
-           
+
             ps = conn.prepareStatement("delete from user_preferences where id=? ");
             ps.setString(1, uid);
             ps.execute();
-            if (pref!=null)
-            for (int i = 0; i < pref.length; i++) {
-                ps = conn.prepareStatement("insert into user_preferences (id,preference) values(?,?)");
-                ps.setString(1, uid);
-                ps.setString(2, pref[i]);
-                ps.execute();
-                    
+            if (pref != null) {
+                for (int i = 0; i < pref.length; i++) {
+                    ps = conn.prepareStatement("insert into user_preferences (id,preference) values(?,?)");
+                    ps.setString(1, uid);
+                    ps.setString(2, pref[i]);
+                    ps.execute();
+
                 }
-            
-            
+            }
+
             ps.close();
             if (q.equals("1")) {
                 out.println("<script language='javascript'>alert('Success');window.history.go(-2)</script>");
-            } else 
-            {
-            
+            } else {
+
                 out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
             }
         } catch (Exception ex) {

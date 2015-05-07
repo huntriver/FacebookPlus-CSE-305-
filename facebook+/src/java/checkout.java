@@ -53,6 +53,11 @@ public class checkout extends HttpServlet {
 
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
+            ps = conn.prepareStatement("UPDATE user set rating=rating+1 WHERE Id=? ");
+       
+            ps.setString(1, uid);
+            ps.execute();
+            
             ps = conn.prepareStatement("UPDATE advertisement set available_units=available_units-? WHERE Id=? ");
             ps.setString(1, num);
             ps.setString(2, aid);
