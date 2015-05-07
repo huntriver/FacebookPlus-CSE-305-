@@ -7,6 +7,23 @@
 
 <body>
 <h1><a id=help>Help Menu</h1>
+<h3>Registration</h3>
+<p>
+    At the top level, 
+all information associated with the Manager will be entered by the database 
+administrator directly through SQL. Employee will register through the same 
+interface as other facebook users. If they are given with employee privilege by 
+their manager, then they will also have an extra tab that allows them to switch 
+between Facebook user and Employee interface within the same login. <o:p></o:p>
+</span></p>
+<p>Main Page</p>
+<p class="MsoNormal">The main page will 
+contain profile tab where user can edit their information, the message tab where 
+user can send messages, check new messages, and delete old messages. Invitation 
+tab contains the number of unanswered invitation to join different circles. 
+Another section showing the personalized suggested items (aka the 
+advertisement), and the best seller list of items will also be shown.
+<o:p>&nbsp;</o:p></span></p>
 <h3><a id=circle>Circle Rules  </a></h3>
 <p>Things a user can do with his or her circles are:</p>
 <ul>
@@ -28,6 +45,23 @@
   <li>Join a circle</li>
   <li>Unjoin a circle</li>
 </ul>
+<p>Circles sharing the 
+same name can be created by the same or different owners. The names can be any 
+special or ASCII character of a set length. Only the circle owner can send 
+invitation to other users by their user name. Owner is also not allowed to 
+delete herself from the circle, or will prompt the whole circle to be deleted. 
+There is no prompt to transfer the circle ownership.</p>
+<p>Clicking on the 
+Manage Circle on a specific circle page will show the user with a list of 
+members. Any user who has applied to join this circle will be shown under 
+“Application”. User can approve, or reject request. Similarly, owner can send 
+invitation to other users to join the circle by typing their username at the 
+search box below. The new invitation will show up at the invitation tab when the 
+respective user logs in. After user clicks “accept” or “discard” to a particular 
+invitation, the number next to the Invitation tab will also be decremented.</span></p>
+<p class="MsoNormal">To apply to a 
+circle, simply search for a valid circle’s name. All names that matches will be 
+shown in the result. <span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p>
 <p><a href="user_index.jsp">Back to Main Page</a>
   
   
@@ -41,6 +75,9 @@
     <li>Receive a message</li>
     <li>Delete a message</li>
   </ul>
+	<p><a id=help0>
+	User can send message to herself or any other single user. A fail message 
+	will show if the user does not exist in the system.</span>&nbsp;</p>
 <a href="user_index.jsp">Back to Main Page</a></div>
 <h3><a id=post>Post Rules  </a></h3>
 <p>Things a user can do regarding posts and comments are:</p>
@@ -71,10 +108,24 @@
 
 <h3><a id=creditCardAccounts>Credit Card Accounts</a></h3>
 <p>For each one of a user's associated credit card accounts, the user would be able to view the purchasing history under each credit card account.</p>
-<p>User will not be able to view other customer's account information nor any employee's information.
-  <a href="user_index.jsp">Back to Main Page</a></p>
-<p>&nbsp;</p>
-<p><img src="img/cat.jpg" width="831" height="478" /></p>
+<p>User will not be able to view other customer's account information nor any employee's information.</p>
+<p><span class="MsoNormal">User is not required to have an associated credit account, but must 
+have an account to purchase. Regardless of the name entered when adding a new 
+credit card, the database still ties the account to user by userId. Thus, the 
+names can potentially be different.<b style="mso-bidi-font-weight:normal">
+<o:p></o:p>
+</b></span></span></p>
+<p> <a href="user_index.jsp">Back to Main Page</a></p>
+<h3>Advertisement</h3>
+<p class="MsoNormal">Advertisement will 
+be shown on the User’s main page only. Upon clicking the advertisement, the user 
+will be prompted to select an account with which to make purchase with.<o:p></o:p></span></p>
+<h3>Post/Comment/Like</h3>
+<p class="MsoNormal">Only the user who 
+originally made the post, comment and like, can edit or delete the post or 
+comment, or unlike. Clicking the like image will immediately replace it with the 
+thumbs down image. <o:p></o:p></span></p>
+<h3><b style="mso-bidi-font-weight:normal">Manager<o:p></o:p></span></b></h3>
 <p>Here is a break down of the:</p>
 <ul>
   <li>1 Stands for admin/manager </li>
@@ -82,6 +133,21 @@
   <li>3.Customer</li>
 </ul>
 <p>Access privilege can be upgraded or downgraded by the manager. Employee is automatically also a customer and can access even more information. Manager is of-course a higher privilege holder than employee.</p>
+<p>&nbsp;</p>
+<h3><b style="mso-bidi-font-weight:normal">
+Employee</h3>
+<p class="MsoNormal">According to the requirement, employee should be able to read all 
+of the other employee’s information, which can include the SSN, but exclude the 
+hourly rate.<o:p></o:p></p>
+<p class="MsoNormal">
+Employee can register for themselves and fill in their own 
+information, perhaps except the hourly rate. The SSN is supposed to be unique by 
+design if the user enter truthfully so it is not generated by the system.<o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal">
+After clicking on the employee’s page, customer representative will 
+be able to <o:p>view various queries.</o:p></span></p>
+<p>&nbsp;</p>
+<h3>Miscellaneous</h3>
 <p>If an invitation is sent to a user but the circle is deleted before that user accepts it, then the invitation box will still be 0.</p>
 <p>When the unlike button is shown, the state is actually "like". The user can then click the "unlike" image to perform the "unlike" action.</p>
 <p>Only the owner of the circle can see the manage circle hyperlink.</p>
@@ -91,8 +157,54 @@
 <p>As for the suggestions list, it list all of the advertisement posted on the site/in the database that matches the user's preference. This is unique per user and independent from the user's transaction pattern.</p>
 <p>Best seller will include all of the items that has ever been bought by all users, and will be ranked from top to bottom. This result will be the same across all users. </p>
 <p>The User rating is incremented by 1 by default for every time the user buys something.</p>
-<p>Although all advertisement posted by all </p>
 <p>If employee or user start to enter their profile information, they must fill in all of the fields or else it would be an error.</p>
+<h3>Programmer's Guide</h3>
+<p><strong>E-R Diagram</strong> <br />
+            The preferences attribute set is tied to the user, not to the account. Here, the account means the credit card account. A user can have several associated credit card accounts, with each account having its own transaction history. However, a physical person is not supposed to register with more than one user name, because each person will have a unique SSN. We did not build any table that maps from one SSN to several usernames. Further, the same user name will be associated with the same person regardless of the role they play.<br />
+<strong>Relational Database Scheme/Design Process for Efficient Query</strong><br />
+Even though the demo data for the account section included many more attributes, we parsed it out to only have two columns. Similar things was done with the User table. The reason was the follow reduce redundant functional dependency to avoid update anomaly and deletion anomaly. We know that if we make irrelevant attributes such as preferences attributes sets as part of the User primary key, we run into problems when any of the preferences field is null. Further, every time we want to update any user information, all of the entries in the User table with a different preferences has to be update as well. If repetitive functional dependency was not avoided, then it would lead to significant query inefficiency. <br />
+<u>It&rsquo;s also worthy to note that Stony Brook&rsquo;s SQL host connection only allows up to about 20 connections simultaneously. Therefore, our project must be especially sensitive to the load it puts on query transaction. </u> <br />
+As for the security aspects, URL parsing has been one of the hardest attack vector to defend against. Suppose our main URL is <a href="http://www.royalhuangs.com/">www.royalhuangs.com/</a>, then to support custom URL with username and circle name appended to the domain part, the string length and character combination can be infinitely long and varied. We decided to now allow custom URL for different users, circle, or posts, so our server is not burdened with distinguishing arbitrarily long, random URL versus malicious path. Placing slight limit on functionality end up increasing our security significantly. <br />
+There are several places where an entry starts to fill partially in a table but will face transaction roll back if not fully completed. For example, the user might click on an advertisement but cancel before all purchasing steps are completed. Also, a circle owner can send invitation to a user, but the user&rsquo;s membership should not be entered into the &ldquo;addedto&rdquo; table until the invitee accepts the invitation. </p>
+<p><strong>Functional Dependency</strong><br />
+  <strong>         </strong>The circleId will uniquely determine a circle across all owners. Since the requirement does not ask for different names to be enforced by the same owner, circles can share the same name. The relationship between Account and has Account is a thick line, meaning an account will have 0 to at most one account owner. <br />
+  <strong>Referential Integrity Constraints</strong><br />
+  Primary key of Person is actually personId which has default increment. Since User may not want to enter his or her SSN right away when they register, and User is created before all of the necessary information for being a Person. Thus Person actually uses foreign key references from User table. Both PersonId and SSN will be unique in the Person table. </p>
+<h3>SQL Injection Prevention Test Cases</h3>
+<div id="post-body-4777847550783591600" itemprop="description articleBody">
+  <div dir="ltr" trbidi="on">Here is the SQL injection strings test cases for the password field.
+    <br />
+    <br />
+    ' or 1=1--<br />
+    <br />
+    &quot; or 1=1--<br />
+    <br />
+    or 1=1--<br />
+    <br />
+    ' or 'a'='a<br />
+    <br />
+    &quot; or &quot;a&quot;=&quot;a<br />
+    <br />
+    ') or ('a'='a<br />
+    <br />
+    &quot;) or (&quot;a&quot;=&quot;a<br />
+  </div>
+  <div></div>
+</div>
+<div>
+<br />
+<p>In the search component:</p>
+<pre>$query = &quot;select item, description from productTable where description LIKE '%&quot; . $_GET[&quot;prod&quot;] . &quot;%'&quot;   (PHP)</pre>
+<pre>var query = &quot;select item, description from productTable where description LIKE '%&quot; + Request.QueryString(&quot;prod&quot;) + &quot;%'&quot;  (ASP)
 
+In the URL input parsing case:
+</pre>
+<p>If we suppose that the values of the parameters are sent to the server through the GET method, and if the domain of the vulnerable web site is www.example.com, the request that we'll carry out will be:</p>
+<pre>http://www.example.com/index.php?username=1'%20or%20'1'%20=%20'1&amp;password=1'%20or%20'1'%20=%20'1 </pre>
+<pre>http://www.example.com/index.php?username=1'%20or%20'1'%20=%20'1'))/*&amp;password=foo </pre>
+<pre>http://www.example.com/index.php?username=1'%20or%20'1'%20=%20'1'))%20LIMIT%201/*&amp;password=foo </pre>
+<p>&nbsp;</p>
+<p>This is prevented because our website does not allow custome url. </p>
+<p>&nbsp;</p>
 </body>
 </html>

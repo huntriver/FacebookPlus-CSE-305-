@@ -2,6 +2,7 @@
     Document   : user_profile
     Created on : Apr 23, 2015, 4:18:08 PM
     Author     : yishuo wang
+
 --%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.*"%>
@@ -14,7 +15,18 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <style>
+        body {
+	background-image: url(img/horse.jpg);
+        
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>  
+        <title>MUser Profile</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -126,7 +138,7 @@ and open the template in the editor.
 
     </head>
     <body>
-        <h1>Profile Information</h1>
+        <h1 class="whiteTextBackground">Profile Information</h1>
 
         <form action="profile" method="post">
             <table border="0">

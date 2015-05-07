@@ -14,7 +14,17 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <style>
+        body {
+	background-image: url(img/lanyanlei.jpg);
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>
+        <title>User Profile</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -111,22 +121,22 @@ and open the template in the editor.
     %>
     </head>
     <body>
-        <h1>Your Profile Information</h1>
+        <h1 style="color:white">Your Profile Information</h1>
 
         <form action="profile" method="post">
             <table border="0">
-                <tr><td>Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
-                <tr><td>First Name:</td> <td> <input type="text" name="fname" value="<%=fname%>"></td></tr>
-                <tr><td>Birth:</td> <td> <input type="text" name="birth" value="<%=birth%>"></td><td>Format:mmddyyyy</td></tr>
-                <tr><td>Gender:</td> <td> 
+                <tr><td style="background-color: white">Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
+                <tr><td style="background-color: white">First Name:</td> <td> <input type="text" name="fname" value="<%=fname%>"></td></tr>
+                <tr><td style="background-color: white">Birth:</td> <td> <input type="text" name="birth" value="<%=birth%>"></td><td>Format:mmddyyyy</td></tr>
+                <tr><td style="background-color: white">Gender:</td> <td> 
                         <select name = "Sex">
                             <option value = "">Choose</option>
                             <option value = "Male" <% if (sex.equals("Male")) { %> selected="selected" <% } %>>Male</option> 
                             <option value = "Female" <% if (sex.equals("Female")) { %> selected="selected" <% }%>>Female</option> 
                     </td></tr>
-                <tr><td>Address: </td> <td><input type="text" name="Address" value="<%=Address%>"></td></tr>
-                <tr><td>City:</td> <td> <input type="text" name="City" value="<%=City%>"></td></tr>
-                <tr><td>State: </td> <td>
+                <tr><td style="background-color: white">Address: </td> <td><input type="text" name="Address" value="<%=Address%>"></td></tr>
+                <tr><td style="background-color: white">City:</td> <td> <input type="text" name="City" value="<%=City%>"></td></tr>
+                <tr><td style="background-color: white">State: </td> <td>
                         <select name = "State">
                             <option value = "">Choose State</option>
                             <option value = "AL" <% if (State.equals("AL")) { %> selected="selected" <% } %>>AL</option> 
@@ -184,13 +194,13 @@ and open the template in the editor.
 
 
 
-                <tr><td>Zip Code:</td> <td> <input type="text" name="Zip" value="<%=Zip%>"></td></tr>
-                <tr><td>Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
-                <tr><td>Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
+                <tr><td style="background-color: white">Zip Code:</td> <td> <input type="text" name="Zip" value="<%=Zip%>"></td></tr>
+                <tr><td style="background-color: white">Telephone: </td> <td><input type="text" name="Tel" value="<%=Tel%>"></td></tr>
+                <tr><td style="background-color: white">Email Address:</td> <td> <input type="text" name="Email" value="<%=Email%>"></td></tr>
                 <tr> <th colspan="2">
 
-                <table>
-                    <caption>Preference</caption>
+                <table style="background-color: white">
+                    <caption style="background-color: white" >Preference</caption>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("car")) {%>checked="checked" <%}%> value="car"></td><td>Car</td></tr>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
@@ -199,7 +209,7 @@ and open the template in the editor.
                 </table>
                 </th>
                 </tr>
-                <tr><td>Rating:</td><td><input type="text" name="rating" <%if (type.equals("3")){%>disabled="disabled"<%}%> value="<%=rating%>">(added by 1 for one transaction)</td></tr>
+                <tr><td style="background-color: white">Rating:</td><td><input type="text" name="rating" <%if (type.equals("3")){%>disabled="disabled"<%}%> value="<%=rating%>">(added by 1 for one transaction)</td></tr>
                 <%if (!type.equals("3")) {
                     PreparedStatement ps3;
                     if (type.equals("2"))

@@ -1,0 +1,18 @@
+@charset "UTF-8";
+/* CSS Document */
+#main{
+position:relative;
+}
+div#first{
+background-image: url('image/theatre.jpg');
+opacity:0.2;
+width:300px;
+height:300px;
+}
+div#second{
+width:300px;
+height:300px;
+position:absolute;
+top: 0;
+left:0;
+}

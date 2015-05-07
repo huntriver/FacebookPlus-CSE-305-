@@ -9,7 +9,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+<style>
+        body {
+	background-image: url(img/ripple.jpg);
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <% String userid = (String) session.getAttribute("userid");

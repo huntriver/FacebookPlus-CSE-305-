@@ -9,6 +9,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        body {
+	background-image: url(img/fractal-shoreline.jpg);
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>All Users</title>
         <%

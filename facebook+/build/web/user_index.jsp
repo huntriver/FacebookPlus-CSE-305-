@@ -9,6 +9,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <style>
+div.background {
+    background: url(img/theatre.jpg) repeat;
+    border: 2px solid black;
+}
+.blueheader {
+	color: #3CF;
+}
+    body {
+	background-image: url(img/clover.jpg);
+	background-repeat: repeat;
+}
+    .bluehead {
+	color: #96C;
+}
+    .darkbluehead {
+	color: #36C;
+}
+    </style>
         <script type="text/javascript">
             function confirm()
             {
@@ -81,10 +100,10 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <option value="helpMenu.html#creditCardAccounts">Credit Card Accounts</option>
           </select>
         </form>
-        <h1>My Circle</h1>
+        <h1 class="blueheader">My Circle</h1>
         <table border="1" >
           
-            <tr><td>Circle Name</td><td>Total Posts</td></tr>
+          <tr><td>Circle Name</td><td>Total Posts</td></tr>
         <%
             while (rs.next()) {
                 String cid = rs.getString("Circle_Id");  //first time return first circle id, second time is second circle id
@@ -114,7 +133,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             }
         %>
         </table>
-        <h1>Create A New Circle</h1>
+        <h1 class="bluehead">Create A New Circle</h1>
         <form action="createCircle" method="post">
             <table>
                 <tr><td>Circle Name: </td> <td><input type="text" name="cname"/></td></tr>
@@ -125,7 +144,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <input type="submit" value="Create" /> 
         </form>
 
-        <h1>Search A Circle</h1>
+        <h1 class="darkbluehead">Search A Circle</h1>
         <form action="search_result.jsp" method="post">
             <table>
                 <tr><td>Circle Name: </td> <td><input type="text" name="cname"/></td></tr>
