@@ -72,7 +72,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <form name="form" id="form">
           Drop Down Help Menu 
           <select name="jumpMenu" id="jumpMenu" onChange="MM_jumpMenu('parent',this,0)">
-           <option value="helpMenu.html/">FAQ from Start</option>
+              <option selected="selected" value="user_index.jsp">Choose One</option>
+           <option value="helpMenu.html#help">FAQ from Start</option>
             <option value="helpMenu.html#circle">Circle Usage</option>
             <option value="helpMenu.html#message">Message Usage</option>
             <option value="helpMenu.html#post">Post Usage</option>            

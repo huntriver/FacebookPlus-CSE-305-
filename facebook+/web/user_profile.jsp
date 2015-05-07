@@ -199,7 +199,7 @@ and open the template in the editor.
                 </table>
                 </th>
                 </tr>
-                <tr><td>Rating:</td><td><%=rating%>(added by 1 for one transaction)</td></tr>
+                <tr><td>Rating:</td><td><input type="text" name="rating" <%if (type.equals("3")){%>disabled="disabled"<%}%> value="<%=rating%>">(added by 1 for one transaction)</td></tr>
                 <%if (!type.equals("3")) {
                     PreparedStatement ps3;
                     if (type.equals("2"))

@@ -66,7 +66,7 @@
         <% if (isowner) {%>
         <h2><a href="Manage_Circle.jsp">Manage the circle</a></h2>
         <% } else {%>
-         <input name="unjoin_circle" type="button" value="Unjoin this circle"  onClick="if (confirm('Are u sure? ')) {
+        <input name="unjoin_circle" type="button" value="Unjoin this circle"  onClick="if (confirm('Are u sure? ')) {
                     location.href = '${pageContext.request.contextPath}/unjoin_circle';
                 }" />
         <% }%>
@@ -78,6 +78,7 @@
                 <tr>  <% if (isowner) {    %><td> </td> <%} %> 
                     <td>Subject</td>
                     <td>Author</td> 
+                    <td>Comments</td> 
                 </tr>
 
                 <% while (rs.next()) {
@@ -86,16 +87,27 @@
                         ps1.execute();
                         ResultSet rs1 = ps1.getResultSet();
                         rs1.next();
-                %>
+                        
+                          PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) FROM comment Where post=?");
+                        ps2.setString(1, rs.getString("id"));
+                        ps2.execute();
+                        ResultSet rs2 = ps2.getResultSet();
+                        rs2.next();
+                        
+                        %>
                 <tr>
                     <% if (isowner) {%> <td>      <input type="checkbox" name="dposts" value="<%=rs.getString("id")%>"        </td>                  <%}%>
 
                     <td>
-                        <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject")%></a>
+                        <a href="${pageContext.request.contextPath}/post?pid=<%=rs.getString("id")%>"><%=rs.getString("subject").replaceAll(" ", "&nbsp")%> </a> 
+
                     </td>
                     <td>
                         <%=rs1.getString("username")%>
                     </td>
+                    <td>
+                        <%=rs2.getString(1)%>
+                        </td>
                 </tr>
                 <%
 
@@ -104,8 +116,8 @@
             </table>
             <%  if (isowner) {%>      
             <input type="submit" value="Delete Selected Posts">
-             </form>   
-             <%}
+        </form>   
+        <%}
 
                 ps.close();
                 conn.close();

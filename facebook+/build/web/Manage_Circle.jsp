@@ -60,7 +60,7 @@
             <h1> Circle Name: <input type="text" name="cname" value="<%=cname%>"/>  
                 <input type="submit" value="Modify" /> </h1>
 
-        </form>
+        </form> 
 
         <h2>Membership management</h2>
 

@@ -64,9 +64,9 @@
     <%
          ps = conn.prepareStatement("DROP view IF EXISTS ads");
          ps.execute();
-        ps = conn.prepareStatement("create view ads as (select sale.advertisement,sum(sale.number_of_units) as sums from sale group by sale.advertisement) ");
+        ps = conn.prepareStatement("create view ads as (select sale.advertisement,count(sale.advertisement) as counts from sale group by sale.advertisement) ");
         ps.execute();
-          ps = conn.prepareStatement("select * from advertisement,ads where advertisement.id=ads.advertisement order by ads.sums desc");
+          ps = conn.prepareStatement("select * from advertisement,ads where advertisement.id=ads.advertisement order by ads.counts desc");
         ps.execute();
         rs = ps.getResultSet();
     %>
@@ -78,7 +78,7 @@
             <td>Content</td>
             <td>Price</td>
             <td>Available_Units</td>
-            <td>Sold </td>
+            <td>Sold Times</td>
         </tr>
         <%  while (rs.next()) {
         %> <tr>
@@ -89,7 +89,7 @@
             <td><%=rs.getString("content")%></td>
             <td><%=rs.getString("unit_price")%></td>
             <td><%=rs.getString("available_units")%></td>
-             <td><%=rs.getString("sums")%></td>
+             <td><%=rs.getString("counts")%></td>
         </tr>
 
 

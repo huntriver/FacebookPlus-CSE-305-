@@ -24,12 +24,12 @@
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
                 //     PreparedStatement ps = conn.prepareStatement("SELECT Id,Last_Name,First_Name FROM person");
-                PreparedStatement ps = conn.prepareStatement("SELECT e.ssn,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue FROM employee e,person p,sale s, advertisement a WHERE a.id=s.advertisement and e.id=p.id group by e.id order by revenue desc limit 1");
+                PreparedStatement ps = conn.prepareStatement("SELECT e.ssn,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue FROM employee e,person p,sale s, advertisement a WHERE a.id=s.advertisement and e.id=p.id and a.employee_id=e.id group by e.id order by revenue desc limit 1");
 
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
 
-                PreparedStatement ps1 = conn.prepareStatement("SELECT u.username,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue from user u,person p, sale s, advertisement a where a.id=s.advertisement and u.id=p.id group by u.id order by revenue desc limit 1");
+                PreparedStatement ps1 = conn.prepareStatement("SELECT u.username,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue from user u,person p, sale s, advertisement a where a.id=s.advertisement and u.id=p.id and u.id=s.user group by u.id order by revenue desc limit 1");
 
                 ps1.execute();
                 ResultSet rs1 = ps1.getResultSet();

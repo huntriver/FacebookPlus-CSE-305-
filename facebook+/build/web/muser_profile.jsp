@@ -222,9 +222,10 @@ and open the template in the editor.
                     ResultSet rs5=ps5.getResultSet();
                     rs5.next();
                  %>
+               
                 <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs5.getString("ssn")%>"></td></tr>
-                <tr><td>Start Date</td><td><input type="text" name="ssn" disabled="dsiabled" value="<%=rs5.getString("start_date")%>"></td></tr>
-                <tr><td>Hourly Rate</td><td><input type="text" name="ssn" disabled="disabled" value="<%=rs5.getString("hourly_rate")%>"></td></tr>
+                <tr><td>Start Date</td><td><input type="text" name="sdate" disabled="dsiabled" value="<%=rs5.getString("start_date")%>"></td></tr>
+                <tr><td>Hourly Rate</td><td><input type="text" name="hrate" <% if (!type.equals("1")){%> disabled="disabled" <%}%> value="<%=rs5.getString("hourly_rate")%>"></td></tr>
                 <%ps5.close();}%>
                 <input type="hidden" value="1" name="q"> 
             </table>

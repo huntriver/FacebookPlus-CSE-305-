@@ -49,6 +49,7 @@ public class profile extends HttpServlet {
         String rating = request.getParameter("rating");
         String Sex = request.getParameter("Sex");
         String ssn = request.getParameter("ssn");
+        String hrate = request.getParameter("hrate");
         String[] pref = request.getParameterValues("pre");
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
@@ -92,23 +93,45 @@ public class profile extends HttpServlet {
         String uid = (String) request.getSession().getAttribute("muid");
         PrintWriter out = response.getWriter();
         try {
-            if (!Zip.matches("[0-9]{5}")) {
-                throw new Exception();
+            if (!Zip.equals("")) {
+                if (!Zip.matches("[0-9]{5}")) {
+                    throw new Exception();
+                }
             }
-            
-            if (!birth.matches("[0-9]{8}") || (Integer.parseInt(birth.substring(0, 2))>12 || Integer.parseInt(birth.substring(0, 2))==0) || (Integer.parseInt(birth.substring(2, 4))>31 || Integer.parseInt(birth.substring(2,4))==0)  ) {
-                throw new Exception();
+            if (!birth.equals("")) {
+                if (!birth.matches("[0-9]{8}") || (Integer.parseInt(birth.substring(0, 2)) > 12 || Integer.parseInt(birth.substring(0, 2)) == 0) || (Integer.parseInt(birth.substring(2, 4)) > 31 || Integer.parseInt(birth.substring(2, 4)) == 0)) {
+                    throw new Exception();
+                }
             }
-
+            if (ssn != null) {
+                if (!ssn.equals("")) {
+                    if (!ssn.matches("[0-9]{9}")) {
+                        throw new Exception();
+                    }
+                }
+            }
+            if (rating != null) {
+                if (!rating.equals("")) {
+                    if (Integer.valueOf(rating) < 0) {
+                        throw new Exception();
+                    }
+                }
+            }
+            if (hrate != null) {
+                if (!hrate.equals("")) {
+                    if (Double.valueOf(hrate) <= 0) {
+                        throw new Exception();
+                    }
+                }
+            }
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-            if (rating != null) {
-                ps = conn.prepareStatement("UPDATE user Set rating=? Where id=?");
-                ps.setString(1, rating);
-                ps.setString(2, uid);
-                ps.execute();
-            }
-            
+
+            ps = conn.prepareStatement("UPDATE user Set rating=? Where id=?");
+            ps.setString(1, rating);
+            ps.setString(2, uid);
+            ps.execute();
+
             ps = conn.prepareStatement("UPDATE person SET Last_Name=? , First_Name=?,Address=?,City=?,State=?,Zip_Code=?,Telephone=?,Email_Address=?, SEX=?, SSN=?, DOB=? WHERE id=?");
 
             ps.setString(1, lname); //1 represents the first ?
@@ -124,12 +147,28 @@ public class profile extends HttpServlet {
             ps.setString(11, birth);
             ps.setString(12, uid);
             ps.execute();
-
-            ps = conn.prepareStatement("UPDATE employee SET SSN=? WHERE id=?");
+            ps = conn.prepareStatement("select * from employee WHERE id=?");
+          
+            ps.setString(1, uid);
+            ps.execute();
+            ResultSet rs=ps.getResultSet();
+            String s;
+            if (rs.next())
+               s="employee";
+            else
+                s="manager";
+            if (ssn!=null){
+            ps = conn.prepareStatement("UPDATE "+s+" SET SSN=? WHERE id=?");
             ps.setString(1, ssn);
             ps.setString(2, uid);
             ps.execute();
-
+            }
+            if (hrate!=null){
+            ps = conn.prepareStatement("UPDATE "+s+" SET hourly_rate=? WHERE id=?");
+            ps.setString(1, hrate);
+            ps.setString(2, uid);
+            ps.execute();
+            }
             ps = conn.prepareStatement("delete from user_preferences where id=? ");
             ps.setString(1, uid);
             ps.execute();
@@ -151,8 +190,7 @@ public class profile extends HttpServlet {
                 out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
             }
         } catch (Exception ex) {
-            out.println("<script language='javascript'>alert('failed');self.location='user_profile.jsp'</script>");
-            
+            out.println("<script language='javascript'>alert('failed');window.history.go(-1)</script>");
 
         } finally {
             if (ps != null) {

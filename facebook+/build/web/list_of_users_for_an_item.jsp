@@ -16,22 +16,23 @@
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
             }
+            else
             if (!type.equals("1")) {
                 out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
             } else {
                 String itemname = request.getParameter("item_name");
-                
+
                 if (itemname.equals("")) {
                     itemname = "%";
                 }
-               
+
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
-                PreparedStatement ps = conn.prepareStatement("SELECT u.Id,u.Username FROM sale s, advertisement a, user u, person p Where a.id=s.advertisement and u.id=p.id and "
+                PreparedStatement ps = conn.prepareStatement("SELECT Distinct u.Id,u.Username,p.last_name, p.first_name FROM sale s, advertisement a, user u, person p Where a.id=s.advertisement and u.id=p.id and "
                         + "s.user=u.id and a.item_name like ?");
-             //   out.println(itemname+" "+lname+" "+fname+" "+uname);
+                //   out.println(itemname+" "+lname+" "+fname+" "+uname);
                 ps.setString(1, itemname);
 
                 ps.execute();
@@ -47,7 +48,8 @@
             <tr>
                 <td>User Id</td>
                 <td>User Name</td>
-
+                <td>First Name</td>
+                <td>Last Name</td>
             </tr>
             <%              while (rs.next()) {
 
@@ -57,7 +59,8 @@
 
                 <td><%=rs.getString("Id")%></td>
                 <td><%=rs.getString("Username")%></td>
-
+                <td><%=rs.getString("first_name")%></td>
+                <td><%=rs.getString("last_name")%></td>
 
                 <%
                     }

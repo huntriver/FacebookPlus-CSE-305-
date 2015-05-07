@@ -10,6 +10,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <%String userid = (String) session.getAttribute("userid");
+          if (userid == null) {
+
+                out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
+
+            }
+          else
+          { %>
     </head>
     <body>
         <h1>New Message</h1>
@@ -23,4 +31,5 @@
         </form> 
                   <a href="message.jsp">back</a>
     </body>
+     <% }%>
 </html>

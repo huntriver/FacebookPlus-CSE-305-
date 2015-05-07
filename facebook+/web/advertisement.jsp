@@ -15,8 +15,7 @@
 
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
-            }
-            if (!type.equals("2")) {
+            } else if (!type.equals("2")) {
                 out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
             } else {
 
@@ -46,10 +45,9 @@
                 </tr>
                 <%              while (rs.next()) {
 
-
                 %>
                 <tr>
-                    <td><input   type="checkbox" name="aids" <%if (!rs.getString("employee_id").equals(userid)){%>disabled="disabled" <%}%>value=<%=rs.getString("id")%>> </td> 
+                    <td><input   type="checkbox" name="aids" <%if (!rs.getString("employee_id").equals(userid)) {%>disabled="disabled" <%}%>value=<%=rs.getString("id")%>> </td> 
                     <td><%=rs.getString("item_name")%></td>
                     <td><%=rs.getString("company")%></td>
                     <td><%=rs.getString("type")%></td>
@@ -63,9 +61,9 @@
             </table>
             <input type="submit" value="Delete Selected Advertisments">
         </form>
-            <br>
-           <br>
-            <br>
+        <br>
+        <br>
+        <br>
         <form action="create_ad" method="post">
             <table>
                 <tr><td>Item_Name:</td><td><input type="text" name="item_name"></td></tr>
@@ -78,11 +76,12 @@
             <input type="submit" value="Create">
 
         </form>
+        <button type="button" onclick="window.location.href = 'employee_page.jsp'">back</button>
     </body>
     <%
-              ps.close();
-             conn.close();
+            ps.close();
+            conn.close();
         }
     %>
-    <button type="button" onclick="window.location.href = 'employee_page.jsp'">back</button>
+
 </html>

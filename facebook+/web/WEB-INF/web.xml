@@ -168,6 +168,10 @@
         <servlet-name>add_and_delete</servlet-name>
         <servlet-class>add_and_delete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>modify_post_subject</servlet-name>
+        <servlet-class>modify_post_subject</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -335,6 +339,10 @@
     <servlet-mapping>
         <servlet-name>add_and_delete</servlet-name>
         <url-pattern>/add_and_delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modify_post_subject</servlet-name>
+        <url-pattern>/modify_post_subject</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
