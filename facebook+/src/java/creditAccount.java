@@ -84,7 +84,7 @@ public class creditAccount extends HttpServlet {
             rs.next();
             String Account_Number = rs.getString(1);
             
-            out.println(Card_Num+"   "+Card_Num.length()+"  "+Full_Name);
+            
             
             ps = conn.prepareStatement("INSERT into user_has_account (User_Id,Account_Number) values (?,?)");
             ps.setString(1, uid);

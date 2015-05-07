@@ -24,15 +24,25 @@
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
                 //     PreparedStatement ps = conn.prepareStatement("SELECT Id,Last_Name,First_Name FROM person");
-                PreparedStatement ps = conn.prepareStatement("SELECT e.ssn,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue FROM employee e,person p,sale s, advertisement a WHERE a.id=s.advertisement and e.id=p.id group by e.id order by revenue desc limit 1");
+                PreparedStatement ps = conn.prepareStatement("SELECT e.ssn,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue FROM employee e,person p,sale s, advertisement a WHERE a.id=s.advertisement and e.id=p.id and a.employee_id=e.id group by e.id order by revenue desc limit 1");
 
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
 
-                PreparedStatement ps1 = conn.prepareStatement("SELECT u.username,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue from user u,person p, sale s, advertisement a where a.id=s.advertisement and u.id=p.id group by u.id order by revenue desc limit 1");
+                PreparedStatement ps1 = conn.prepareStatement("SELECT u.username,p.last_name,p.first_name,sum(s.number_of_units*a.unit_price) as revenue from user u,person p, sale s, advertisement a where a.id=s.advertisement and u.id=p.id and u.id=s.user group by u.id order by revenue desc limit 1");
 
                 ps1.execute();
                 ResultSet rs1 = ps1.getResultSet();
+
+                PreparedStatement ps3 = conn.prepareStatement("DROP view IF EXISTS ads");
+                ps3.execute();
+                ps3 = conn.prepareStatement("create view ads as (select sale.advertisement,sum(sale.number_of_units) as sums from sale group by sale.advertisement) ");
+                ps3.execute();
+                ps3 = conn.prepareStatement("select * from advertisement,ads where advertisement.id=ads.advertisement order by ads.sums desc");
+                ps3.execute();
+                ResultSet rs3 = ps3.getResultSet();
+                
+                
 
 
         %>
@@ -40,7 +50,9 @@
     <body>
         <h1>Manager Page</h1>
         <table border="1" style="height:500px">
-            <tr><td><a href="employee_list.jsp">Show all Employees</a> </td></tr>
+            <tr><td><a href="employee_list.jsp">Show all Employees</a> </td> </td></tr>
+            <tr><td><a href="user_list.jsp">Show all Users</a> </td></tr>
+            <tr><td><a href="add_delete.jsp">add_delete</a> </td></tr>
             <tr><td> sale report 
                     <form action="salereport.jsp" method="post">
                         <select name = "month">
@@ -50,7 +62,7 @@
                             <%}%>
 
                         </select>
-                        <input type="submit" value="ckeck">
+                        <input type="submit" value="check">
                     </form>
                 </td></tr>
             <tr><td><a href="showallads.jsp">Show all Advertisements</a> </td></tr>
@@ -98,6 +110,57 @@
                     </table>
                     <%}%>
                 </td></tr>
+            <tr><td>most active items
+                    <table border="1">    
+                        <tr>
+                            <td>Item_Name</td>
+                            <td>Company</td>
+                            <td>Type</td>
+                            <td>Content</td>
+                            <td>Price</td>
+                            <td>Available_Units</td>
+                            <td>Sold </td>
+                        </tr>
+                        <%  while (rs3.next()) {
+                        %> <tr>
+
+                            <td><%=rs3.getString("item_name")%></td>
+                            <td><%=rs3.getString("company")%></td>
+                            <td><%=rs3.getString("type")%></td>
+                            <td><%=rs3.getString("content")%></td>
+                            <td><%=rs3.getString("unit_price")%></td>
+                            <td><%=rs3.getString("available_units")%></td>
+                            <td><%=rs3.getString("sums")%></td>
+                        </tr>
+
+
+                        <%
+                            }
+
+                        %>
+                    </table>
+                    <br>
+                    
+                </td></tr>
+            <tr><td>Produce a list of all customers who have purchased a particular item
+                    <form action="list_of_users_for_an_item.jsp" method="post">
+                        Search by:<br>
+                        <table border="0"> 
+                            <tr><td>   Item_name </td><td><input type="text" name="item_name">  </td></tr>       
+                            <tr><td colspan="2" align=right>    <input type="submit" value="Search"> </td></tr>
+                        </table>
+                    </form>
+                </td></tr>
+            <tr><td>Produce a list of all items for a given company
+                    <form action="list_of_items_for_a_company.jsp" method="post">
+                        Search by:<br>
+                        <table border="0"> 
+                            <tr><td>Company</td><td><input type="text" name="company">  </td></tr>       
+                            <tr><td colspan="2" align=right>    <input type="submit" value="Search"> </td></tr>
+                        </table>
+                    </form>
+                </td></tr>
+            
         </table>
         <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
     </body>

@@ -9,8 +9,9 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Leon
+ * @author 鑫河
  */
-public class delete_ad extends HttpServlet {
+public class modify_post_subject extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,45 +39,54 @@ public class delete_ad extends HttpServlet {
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         Connection conn = null;
-        String[] aids = request.getParameterValues("aids");
-
+         
+        String subject = request.getParameter("psubject");
+        String uid = (String) request.getSession().getAttribute("userid");
+         String pid = (String) request.getSession().getAttribute("pid");
         PrintWriter out = response.getWriter();
-        if (aids == null) {
-            out.println("<script language=\"JavaScript\">alert(\"choose at least one advertisement！\");self.location='advertisement.jsp';</script>");
-        } else {
-            try {
+      
+        if (uid == null || pid==null) {
+            out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>");
+        }
 
-                Class.forName(driver).newInstance();
-                conn = DriverManager.getConnection(dburl);
+        if ( subject != null) {
+            if ( subject.equals("")) {
+                out.println("<script language=\"JavaScript\">alert(\"subject must be not empty！\");self.location='index.html';</script>");
 
-                ps = conn.prepareStatement("DELETE FROM advertisement WHERE Id=? ");
-         //   ps.setString(1, cname); //1 represents the first ?
+            } else {
+                try {
+                
+                    Class.forName(driver).newInstance();
+                    conn = DriverManager.getConnection(dburl);
 
-                for (int i = 0; i < aids.length; i++) {
-                    ps.setString(1, aids[i]);
+                    ps = conn.prepareStatement("UPDATE post SET subject=? WhERE Id=?");
+                    ps.setString(1, subject); //1 represents the first ?
+                    ps.setString(2,pid);
+                    
+                 
                     ps.execute();
-                }
+ 
 
-                ps.close();
+                 //   ps.close();
+                    out.println("<script language='javascript'>alert('Success');self.location='post_page.jsp'</script>");
+                } catch (Exception ex) {
 
-                out.println("<script language='javascript'>alert('Success');self.location='advertisement.jsp';</script>");
-            } catch (Exception ex) {
+                    out.println("failed " + ex.getMessage());
 
-                out.println("failed " + ex.getMessage());
+                } finally {
+                    if (ps != null) {
+                        try {
+                            ps.close();
+                        } catch (SQLException ex) {
 
-            } finally {
-                if (ps != null) {
-                    try {
-                        ps.close();
-                    } catch (SQLException ex) {
-
+                        }
                     }
-                }
-                if (conn != null) {
-                    try {
-                        conn.close();
-                    } catch (SQLException ex) {
+                    if (conn != null) {
+                        try {
+                            conn.close();
+                        } catch (SQLException ex) {
 
+                        }
                     }
                 }
             }
@@ -84,7 +94,6 @@ public class delete_ad extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *

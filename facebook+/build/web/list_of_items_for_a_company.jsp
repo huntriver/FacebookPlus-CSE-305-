@@ -20,12 +20,20 @@
             if (!type.equals("1")) {
                 out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
             } else {
+                String company = request.getParameter("company");
+
+                if (company.equals("")) {
+                    company = "%";
+                }
 
                 String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 Connection conn = DriverManager.getConnection(dburl);
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM advertisement");
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM advertisement Where Company=?");
+                //   out.println(itemname+" "+lname+" "+fname+" "+uname);
+                ps.setString(1, company);
+
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
 
@@ -33,45 +41,46 @@
         %>
     </head>
     <body>
-        <h1>Advertisements</h1>
-       
-            <table border="1">
-                <tr>
-                  
-                    <td>Item_Name</td>
-                    <td>Company</td>
-                    <td>Type</td>
-                    <td>Content</td>
-                    <td>Price</td>
-                    <td>Available_Units</td>
-                </tr>
-                <%              while (rs.next()) {
+        <h1>All Items that company <%=company%> have</h1>
+
+        <table border="1">
+            <tr>
+                <td>Item_Name</td>
+                <td>Company</td>
+                <td>Type</td>
+                <td>Content</td>
+                <td>Price</td>
+                <td>Available_Units</td>
+
+            </tr>
+            <%              while (rs.next()) {
 
 
-                %>
-                <tr>
-                
-                    <td><%=rs.getString("item_name")%></td>
-                    <td><%=rs.getString("company")%></td>
-                    <td><%=rs.getString("type")%></td>
-                    <td><%=rs.getString("content")%></td>
-                    <td><%=rs.getString("unit_price")%></td>
-                    <td><%=rs.getString("available_units")%></td>
-                </tr>
+            %>
+            <tr>
+
+                <td><%=rs.getString("item_name")%></td>
+                <td><%=rs.getString("company")%></td>
+                <td><%=rs.getString("type")%></td>
+                <td><%=rs.getString("content")%></td>
+                <td><%=rs.getString("unit_price")%></td>
+                <td><%=rs.getString("available_units")%></td>
+
+
                 <%
                     }
                 %>
-            </table>
-           
-            <br>
-           <br>
-            <br>
-         <button type="button" onclick="window.location.href = 'manager_page.jsp'">back</button>
+        </table>
+
+        <br>
+        <br>
+        <br>
+        <button type="button" onclick="window.location.href = 'manager_page.jsp'">back</button>
     </body>
     <%
-              ps.close();
-             conn.close();
+            ps.close();
+            conn.close();
         }
     %>
-  
+
 </html>

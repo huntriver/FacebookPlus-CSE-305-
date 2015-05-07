@@ -16,6 +16,7 @@
                 out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
 
             }
+            else
             if (!type.equals("2")) {
                 out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>");
             } else {

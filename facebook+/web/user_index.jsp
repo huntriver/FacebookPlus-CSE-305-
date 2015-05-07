@@ -15,6 +15,12 @@
                 alert("Create successfully");
             }
         </script>
+        <script type="text/javascript">
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <% String userid = (String) session.getAttribute("userid");
@@ -63,8 +69,22 @@
         <%
             }
         %>
-
+<form name="form" id="form">
+          Drop Down Help Menu 
+          <select name="jumpMenu" id="jumpMenu" onChange="MM_jumpMenu('parent',this,0)">
+              <option selected="selected" value="user_index.jsp">Choose One</option>
+           <option value="helpMenu.html#help">FAQ from Start</option>
+            <option value="helpMenu.html#circle">Circle Usage</option>
+            <option value="helpMenu.html#message">Message Usage</option>
+            <option value="helpMenu.html#post">Post Usage</option>            
+            <option value="helpMenu.html#purchase">Purchase Usage</option>
+            <option value="helpMenu.html#creditCardAccounts">Credit Card Accounts</option>
+          </select>
+        </form>
         <h1>My Circle</h1>
+        <table border="1" >
+          
+            <tr><td>Circle Name</td><td>Total Posts</td></tr>
         <%
             while (rs.next()) {
                 String cid = rs.getString("Circle_Id");  //first time return first circle id, second time is second circle id
@@ -73,12 +93,19 @@
                 ps1.execute();
                 ResultSet rs1 = ps1.getResultSet();
                 rs1.next();
+                 PreparedStatement ps2 = conn.prepareStatement("SELECT Count(*) FROM post Where circle=?");
+                ps2.setString(1, cid);
+                ps2.execute();
+                ResultSet rs2 = ps2.getResultSet();
+                rs2.next();
 
 
         %>
-        <a href="${pageContext.request.contextPath}/circle?cid=<%=cid%>"><%=rs1.getString("name")%></a>
-        </br>
+       <tr><td> <a href="${pageContext.request.contextPath}/circle?cid=<%=cid%>"><%=rs1.getString("name")%></a></td>
+           <td> <%=rs2.getString(1)%></td>
+       </tr>
         <%                    ps1.close();
+                 ps2.close();
                 }
 
                 out.println("</br>");
@@ -86,6 +113,7 @@
                 conn.close();
             }
         %>
+        </table>
         <h1>Create A New Circle</h1>
         <form action="createCircle" method="post">
             <table>

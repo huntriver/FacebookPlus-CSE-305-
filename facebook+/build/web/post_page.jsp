@@ -61,99 +61,123 @@
         %>
     </head>
     <body>
-        <h1>Subject: <%=subject%></h1>
-
-        <%if (isowner ||authorid.equals(userid)) { %>
-        <form  method="post" action="modify_post">
+        <%if (isowner || authorid.equals(userid)) { %>
+        <form action="modify_post_subject" method="post">
             <%}%>
-        <textarea name="content" <%if ((!isowner )&& (!authorid.equals(userid))) {%>disabled="disabled"<%}%>style="height:150px;width:900px;resize: none;"><%=content%></textarea>
+            <h1> Subject:<input type="text" name="psubject"<%if ((!isowner) && (!authorid.equals(userid))) {%>disabled="disabled"<%}%>  value="<%=subject%>"/> 
+                <% if (isowner || authorid.equals(userid)) {%>
+                <input type="submit" value="Modify" /> 
+
+        </form>
+        <%}%>
+    </h1> 
+    <%if (isowner || authorid.equals(userid)) { %>
+    <form  method="post" action="modify_post">
+        <%}%>
+        <textarea name="content" <%if ((!isowner) && (!authorid.equals(userid))) {%>disabled="disabled"<%}%>style="height:150px;width:900px;resize: none;"><%=content%></textarea>
         </br>
-         <% if (isowner||authorid.equals(userid)) {%>
-           
-           <input type="submit" value="Modify">
-        </form>
-        <%}%>
-        
-        
-        <form id="form1" name="form1" method="post" action="<%=likepost ? "dislikepost" : "likepost"%>">
-            <%=author%> posted on <%=date%>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-
-
-            <input name="like" type="image" value="like" src="<%=likepost ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
-
-        </form>
-      
         <% if (isowner || authorid.equals(userid)) {%>
-        <a href="delete_post">delete this post</a>
-        <%}%>
-        <h2>Comments</h2>
-        <%
-            ps = conn.prepareStatement("SELECT * FROM comment Where post=?");
+
+        <input type="submit" value="Modify">
+    </form>
+   <%}%>
+
+    <form id="form1" name="form1" method="post" action="<%=likepost ? "dislikepost" : "likepost"%>">
+        <%=author%> posted on <%=date%>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+        <input name="like" type="image" value="like" src="<%=likepost ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
+        <% ps = conn.prepareStatement("SELECT Count(*) FROM user_likes_post Where post=?");
             ps.setString(1, pid);
 
             ps.execute();
             rs = ps.getResultSet();
-            while (rs.next()) {
-                String aid = rs.getString("author");
-                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where id=?");
-                ps1.setString(1, aid);
-                ps1.execute();
-                ResultSet r = ps1.getResultSet();
-                r.next();
-                String auname = r.getString("username");
+            rs.next();
+        %>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <%=rs.getString(1)%> likes!   
+    </form>
 
-                ps1 = conn.prepareStatement("SELECT * FROM user_likes_comment Where User=? and Comment=?");
-                ps1.setString(1, userid);
-                ps1.setString(2, rs.getString("Id"));
-                ps1.execute();
-                ResultSet r1 = ps1.getResultSet();
-                boolean likecomment;
-                if (r1.next()) {
-                    likecomment = true;
-                } else {
-                    likecomment = false;
-                }
 
-        if (isowner || aid.equals(userid)) { %>
-        <form  method="post" action="modify_comment">
-            <%}%>
-            <textarea name="content"  <%if ((!isowner )&& (!aid.equals(userid))) {%>disabled="disabled" <%}%>  style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
-            </br>
-            <% if (isowner || aid.equals(userid)) {%>
-            <input name="coid" type="hidden" value="<%=rs.getString("Id")%>">
-           <input type="submit" value="Modify">
-        </form>
-        <%}%>
-        <form id="form1" name="form1" method="post" action="<%=likecomment ? "dislikecomment" : "likecomment"%>">
-            <%=auname%> posted on <%=rs.getString("date")%> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <input name="like" type="image"  src="<%=likecomment ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
-            <input name="cid" type="hidden" value="<%=rs.getString("Id")%>">
-        </form>
-        <% if (isowner || aid.equals(userid)) {%>
-        <a href="delete_comment?coid=<%=rs.getString("Id")%>">delete this comment</a>
-        <%}%>
-        </br>
-        <%
-                ps1.close();
+
+    <% if (isowner || authorid.equals(userid)) {%>
+    <a href="delete_post">delete this post</a>
+    <%}%>
+    <h2>Comments</h2>
+    <%
+        ps = conn.prepareStatement("SELECT * FROM comment Where post=?");
+        ps.setString(1, pid);
+
+        ps.execute();
+        rs = ps.getResultSet();
+        while (rs.next()) {
+            String aid = rs.getString("author");
+            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM user Where id=?");
+            ps1.setString(1, aid);
+            ps1.execute();
+            ResultSet r = ps1.getResultSet();
+            r.next();
+            String auname = r.getString("username");
+
+            ps1 = conn.prepareStatement("SELECT * FROM user_likes_comment Where User=? and Comment=?");
+            ps1.setString(1, userid);
+            ps1.setString(2, rs.getString("Id"));
+            ps1.execute();
+            ResultSet r1 = ps1.getResultSet();
+            boolean likecomment;
+            if (r1.next()) {
+                likecomment = true;
+            } else {
+                likecomment = false;
             }
 
+            if (isowner || aid.equals(userid)) { %>
+    <form  method="post" action="modify_comment">
+        <%}%>
+        <textarea name="content"  <%if ((!isowner) && (!aid.equals(userid))) {%>disabled="disabled" <%}%>  style="height:150px;width:800px;resize: none;"><%=rs.getString("content")%></textarea>
+        </br>
+        <% if (isowner || aid.equals(userid)) {%>
+        <input name="coid" type="hidden" value="<%=rs.getString("Id")%>">
+        <input type="submit" value="Modify">
+    </form>
+    <%}%>
+    <form id="form1" name="form1" method="post" action="<%=likecomment ? "dislikecomment" : "likecomment"%>">
+        <%=auname%> posted on <%=rs.getString("date")%> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <input name="like" type="image"  src="<%=likecomment ? "img/dislike.png" : "img/like.png"%>"  width="40px" height="50px" />
+        <% PreparedStatement ps2= conn.prepareStatement("SELECT Count(*) FROM user_likes_comment Where comment=?");
+            ps2.setString(1, rs.getString("Id"));
+
+            ps2.execute();
+            ResultSet rs2 = ps2.getResultSet();
+            rs2.next();
         %>
-
-        <h2>Make a Comment</h2>
-        <form action="new_comment" method="post"> 
-            <table> 
-                <tr><td>content</td><td><textarea name="content" style="height:150px;width:900px;resize: none;"></textarea></td></tr> 
-                <tr><td></td><td><input type="submit" name="submit" value="Submit"></td></tr> 
-            </table> 
-        </form> 
-
-        </br></br></br>
-        <a href="Circle_page.jsp">back</a>
-        &nbsp;
-        <a href="logout.jsp">logout</a>
-
-    </body>
-    <%            conn.close();
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <%=rs2.getString(1)%> likes!   
+        <input name="cid" type="hidden" value="<%=rs.getString("Id")%>">
+    </form>
+    <% if (isowner || aid.equals(userid)) {%>
+    <a href="delete_comment?coid=<%=rs.getString("Id")%>">delete this comment</a>
+    <%}%>
+    </br>
+    <%
+            ps1.close();
         }
+
     %>
+
+    <h2>Make a Comment</h2>
+    <form action="new_comment" method="post"> 
+        <table> 
+            <tr><td>content</td><td><textarea name="content" style="height:150px;width:900px;resize: none;"></textarea></td></tr> 
+            <tr><td></td><td><input type="submit" name="submit" value="Submit"></td></tr> 
+        </table> 
+    </form> 
+
+    </br></br></br>
+    <a href="Circle_page.jsp">back</a>
+    &nbsp;
+    <a href="logout.jsp">logout</a>
+
+</body>
+<%            conn.close();
+    }
+%>
 </html>

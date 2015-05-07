@@ -10,6 +10,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Account page</title>
+        <%String userid = (String) session.getAttribute("userid");
+          if (userid == null) {
+
+                out.println("<script language=\"JavaScript\">alert(\"please login first！\");self.location='index.html';</script>"); //注意该方法的写法
+
+            }
+          else
+          { %>
     </head>
     <body>
         <form action="creditAccount" method="post">
@@ -24,4 +32,5 @@
         </form>
         <button type="button" onclick="window.location.href = 'account.jsp'">back</button>
     </body>
+     <% }%>
 </html>

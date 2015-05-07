@@ -45,6 +45,7 @@ public class register extends HttpServlet {
         String pwd = request.getParameter("pwd");
         String pwd1 = request.getParameter("pwd1");
         PrintWriter out = response.getWriter();
+        String uid = (String) request.getSession().getAttribute("userid");
         try {
             if (username.equals("") || pwd.equals("") || pwd1.equals("")) {
                 throw new Exception();
@@ -81,9 +82,21 @@ public class register extends HttpServlet {
             ps.execute();
 
             ps.close();
-            out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='index.html';</script>");
+            
+            if (uid == null) {
+                out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='index.html';</script>");
+            }
+            else{
+                out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='add_delete.jsp';</script>");
+            }
         } catch (Exception ex) {
-            out.println("<script language=\"JavaScript\">alert(\"Failed！\");self.location='register.html';</script>");
+            if (uid == null) {
+                out.println("<script language=\"JavaScript\">alert(\"Failed！\");self.location='register.html';</script>");
+            }
+            else{
+                out.println("<script language=\"JavaScript\">alert(\"Success！\");self.location='manager_regiser.jsp';</script>");
+            }
+            
             out.println("failed " + ex.getMessage());
 
         } finally {
