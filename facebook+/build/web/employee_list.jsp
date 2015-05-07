@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>All Users</title>
+        <title>All Employees</title>
         <%
             String userid = (String) session.getAttribute("userid");
             if (userid == null) {
@@ -41,7 +41,7 @@
         %>
     </head>
     <body>
-        <h1>All Users</h1>
+        <h1>All Employees</h1>
             <table border="1">
                 <tr><td>id</td><td>username</td><td>Edit</td></tr>
                 <%

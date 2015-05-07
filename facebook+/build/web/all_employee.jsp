@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>All Employees</title>
+        <title>All Users</title>
         <%
             String userid = (String) session.getAttribute("userid");
             if (userid == null) {
@@ -23,12 +23,17 @@
                 Connection conn = DriverManager.getConnection(dburl);
                 
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM person WHERE id=?");
+                
                 ps.setString(1, userid);
                 ps.execute();
                 ResultSet rs = ps.getResultSet();
                 rs.next();
-
-                if (!rs.getString("type").equals("1") && !rs.getString("type").equals("1")) {
+                
+               
+                
+                
+                if (!rs.getString("type").equals("2")) {
                     out.println("<script language=\"JavaScript\">alert(\"access deny！\");self.location='user_index.jsp';</script>"); //注意该方法的写法
                     ps.close();
                     conn.close();
@@ -43,14 +48,19 @@
     <body>
         <h1>All Employees</h1>
             <table border="1">
-                <tr><td>id</td><td>username</td><td>Edit</td></tr>
+                <tr><td>id</td><td>username</td><td>Rating</td><td>Last Name</td><td>First Name</td><td>Birth</td><td>Gender</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Telephone</td><td>Email Address</td></tr>
                 <%
-                    for (int i = 0; rs.next(); i++) {                        
+                    for (int i = 0; rs.next(); i++) {
+                        ps1.setString(1, rs.getString("Id"));
+                        ps1.execute();
+                        ResultSet rs1 = ps1.getResultSet();
+                        rs1.next();
                 %>
-                <tr><td> <%=rs.getString("id")%> </td> 
-                    <td><%=rs.getString("username")%></td>    
+                <tr><td> <%=rs.getString("id")%> </td><td><%=rs.getString("username")%></td><td><%=rs.getString("Rating")%></td><td> <%=rs1.getString("Last_Name")%> </td><td><%=rs1.getString("First_Name")%></td>
+                    <td> <%=rs1.getString("DOB")%> </td><td><%=rs1.getString("SEX")%></td><td> <%=rs1.getString("Address")%> </td><td><%=rs1.getString("City")%></td> 
+                    <td> <%=rs1.getString("State")%> </td><td><%=rs1.getString("Zip_Code")%></td><td> <%=rs1.getString("Telephone")%> </td><td><%=rs1.getString("Email_Address")%></td>                       
 
-                    <td><button type="button" onclick="window.location.href = 'modify_profile?uid=<%=rs.getString("id")%>'">go</button></td> 
+                    
                 </tr>
                 <%
                     }
@@ -60,5 +70,5 @@
                 %>
             </table>
     </body>
-    <button type="button" onclick="window.location.href = 'manager_page.jsp'">back</button>
+    <button type="button" onclick="window.location.href = 'employee_page.jsp'">back</button>
 </html>

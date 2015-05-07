@@ -23,7 +23,7 @@ and open the template in the editor.
             String userid = (String) session.getAttribute("muid");
             String lname = null;
             String fname = null;
-            //String Sex = null;
+            String birth = null;
             String Address = null;
             String City = null;
             String State = null;
@@ -68,6 +68,7 @@ and open the template in the editor.
 
                 lname = rs.getString("Last_Name");
                 fname = rs.getString("First_Name");
+                birth = rs.getString("DOB");
                 sex = rs.getString("SEX");
                 Address = rs.getString("Address");
                 City = rs.getString("City");
@@ -77,6 +78,7 @@ and open the template in the editor.
                 Tel = rs.getString("Telephone");
                 Email = rs.getString("Email_Address");
                 String rating = rs3.getString("rating");
+                String type_click = rs3.getString("type");
 
                 ArrayList<String> pref = new ArrayList<String>();
                 for (int i = 0; rs1.next(); i++) {
@@ -110,11 +112,16 @@ and open the template in the editor.
                 if (Email == null) {
                     Email = "";
                 }
-
+                if (birth == null) {
+                    birth = "";
+                }
                 //    String date = rs.getString("date");
                 //    String authorid = rs.getString("author");
                 ps.close();
-                conn.close();
+                ps3.close();
+                ps1.close();
+
+
         %>
 
     </head>
@@ -125,6 +132,7 @@ and open the template in the editor.
             <table border="0">
                 <tr><td>Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
                 <tr><td>First Name:</td> <td> <input type="text" name="fname" value="<%=fname%>"></td></tr>
+                <tr><td>Birth:</td> <td> <input type="text" name="birth" value="<%=birth%>"></td><td>Format:mmddyyyy</td></tr>
                 <tr><td>Gender:</td> <td> 
                         <select name = "Sex">
                             <option value = "">Choose</option>
@@ -206,6 +214,18 @@ and open the template in the editor.
                 </table>
                 </tr>
                 <tr><td>Rating:</td><td><input type="text" name="rating" value="<%=rating%>">(added by 1 for one transaction)</td></tr>
+                <%if (type.equals("1") && type_click.equals("2")) {
+                    PreparedStatement ps5 = conn.prepareStatement("SELECT * FROM employee Where id=?");
+
+                    ps5.setString(1, userid);
+                    ps5.execute();
+                    ResultSet rs5=ps5.getResultSet();
+                    rs5.next();
+                 %>
+                <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs5.getString("ssn")%>"></td></tr>
+                <tr><td>Start Date</td><td><input type="text" name="ssn" disabled="dsiabled" value="<%=rs5.getString("start_date")%>"></td></tr>
+                <tr><td>Hourly Rate</td><td><input type="text" name="ssn" disabled="disabled" value="<%=rs5.getString("hourly_rate")%>"></td></tr>
+                <%ps5.close();}%>
                 <input type="hidden" value="1" name="q"> 
             </table>
             </br>
@@ -213,6 +233,12 @@ and open the template in the editor.
         </form>
         <button type="button" onclick="window.history.go(-1);">back</button>
     </body>
-    <%}%>
+
+    <%
+            conn.close();
+        }
+    %>
+
+
 </html>
 

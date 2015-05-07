@@ -28,8 +28,10 @@
         <h1>Employee Page</h1>
         <table border="0">
             <tr> <td><a href="normal_user_list.jsp">All Customer</a></td> </tr>
+            <tr> <td> <a href="all_employee.jsp">all Employee</a></td></tr> 
             <tr> <td><a href="advertisement.jsp">Advertisements</a> </td></tr>
             <tr> <td> <a href="show_mailinglist.jsp">show customer mailing list</a></td></tr> 
+            
             <form action="suggestion_list.jsp" method="post">
                 <tr> <td> Produce a list of item suggestion for a given customer:<input type="text" name="uname"> <input type="submit" value="GO"></td></tr> 
              </form>

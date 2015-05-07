@@ -49,12 +49,7 @@ public class list extends HttpServlet {
         
         // out.println(ids.length+" "+types.i)
         PrintWriter out = response.getWriter();
-        for(int i=0;i<H_Rate.length;i++){
-            out.println(H_Rate[i]+" ");
-        }
-        for(int i=0;i<ids.length;i++){
-            out.println(ids[i]+" ");
-        }
+        
         try {
 
             Class.forName(driver).newInstance();
@@ -66,7 +61,7 @@ public class list extends HttpServlet {
                 ps.setString(2, ids[i]);
                 //out.println(ids[i]+"   "+H_Rate[i]+ "<br>");
                 
-                out.println(ids[i] + " " + types[i] + "<br>");
+                
                 
                 ps.execute();
                 
@@ -90,7 +85,7 @@ public class list extends HttpServlet {
                         ps.execute();
                     }
                     else{
-                        out.println(ids[i]+"   "+H_Rate[i]+ "<br>");
+                       
                         
                         ps = conn.prepareStatement("UPDATE employee SET Hourly_Rate=? WHERE Id=?");
                         ps.setString(1, H_Rate[i]);    

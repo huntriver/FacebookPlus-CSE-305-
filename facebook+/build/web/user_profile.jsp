@@ -22,7 +22,7 @@ and open the template in the editor.
             String userid = (String) session.getAttribute("userid");
             String lname = null;
             String fname = null;
-            //String Sex = null;
+            String birth = null;
             String Address = null;
             String City = null;
             String State = null;
@@ -60,6 +60,7 @@ and open the template in the editor.
 
                 lname = rs.getString("Last_Name");
                 fname = rs.getString("First_Name");
+                birth = rs.getString("DOB");
                 sex = rs.getString("SEX");
                 Address = rs.getString("Address");
                 City = rs.getString("City");
@@ -101,18 +102,22 @@ and open the template in the editor.
                 if (Email == null) {
                     Email = "";
                 }
+                if (birth == null) {
+                    birth = "";
+                }
 
                 //    String date = rs.getString("date");
                 //    String authorid = rs.getString("author");
     %>
     </head>
     <body>
-        <h1>Profile Information</h1>
+        <h1>Your Profile Information</h1>
 
         <form action="profile" method="post">
             <table border="0">
                 <tr><td>Last Name: </td> <td><input type="text" name="lname" value="<%=lname%>"></td></tr>
                 <tr><td>First Name:</td> <td> <input type="text" name="fname" value="<%=fname%>"></td></tr>
+                <tr><td>Birth:</td> <td> <input type="text" name="birth" value="<%=birth%>"></td><td>Format:mmddyyyy</td></tr>
                 <tr><td>Gender:</td> <td> 
                         <select name = "Sex">
                             <option value = "">Choose</option>
@@ -209,7 +214,7 @@ and open the template in the editor.
                 <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs3.getString("ssn")%>"></td></tr>
                 <tr><td>Start Date</td><td><input type="text" name="ssn" disabled="dsiabled" value="<%=rs3.getString("start_date")%>"></td></tr>
                 <tr><td>Hourly Rate</td><td><input type="text" name="ssn" disabled="disabled" value="<%=rs3.getString("hourly_rate")%>"></td></tr>
-                <%}%>
+                <%ps3.close();}%>
                 <input type="hidden" value="0" name="q"> 
             </table>
             </br>

@@ -59,7 +59,7 @@
                     <tr><td><input type="checkbox" name="daccount" value=<%=Account_Num%>></td>
                         <td><%=Account_Num%></td><td><%=Date%></td><td><%=Credit_Num%></td>
                         <td>
-                               <button type="button" onclick="window.location.href = 'view_history?acnum=<%=Account_Num%>'">view historyk</button>
+                               <button type="button" onclick="window.location.href = 'view_history?acnum=<%=Account_Num%>'">view history</button>
                            
                         </td>
                     </tr>
