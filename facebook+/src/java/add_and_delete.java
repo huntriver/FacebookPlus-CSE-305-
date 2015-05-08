@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,32 +22,41 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class add_and_delete extends HttpServlet {
 
-   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String dburl = "jdbc:mysql://mysql2.cs.stonybrook.edu:3306/fhonda?user=fhonda&password=108180831";
         String driver = "com.mysql.jdbc.Driver";
         PreparedStatement ps = null;
         PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
         Connection conn = null;
         String[] aids = request.getParameterValues("aids");
 
         PrintWriter out = response.getWriter();
         if (aids == null) {
             out.println("<script language=\"JavaScript\">alert(\"choose at least one user！\");self.location='add_delete.jsp';</script>");
-            
+
         } else {
             try {
 
                 Class.forName(driver).newInstance();
                 conn = DriverManager.getConnection(dburl);
+                ps2 = conn.prepareStatement("select * FROM user_has_account WHERE user_Id=? ");
 
-                ps = conn.prepareStatement("DELETE FROM user WHERE Id=? ");
+                ps = conn.prepareStatement("DELETE FROM account WHERE account_number=? ");
+
                 ps1 = conn.prepareStatement("DELETE FROM person WHERE Id = ? ");
 
                 for (int i = 0; i < aids.length; i++) {
-                    ps.setString(1, aids[i]);
-                    ps.execute();
+                    ps2.setString(1, aids[i]);
+                    ps2.execute();
+                    ResultSet rs = ps2.getResultSet();
+                    while (rs.next()) {
+                        ps.setString(1, rs.getString("account_number"));
+                        ps.execute();
+                    }
+
                     ps1.setString(1, aids[i]);
                     ps1.execute();
                 }
@@ -76,6 +86,7 @@ public class add_and_delete extends HttpServlet {
             }
         }
     }// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

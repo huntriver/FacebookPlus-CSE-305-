@@ -39,6 +39,7 @@ public class delete_post_from_circle extends HttpServlet {
         PreparedStatement ps = null;
         Connection conn = null;
         String[] dposts = request.getParameterValues("dposts");
+         String cid = (String) request.getSession().getAttribute("cid");
    //    String cid = (String) request.getSession().getAttribute("cid");
        PrintWriter out = response.getWriter();
               if (dposts==null){
@@ -50,7 +51,9 @@ public class delete_post_from_circle extends HttpServlet {
          Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
        
-           
+            ps=conn.prepareStatement("update page set post_count=post_count-1 where circle_id=?");
+                ps.setString(1,cid);
+                ps.execute();
 
             ps = conn.prepareStatement("DELETE FROM post WHERE Id=?");
          //   ps.setString(1, cname); //1 represents the first ?

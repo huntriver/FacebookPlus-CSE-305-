@@ -3,9 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/miumermaid/Documents/cse305/facebook+/web/show_mailinglist.jsp</file>
             <file>file:/C:/Users/miumermaid/Documents/cse305/facebook+/web/search_result.jsp</file>
             <file>file:/C:/Users/miumermaid/Documents/cse305/facebook+/web/manager_page.jsp</file>
+=======
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/profile.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/delete_post.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/account.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/delete_post_from_circle.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/new_post.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/delete_comment.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/user_index.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/createCircle.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/circle.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/employee_page.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/post_page.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/Manage_Circle.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/muser_profile.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/Circle_page.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/checkout.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/user_profile.jsp</file>
+>>>>>>> c145fbed2014c9d44347aea702b10bd5127be431
         </group>
     </open-files>
 </project-private>
