@@ -8,6 +8,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        body {
+	background-image: url(img/undersea.jfif);
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>   
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>All Users</title>
         <%
@@ -53,14 +63,14 @@
         <h1>All Users</h1>
         <form action="list" method="post">
             <table border="1">
-                <tr><td>id</td><td>username</td><td>roll</td><td>Hourly Rate</td>
+                <tr><td class="whiteTextBackground">id</td><td class="whiteTextBackground">username</td><td class="whiteTextBackground">Role</td><td class="whiteTextBackground">Hourly Rate</td>
                 </tr>
                 <%
                     for (int i = 0; rs.next(); i++) {
                         
                 %>
-                <tr> <td> <% if (!rs.getString("type").equals("1")) { %>  <input type="hidden" name="id" value="<%=rs.getString("id")%>" >  <%}%> <%=rs.getString("id")%></td> 
-                    <td><%=rs.getString("username")%></td> 
+                <tr> <td class="whiteTextBackground"> <% if (!rs.getString("type").equals("1")) { %>  <input type="hidden" name="id" value="<%=rs.getString("id")%>" >  <%}%> <%=rs.getString("id")%></td> 
+                    <td class="whiteTextBackground"><%=rs.getString("username")%></td> 
                     <td>  <% if (rs.getString("type").equals("1")) { %> 
                                     Manager
                         <%}
@@ -74,7 +84,7 @@
                         </Select>
                         
                     </td>
-                    <td> <% if (!rs.getString("type").equals("1")) { %> 
+                    <td class="whiteTextBackground"> <% if (!rs.getString("type").equals("1")) { %> 
                         <input type="text" name="H_Rate" <% if (rs.getString("type").equals("3")) { %> value="<%=""%>"<% } %>                                            
                                                           <% if (rs.getString("type").equals("2")) {                                                              
                                                               ps_.setString(1, rs.getString("id"));

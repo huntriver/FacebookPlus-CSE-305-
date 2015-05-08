@@ -16,8 +16,7 @@
 }
 .whiteTextBackground{
     background-color: white; 
-}
-            
+}            
         </style>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>All Users</title>

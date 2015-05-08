@@ -7,7 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    
+     <style>
+        body {
+	background-image: url(img/gold.jpg);
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>      
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <% String userid = (String) session.getAttribute("userid");
             String type = (String) session.getAttribute("type");

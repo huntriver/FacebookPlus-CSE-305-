@@ -10,13 +10,12 @@
     <head>
          <style>
         body {
-	background-image: url(img/blue.jfif);
+	background-image: url(img/blossom.jpg);
 	background-repeat: repeat;
 }
 .whiteTextBackground{
     background-color: white; 
-}
-            
+}            
         </style>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <% String[] Months = {"january", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};

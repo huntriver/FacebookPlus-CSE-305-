@@ -32,8 +32,8 @@
     <body>
         <form action="creditAccount" method="post">
             <table>
-                <tr><td>Credit Card Number </td> <td><input type="text" name="Card_Num"/></td></tr>
-                <tr><td>Name On Your Card:</td> <td> <input type="text" name="Full_Name" /></td></tr>
+                <tr><td class="whiteTextBackground">Credit Card Number </td> <td><input type="text" name="Card_Num"/></td></tr>
+                <tr><td class="whiteTextBackground">Name On Your Card:</td> <td> <input type="text" name="Full_Name" /></td></tr>
             </table>
             </br>
             <input type="submit" value="Create" />       &nbsp;&nbsp; &nbsp;   

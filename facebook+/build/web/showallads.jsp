@@ -2,12 +2,23 @@
     Document   : advertisement
     Created on : 2015-5-4, 10:53:54
     Author     : Leon
+
 --%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        body {
+	background-image: url(img/gold.jpg);
+	background-repeat: repeat;
+}
+.whiteTextBackground{
+    background-color: white; 
+}
+            
+        </style>   
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <% String userid = (String) session.getAttribute("userid");
             String type = (String) session.getAttribute("type");
