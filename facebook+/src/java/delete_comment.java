@@ -49,6 +49,10 @@ public class delete_comment extends HttpServlet {
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 conn = DriverManager.getConnection(dburl);
+                  ps = conn.prepareStatement("UPdate post set comment_count=comment_count-1 WHERE id=? ");
+                ps.setString(1, pid);
+                
+                ps.execute();
                 ps = conn.prepareStatement("DELETE FROM comment WHERE id=? ");
                 ps.setString(1, coid);
                 
@@ -57,6 +61,7 @@ public class delete_comment extends HttpServlet {
                 response.sendRedirect("post_page.jsp");
 
             } catch (Exception e) {
+                out.println(e.getMessage());
             } finally {
            if (ps != null) {
                 try {

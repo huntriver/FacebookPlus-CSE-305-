@@ -16,15 +16,15 @@ and open the template in the editor.
 <html>
     <head>
         <style>
-        body {
-	background-image: url(img/horse.jpg);
-        
-	background-repeat: repeat;
-}
-.whiteTextBackground{
-    background-color: white; 
-}
-            
+            body {
+                background-image: url(img/horse.jpg);
+
+                background-repeat: repeat;
+            }
+            .whiteTextBackground{
+                background-color: white; 
+            }
+
         </style>  
         <title>MUser Profile</title>
         <meta charset="UTF-8">
@@ -222,23 +222,26 @@ and open the template in the editor.
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("life insurance")) {%>checked="checked" <%}%> value="life insurance"></td><td>life insurance </td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("toys")) {%>checked="checked" <%}%> value="toys"></td><td>toys </td></tr>
 
                 </table>
                 </tr>
-                <tr><td>Rating:</td><td><input type="text" name="rating" value="<%=rating%>">(added by 1 for one transaction)</td></tr>
-                <%if (type.equals("1") && type_click.equals("2")) {
-                    PreparedStatement ps5 = conn.prepareStatement("SELECT * FROM employee Where id=?");
+                <tr><td>Rating:</td><td><input type="text" name="rating" value="<%=rating%>">(added by 1 for one transaction MAX 10)</td></tr>
+                        <%if (type.equals("1") && type_click.equals("2")) {
+                                PreparedStatement ps5 = conn.prepareStatement("SELECT * FROM employee Where id=?");
 
-                    ps5.setString(1, userid);
-                    ps5.execute();
-                    ResultSet rs5=ps5.getResultSet();
-                    rs5.next();
-                 %>
-               
-                <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs5.getString("ssn")%>"></td></tr>
+                                ps5.setString(1, userid);
+                                ps5.execute();
+                                ResultSet rs5 = ps5.getResultSet();
+                                rs5.next();
+                        %>
+
+                <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs5.getString("ssn") == null ? "" : rs5.getString("ssn")%>"></td></tr>
                 <tr><td>Start Date</td><td><input type="text" name="sdate" disabled="dsiabled" value="<%=rs5.getString("start_date")%>"></td></tr>
-                <tr><td>Hourly Rate</td><td><input type="text" name="hrate" <% if (!type.equals("1")){%> disabled="disabled" <%}%> value="<%=rs5.getString("hourly_rate")%>"></td></tr>
-                <%ps5.close();}%>
+                <tr><td>Hourly Rate</td><td><input type="text" name="hrate" <% if (!type.equals("1")) {%> disabled="disabled" <%}%> value="<%=rs5.getString("hourly_rate") == null ? "" : rs5.getString("hourly_rate")%>"></td></tr>
+                        <%ps5.close();
+                    }%>
                 <input type="hidden" value="1" name="q"> 
             </table>
             </br>

@@ -15,14 +15,14 @@ and open the template in the editor.
 <html>
     <head>
         <style>
-        body {
-	background-image: url(img/lanyanlei.jpg);
-	background-repeat: repeat;
-}
-.whiteTextBackground{
-    background-color: white; 
-}
-            
+            body {
+                background-image: url(img/lanyanlei.jpg);
+                background-repeat: repeat;
+            }
+            .whiteTextBackground{
+                background-color: white; 
+            }
+
         </style>
         <title>User Profile</title>
         <meta charset="UTF-8">
@@ -118,7 +118,7 @@ and open the template in the editor.
 
                 //    String date = rs.getString("date");
                 //    String authorid = rs.getString("author");
-    %>
+%>
     </head>
     <body>
         <h1 style="color:white">Your Profile Information</h1>
@@ -205,26 +205,29 @@ and open the template in the editor.
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("clothing")) {%>checked="checked" <%}%> value="clothing"></td><td>clothing</td></tr>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("food")) {%>checked="checked" <%}%> value="food"></td><td>food</td> </tr>
                     <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("game")) {%>checked="checked" <%}%> value="game"></td><td>game </td></tr>
-
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("life insurance")) {%>checked="checked" <%}%> value="life insurance"></td><td>life insurance </td></tr>
+                    <tr><td><input   type="checkbox" name="pre" <%if (pref.contains("toys")) {%>checked="checked" <%}%> value="toys"></td><td>toys </td></tr>
                 </table>
                 </th>
                 </tr>
-                <tr><td style="background-color: white">Rating:</td><td><input type="text" name="rating" <%if (type.equals("3")){%>disabled="disabled"<%}%> value="<%=rating%>">(added by 1 for one transaction)</td></tr>
-                <%if (!type.equals("3")) {
-                    PreparedStatement ps3;
-                    if (type.equals("2"))
-                       ps3 = conn.prepareStatement("SELECT * FROM employee Where id=?");
-                    else
-                       ps3 = conn.prepareStatement("SELECT * FROM manager Where id=?");
-                    ps3.setString(1, userid);
-                    ps3.execute();
-                    ResultSet rs3=ps3.getResultSet();
-                    rs3.next();
-                 %>
-                <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs3.getString("ssn")%>"></td></tr>
-                <tr><td>Start Date</td><td><input type="text" name="ssn" disabled="dsiabled" value="<%=rs3.getString("start_date")%>"></td></tr>
-                <tr><td>Hourly Rate</td><td><input type="text" name="ssn" disabled="disabled" value="<%=rs3.getString("hourly_rate")%>"></td></tr>
-                <%ps3.close();}%>
+                <tr><td style="background-color: white">Rating:</td><td><input type="text" name="rating" <%if (type.equals("3")) {%>disabled="disabled"<%}%> value="<%=rating%>">(added by 1 for one transaction MAX 10)</td></tr>
+                        <%if (!type.equals("3")) {
+                                PreparedStatement ps3;
+                                if (type.equals("2")) {
+                                    ps3 = conn.prepareStatement("SELECT * FROM employee Where id=?");
+                                } else {
+                                    ps3 = conn.prepareStatement("SELECT * FROM manager Where id=?");
+                                }
+                                ps3.setString(1, userid);
+                                ps3.execute();
+                                ResultSet rs3 = ps3.getResultSet();
+                                rs3.next();
+                        %>
+                <tr><td>SSN</td><td><input type="text" name="ssn" value="<%=rs3.getString("ssn") == null ? "" : rs3.getString("ssn")%>"></td></tr>
+                <tr><td>Start Date</td><td><input type="text" name="sdate" disabled="dsiabled" value="<%=rs3.getString("start_date")%>"></td></tr>
+                <tr><td>Hourly Rate</td><td><input type="text" name="hrate" <%if (!type.equals("1")) {%>disabled="disabled"<%}%> value="<%=rs3.getString("hourly_rate") == null ? "" : rs3.getString("hourly_rate")%>"></td></tr>
+                        <%ps3.close();
+                    }%>
                 <input type="hidden" value="0" name="q"> 
             </table>
             </br>
@@ -233,12 +236,9 @@ and open the template in the editor.
         <button type="button" onclick="window.location.href = 'user_index.jsp'">back</button>
     </body>
     <%
-                ps.close();
-                conn.close();
-                
+            ps.close();
+            conn.close();
 
-
-
-    }%>
+        }%>
 </html>
 

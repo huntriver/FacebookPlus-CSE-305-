@@ -86,12 +86,16 @@ public class profile extends HttpServlet {
         if (Email == null) {
             Email = "";
         }
-
+             if (rating == null) {
+            rating = "0";
+        }
         PreparedStatement ps = null;
         Connection conn = null;
 
         String uid = (String) request.getSession().getAttribute("muid");
         PrintWriter out = response.getWriter();
+        // out.println("123");
+ 
         try {
             if (!Zip.equals("")) {
                 if (!Zip.matches("[0-9]{5}")) {
@@ -112,7 +116,7 @@ public class profile extends HttpServlet {
             }
             if (rating != null) {
                 if (!rating.equals("")) {
-                    if (Integer.valueOf(rating) < 0) {
+                    if (Integer.valueOf(rating) < 0 || Integer.valueOf(rating)>10) {
                         throw new Exception();
                     }
                 }
@@ -126,7 +130,7 @@ public class profile extends HttpServlet {
             }
             Class.forName(driver).newInstance();
             conn = DriverManager.getConnection(dburl);
-
+   //out.println("123");
             ps = conn.prepareStatement("UPDATE user Set rating=? Where id=?");
             ps.setString(1, rating);
             ps.setString(2, uid);
@@ -147,6 +151,7 @@ public class profile extends HttpServlet {
             ps.setString(11, birth);
             ps.setString(12, uid);
             ps.execute();
+     //       out.println("123");
             ps = conn.prepareStatement("select * from employee WHERE id=?");
           
             ps.setString(1, uid);
@@ -172,8 +177,10 @@ public class profile extends HttpServlet {
             ps = conn.prepareStatement("delete from user_preferences where id=? ");
             ps.setString(1, uid);
             ps.execute();
+         
             if (pref != null) {
                 for (int i = 0; i < pref.length; i++) {
+                //      out.println(pref[i]);
                     ps = conn.prepareStatement("insert into user_preferences (id,preference) values(?,?)");
                     ps.setString(1, uid);
                     ps.setString(2, pref[i]);
@@ -190,6 +197,7 @@ public class profile extends HttpServlet {
                 out.println("<script language='javascript'>alert('Success');self.location='user_index.jsp'</script>");
             }
         } catch (Exception ex) {
+            out.println(ex.getMessage());
             out.println("<script language='javascript'>alert('failed');window.history.go(-1)</script>");
 
         } finally {

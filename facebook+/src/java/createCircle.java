@@ -75,6 +75,13 @@ public class createCircle extends HttpServlet {
             rs.next();
             String cid = rs.getString(1);
             
+            
+             ps = conn.prepareStatement("INSERT INTO page (circle_id) values (?)");
+            ps.setString(1, cid);
+            ps.execute();
+            
+            
+            
              ps = conn.prepareStatement("INSERT INTO addedto (User_Id,Circle_Id) values (?,?)");
             ps.setString(1, ownerId); //1 represents the first ?
             ps.setString(2, cid);

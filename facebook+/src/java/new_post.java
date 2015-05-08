@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,16 +58,26 @@ public class new_post extends HttpServlet {
 
                     Class.forName(driver).newInstance();
                     conn = DriverManager.getConnection(dburl);
+                    ps = conn.prepareStatement("select * from page where circle_id=?");
+                    ps.setString(1, cid);
+                    ps.execute();
+                    ResultSet rs = ps.getResultSet();
+                    rs.next();
 
-                    ps = conn.prepareStatement("INSERT INTO post (Circle,Author,Subject,Date,Content) values (?,?,?,?,?)");
+                    ps = conn.prepareStatement("update page set post_count=post_count+1 where circle_id=?");
+                    ps.setString(1, cid);
+                    ps.execute();
+
+                    ps = conn.prepareStatement("INSERT INTO post (Circle,Author,Subject,Date,Content,page) values (?,?,?,?,?,?)");
                     ps.setString(1, cid); //1 represents the first ?
                     ps.setString(2, uid);
                     ps.setString(3, subject);
+                    ps.setString(6, rs.getString("id"));
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date now = new Date();
                     String date = sdf.format(now);
                     ps.setString(4, date);
-                    ps.setString(5,content);
+                    ps.setString(5, content);
                     ps.execute();
 
                     ps.close();

@@ -3,23 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/showallads.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/showrevenue.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/list_of_items_for_a_company.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/helpMenu.html</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/account.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/advertisement.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/newAccount.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/show_mailinglist.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/Manage_Circle.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/user_index.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/post_page.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/suggestion_list.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/employee_page.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/Circle_page.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/newMessage.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/logout.jsp</file>
-            <file>file:/F:/cse%20305/final%20project/facebook+/web/showtranscation.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/profile.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/delete_post.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/account.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/delete_post_from_circle.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/new_post.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/delete_comment.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/user_index.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/createCircle.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/circle.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/employee_page.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/post_page.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/Manage_Circle.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/muser_profile.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/Circle_page.jsp</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/src/java/checkout.java</file>
+            <file>file:/C:/Users/Leon/Documents/cse305/facebook+/web/user_profile.jsp</file>
         </group>
     </open-files>
 </project-private>

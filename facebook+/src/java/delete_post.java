@@ -35,6 +35,7 @@ public class delete_post extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String userid = (String) request.getSession().getAttribute("userid");
         String pid = (String) request.getSession().getAttribute("pid");
+          String cid = (String) request.getSession().getAttribute("cid");
         Connection conn=null;
         PrintWriter out = response.getWriter();
         if (userid == null || pid == null) {
@@ -48,6 +49,10 @@ public class delete_post extends HttpServlet {
                 String driver = "com.mysql.jdbc.Driver";
                 Class.forName(driver).newInstance(); //init driver
                 conn = DriverManager.getConnection(dburl);
+                ps=conn.prepareStatement("update page set post_count=post_count-1 where circle_id=?");
+                ps.setString(1,cid);
+                ps.execute();
+                
                 ps = conn.prepareStatement("DELETE FROM post WHERE id=? ");
                 ps.setString(1, pid);
                 
