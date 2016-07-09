@@ -1,0 +1,6 @@
+# FacebookPlus-CSE-305-
+The basic idea behind your social network system--which I will henceforth refer to as fb+ (as shorthand for the combination of facebook and google+)--is that it will allow users to set up circles (or groups) of other fb+ users, where one such circle can be for friends, another for family members, another for co-workers, and so on. Moreover, each such circle has an associated fb+ page on which circle members can make posts and comment on existing posts. Additionally, circle members can like a post or a comment on a post.
+
+Fb+ users should also be able to search for other fb+ users, and add them (with the other fb+ user's consent) to the circle(s) of their choice. Fb+ users should also be able to send each other messages.
+
+Your social network site will also support targeted advertising as a mechanism for the site to generate revenue. Users will specify their preferences (e.g. cars, clothing, life insurance) as to the type of advertising they wouldn't mind seeing while visiting the site. Likewise, the site will ensure that only advertisements of these types are displayed to the user. A user can click on an advertisement to purchase one or more of the items being advertised. FB+ receives 10% of all such transactions, and this is how the site makes money!
